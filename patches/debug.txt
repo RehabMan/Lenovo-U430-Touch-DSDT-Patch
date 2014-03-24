@@ -1,0 +1,278 @@
+# BTKL
+
+into device label RMDT code_regex . insert
+begin
+Method(DBG0, 1, NotSerialized)\n
+{\n
+   //\rmdt.p1("DBG0")\n
+   //\rmdt.p2("_TZ.TZ00._TMP", \_TZ.TZ00._TMP())\n
+}\n
+end;
+
+into method label _Q8F parent_label EC0 code_regex . insert
+begin
+    \rmdt.p2("_Q8F", TPDS)\n
+    Store(LNot(TPDS), TPDS)\n
+end;
+
+
+# instrument _PTS and _WAK
+into method label _WAK code_regex ([\s\S]*)(Return[\s\S]*) replace_matched
+begin
+\\rmdt.p2("_WAK enter", Arg0)\n
+%1\n
+\\rmdt.p1("_WAK exit")\n
+%2\n
+end;
+
+into method label _PTS code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p2("_PTS enter", Arg0)\n
+%1\n
+\\rmdt.p1("_PTS exit")\n
+end;
+
+# instrument EC query methods
+into method label _Q09 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q09 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q09 exit")\n
+end;
+
+into method label _Q26 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q26 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q26 exit")\n
+end;
+
+into method label _Q27 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q27 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q27 exit")\n
+end;
+
+into method label _Q27 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q27 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q27 exit")\n
+end;
+
+into method label _Q60 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q60 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q60 exit")\n
+end;
+
+into method label _Q69 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q69 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q69 exit")\n
+end;
+
+into method label _Q70 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q70 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q70 exit")\n
+end;
+
+into method label _Q71 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q71 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q71 exit")\n
+end;
+
+into method label _Q8F parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q8F enter")\n
+%1\n
+\\rmdt.p1("EC0._Q8F exit")\n
+end;
+
+into method label _Q90 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q90 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q90 exit")\n
+end;
+
+into method label _Q91 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q91 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q91 exit")\n
+end;
+
+into method label _Q92 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q92 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q92 exit")\n
+end;
+
+into method label _Q93 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q93 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q93 exit")\n
+end;
+
+into method label _Q94 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q94 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q94 exit")\n
+end;
+
+into method label _QE0 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._QE0 enter")\n
+%1\n
+\\rmdt.p1("EC0._QE0 exit")\n
+end;
+
+into method label _QE2 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._QE2 enter")\n
+%1\n
+\\rmdt.p1("EC0._QE2 exit")\n
+end;
+
+into method label _QE4 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._QE4 enter")\n
+%1\n
+\\rmdt.p1("EC0._QE4 exit")\n
+end;
+
+into method label _QE5 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._QE5 enter")\n
+%1\n
+\\rmdt.p1("EC0._QE5 exit")\n
+end;
+
+into method label _QE6 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._QE6 enter")\n
+%1\n
+\\rmdt.p1("EC0._QE6 exit")\n
+end;
+
+into method label _QE7 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._QE7 enter")\n
+%1\n
+\\rmdt.p1("EC0._QE7 exit")\n
+end;
+
+into method label _QE8 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._QE8 enter")\n
+%1\n
+\\rmdt.p1("EC0._QE8 exit")\n
+end;
+
+into method label _QE9 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._QE9 enter")\n
+%1\n
+\\rmdt.p1("EC0._QE9 exit")\n
+end;
+
+into method label _Q41 parent_label _SB.PCI0.LPCB.EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q41 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q41 exit")\n
+end;
+
+into method label _Q41 parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("EC0._Q41 enter")\n
+%1\n
+\\rmdt.p1("EC0._Q41 exit")\n
+end;
+
+
+# instrument GPE event methods
+
+into method label _L6B parent_label _GPE code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("_GPE._L6B enter")\n
+%1\n
+\\rmdt.p1("_GPE._L6B exit")\n
+end;
+
+into method label _L69 parent_label _GPE code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("_GPE._L69 enter")\n
+%1\n
+\\rmdt.p1("_GPE._L69 exit")\n
+end;
+
+into method label _L6D parent_label _GPE code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("_GPE._L6D enter")\n
+%1\n
+\\rmdt.p1("_GPE._L6D exit")\n
+end;
+
+into method label _L61 parent_label _GPE code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("_GPE._L61 enter")\n
+%1\n
+\\rmdt.p1("_GPE._L61 exit")\n
+end;
+
+into method label _L62 parent_label _GPE code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("_GPE._L62 enter")\n
+%1\n
+\\rmdt.p1("_GPE._L62 exit")\n
+end;
+
+into method label _L66 parent_label _GPE code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("_GPE._L66 enter")\n
+%1\n
+\\rmdt.p1("_GPE._L66 exit")\n
+end;
+
+into method label _L67 parent_label _GPE code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("_GPE._L67 enter")\n
+%1\n
+\\rmdt.p1("_GPE._L67 exit")\n
+end;
+
+into method label _L68 parent_label _GPE code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("_GPE._L68 enter")\n
+%1\n
+\\rmdt.p1("_GPE._L68 exit")\n
+end;
+
+# odds and ends
+
+into method label _REG parent_label EC0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p3("EC0._REG enter", Arg0, Arg1)\n
+%1\n
+\\rmdt.p1("EC0._REG exit")\n
+end;
+
+
+into method label _INI parent_label _SB.PCI0 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("PCI0._INI enter")\n
+%1\n
+\\rmdt.p1("PCI0._INI exit")\n
+end;

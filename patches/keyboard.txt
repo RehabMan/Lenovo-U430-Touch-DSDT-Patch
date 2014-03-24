@@ -1,0 +1,122 @@
+# fix Clover mangling of DSDT info... for dsdt.dsl
+
+# Override DSDT oemId (for Clover, since it patches with "Apple ")
+into method label _DSM parent_label PS2K remove_entry;
+into device label PS2K insert
+begin
+Method (_DSM, 4, NotSerialized)\n
+{\n
+    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }\n
+    Return (Package()\n
+    {\n
+        "RM,oem-id", "LENOVO",\n
+        "RM,oem-table-id", "U430",\n
+    })\n
+}\n
+end;
+
+# Make EC-based brightness up/down work with RehabMan VoodooPS2 ACPI keyboard mechanism
+
+# _Q91 (Fn+F11) called on brightness down key
+into method label _Q91 parent_label EC0 replace_content
+begin
+    // e06b: code for brightness down\n
+    Notify (PS2K, 0x026b)\n
+    Notify (PS2K, 0x02eb)\n
+end;
+
+# _Q90 (Fn+F12) called on brightness up key
+into method label _Q90 parent_label EC0 replace_content
+begin
+    // e06c: code for brightness up\n
+    Notify (PS2K, 0x026c)\n
+    Notify (PS2K, 0x02ec)\n
+end;
+
+# RKAB/RKAC called for PS2 code e0fb/e0fc (brightness is mapped to it)
+into device label PS2K insert
+begin
+Method (RKAB, 1, NotSerialized)\n
+{\n
+    // if screen is turned off, turn it on...\n
+    If (LNot(\_SB.PCI0.LPCB.EC0.BLIS))\n
+    {\n
+        Store (1, \_SB.PCI0.LPCB.EC0.BLIS)\n
+        \_SB.PCI0.LPCB.EC0.QQ94()\n
+        \_SB.PCI0.LPCB.EC0._Q41()\n
+    }\n
+}\n
+Method (RKAC, 1, NotSerialized) { RKAB(Arg0) }\n
+end;
+
+# _Q94 (Fn+F9) is used to turn on/off screen
+into method label _Q94 parent_label EC0 set_label begin QQ94 end;
+into device label EC0 insert
+begin
+Method (_Q94, 0, NotSerialized)\n
+{\n
+    // e069 will be mapped to either F10 (44) or e0f0 or e0f2\n
+    Notify (PS2K, 0x0269)\n
+    Notify (PS2K, 0x02e9)\n
+}\n
+end;
+
+# RKA0 called for PS2 code e0f0 (mapped from normal Fn+F9)
+# RKA1 called for PS2 code e0f1 (mapped from F9, with keys swapped)
+# RKA2 called for PS2 code e0f2 (mapped from Fn+F9, with keys swapped)
+into device label PS2K insert
+begin
+Method (RKA0, 1, NotSerialized)\n
+{\n
+    If (Arg0)\n
+    {\n
+        // normal action for Fn+F9 (without keys swapped, toggle screen)\n
+        \_SB.PCI0.LPCB.EC0.QQ94()\n
+        \_SB.PCI0.LPCB.EC0._Q41()\n
+    }\n
+}\n
+Method (RKA1, 1, NotSerialized)\n
+{\n
+    If (Arg0)\n
+    {\n
+        // F9 with keys swapped, do what EC would do (toggle screen)\n
+        Store(LNot(\_SB.PCI0.LPCB.EC0.BLIS), \_SB.PCI0.LPCB.EC0.BLIS)\n
+        RKA0(Arg0)\n
+    }\n
+}\n
+Method (RKA2, 1, NotSerialized)\n
+{\n
+    If (Arg0)\n
+    {\n
+        // Fn+F9 with keys swapped, undo what EC would do (avoid toggling screen)\n
+        Store(LNot(\_SB.PCI0.LPCB.EC0.BLIS), \_SB.PCI0.LPCB.EC0.BLIS)\n
+    }\n
+}\n
+end;
+
+# _Q8F (Fn+F6) is used to turn on/off trackpad
+into method label _Q8F parent_label EC0 replace_content
+begin
+    // EC toggles TPDS when this key is struck before arriving here\n
+    // We can cancel the toggle by setting TPDS=1 (trackpad enabled)\n
+    Store(1, TPDS)\n
+    // e066 will be mapped to either F6 (40) or e037\n
+    Notify (PS2K, 0x0266)\n
+    Notify (PS2K, 0x02e6)\n
+end;
+
+# _Q41 is a strange one...
+# _Q41 *only* is called for Fn+F7
+# _Q41 is called *prior* to _Q8F (Fn+F6)
+# _Q41 is called *after* the other EC based Fn keys (Fn+F11/Fn+F12/Fn+F9)
+# Note: to untangle this, must use Macro Inversion feature
+into method label _Q41 remove_entry;
+into device label EC0 insert
+begin
+Method (_Q41, 0, NotSerialized)\n
+{\n
+    // e067 will be mapped to either F7 (41) or itself\n
+    Notify (PS2K, 0x0267)\n
+    Notify (PS2K, 0x02e7)\n
+}\n
+end;

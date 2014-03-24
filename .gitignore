@@ -1,0 +1,12 @@
+.DS_Store
+ssdt?.dsl
+dsdt.dsl
+patched/ssdt*.dsl
+patched/dsdt.dsl
+build/*.aml
+u430.xcodeproj/project.xcworkspace/xcuserdata
+u430.xcodeproj/project.xcworkspace/xcshareddata/u430.xccheckout
+u430.xcodeproj/xcuserdata
+linux_native/*
+!linux_native/readme.txt
+

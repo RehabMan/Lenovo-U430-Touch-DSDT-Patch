@@ -1,0 +1,3 @@
+# syntax fixes for dsdt.dsl
+
+into method label _INI parent_label _SB.PCI0 code_regex (Store\s\(\\_GPE\.MMTB.*) replace_matched begin // %1 end;
