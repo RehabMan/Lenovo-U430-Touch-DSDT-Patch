@@ -1,6 +1,6 @@
-## Haswell HP Envy DSDT patches by RehabMan
+## Lenovo Haswell U430 DSDT patches by RehabMan
 
-This set of patches/makefile can be used to patch your Haswell HP Envy DSDT/SSDTs.  It relies heavily on already existing laptop DSDT patches at github here: https://github.com/RehabMan/Laptop-DSDT-Patch
+This set of patches/makefile can be used to patch your Lenovo U430 Touch DSDT/SSDTs.  It relies heavily on already existing laptop DSDT patches at github here: https://github.com/RehabMan/Laptop-DSDT-Patch
 
 In fact, you will need to copy/clone that github repository to use this one.  Sorry, many of the laptop patches are generic and there are only a few specific to this laptop and I did not want to end up maintaining two copies of them.  There is already enough of that with the Laptop and ProBook repositories.
 
@@ -10,7 +10,7 @@ Because the ACPI files for this computer are highly dependentent on one another,
 ### Setup:
 
 What you'll need:
-- this repo: https://github.com/RehabMan/HP-Envy-DSDT-Patch
+- this repo: https://github.com/RehabMan/HP-Lenovo-U430-Touch-DSDT-Patch
 - laptop repo: https://github.com/RehabMan/Laptop-DSDT-Patch
 - patchmatic: https://github.com/RehabMan/OS-X-MaciASL-patchmatic
 - MaciASL: https://github.com/RehabMan/OS-X-MaciASL-patchmatic (always useful, even in this case)
@@ -28,12 +28,12 @@ I like to use git to setup the directory structure.  The two projects must be se
 mkdir ~/Projects
 cd ~/Projects
 git clone https://github.com/RehabMan/Laptop-DSDT-Patch laptop.git
-git clone https://github.com/RehabMan/HP-Envy-DSDT-Patch envy.git
+git clone https://github.com/RehabMan/HP-Lenovo-U430-Touch-DSDT-Patch u430.git
 ```
 
 Now you have the following directory structure:
 Projects/laptop.git
-Projects/envy.git
+Projects/u430.git
 
 
 ### How to use:
@@ -115,6 +115,6 @@ TBD
 
 ### Change Log:
 
-2014-01-14 Initial Release
+2014-03-23 Initial Release
 
 
