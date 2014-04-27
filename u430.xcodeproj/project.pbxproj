@@ -29,6 +29,7 @@
 		84517BE6186FC7A4003ACE44 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		84517BE7186FC7A4003ACE44 /* ssdt4.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssdt4.dsl; sourceTree = "<group>"; };
 		845362E818B99935005C7C7B /* debug1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debug1.txt; path = patches/debug1.txt; sourceTree = "<group>"; };
+		8455352818E65265001ADBFD /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		84678CB8189F965300B5C1BE /* audio.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = audio.txt; path = patches/audio.txt; sourceTree = "<group>"; };
 		8499623A1857F04D009A226D /* syntax_dsdt.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = syntax_dsdt.txt; path = patches/syntax_dsdt.txt; sourceTree = "<group>"; };
 		84ADB53718860F9600097B3C /* remove_wmi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = remove_wmi.txt; path = patches/remove_wmi.txt; sourceTree = "<group>"; };
@@ -41,8 +42,9 @@
 			isa = PBXGroup;
 			children = (
 				8406FCD6188627B8006D8DB7 /* README.md */,
-				840152EF182AE45E00D58B0A /* makefile */,
 				840152F0182AE46D00D58B0A /* disassemble.sh */,
+				840152EF182AE45E00D58B0A /* makefile */,
+				8455352818E65265001ADBFD /* config.plist */,
 				840152FC182AE4C600D58B0A /* patches */,
 				8444F2C118B9DDD500D59FF1 /* unpatched */,
 				84517BE4186FC7A4003ACE44 /* patched */,

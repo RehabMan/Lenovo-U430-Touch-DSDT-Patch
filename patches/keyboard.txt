@@ -116,7 +116,7 @@ begin
 Method (_Q41, 0, NotSerialized)\n
 {\n
     // e067 will be mapped to either F7 (41) or itself\n
-    Notify (PS2K, 0x0267)\n
-    Notify (PS2K, 0x02e7)\n
+    //Notify (PS2K, 0x0267)\n
+    //Notify (PS2K, 0x02e7)\n
 }\n
 end;
