@@ -173,6 +173,36 @@
 				<key>Comment</key>
 				<string>HDMI audio connector patch 10.9.2</string>
 			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Find</key>
+				<data>PYQI7BA=</data>
+				<key>Replace</key>
+				<data>PQAAAAA=</data>
+				<key>Comment</key>
+				<string>AppleHDA ALC283 patch #1</string>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Find</key>
+				<data>PYUI7BA=</data>
+				<key>Replace</key>
+				<data>PQAAAAA=</data>
+				<key>Comment</key>
+				<string>AppleHDA ALC283 patch #2</string>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Find</key>
+				<data>PYQZ1BE=</data>
+				<key>Replace</key>
+				<data>PYMC7BA=</data>
+				<key>Comment</key>
+				<string>AppleHDA ALC283 patch #3</string>
+			</dict>
 		</array>
 	</dict>
 	<key>SystemParameters</key>
