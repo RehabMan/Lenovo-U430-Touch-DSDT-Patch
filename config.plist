@@ -175,6 +175,16 @@
 			</dict>
 			<dict>
 				<key>Name</key>
+				<string>AppleIntelFramebufferAzul</string>
+				<key>Find</key>
+				<data>BgAmCgEDAwMAAAACAAAwAQAAYAAAAABg2QoAANkKAAAAAAAAAAAAAAAACAACAAAAMAAAAAEFCQAABAAAhwAAAAIECQAABAAAhwAAAP8AAAABAAAAQAAAAA8AAAABAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</data>
+				<key>Replace</key>
+				<data>BgAmCgEDAwMAAAACAAAwAQAAYAAAAABg2QoAANkKAAAAAAAAAAAAAAAACAACAAAAMAAAAAEFCQAABAAAhwAAAAIECQAACAAAhwAAAP8AAAABAAAAQAAAAA8AAAABAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</data>
+				<key>Comment</key>
+				<string>HDMI audio connector patch 10.9.3</string>
+			</dict>
+			<dict>
+				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Find</key>
 				<data>PYQI7BA=</data>
