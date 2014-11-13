@@ -2,95 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SMBIOS</key>
-	<dict>
-		<key>Trust</key>
-		<false/>
-	</dict>
-	<key>DisableDrivers</key>
-	<array>
-		<string>VBoxHfs</string>
-	</array>
-	<key>CPU</key>
-	<dict>
-		<key>C2</key>
-		<true/>
-		<key>C4</key>
-		<true/>
-		<key>C6</key>
-		<true/>
-	</dict>
-	<key>Boot</key>
-	<dict>
-		<key>Arguments</key>
-		<string>dart=0 -gux_defer_usb2 -gux_no_idle</string>
-		<key>Legacy</key>
-		<string>PBR</string>
-		<key>Log</key>
-		<false/>
-		<key>Timeout</key>
-		<integer>5</integer>
-		<key>XMPDetection</key>
-		<string>No</string>
-		<key>Secure</key>
-		<false/>
-	</dict>
-	<key>Graphics</key>
-	<dict>
-		<key>DualLink</key>
-		<integer>1</integer>
-		<key>ig-platform-id</key>
-		<string>0x0a260006</string>
-		<key>InjectEDID</key>
-		<true/>
-		<key>Inject</key>
-		<dict>
-			<key>Intel</key>
-			<true/>
-			<key>ATI</key>
-			<false/>
-			<key>NVidia</key>
-			<false/>
-		</dict>
-	</dict>
-	<key>GUI</key>
-	<dict>
-		<key>Language</key>
-		<string>en:0</string>
-		<key>Theme</key>
-		<string>bluemac</string>
-		<key>Mouse</key>
-		<dict>
-			<key>Enabled</key>
-			<false/>
-		</dict>
-		<key>Scan</key>
-		<dict>
-			<key>Entries</key>
-			<true/>
-			<key>Tool</key>
-			<true/>
-			<key>Legacy</key>
-			<false/>
-			<key>Kernel</key>
-			<string>All</string>
-		</dict>
-		<key>Hide</key>
-		<array>
-			<string>Windows</string>
-			<string>\EFI\BOOT\BOOTX64.EFI</string>
-		</array>
-	</dict>
 	<key>ACPI</key>
 	<dict>
 		<key>DSDT</key>
 		<dict>
-			<key>Debug</key>
-			<false/>
-			<key>ReuseFFFF</key>
-			<false/>
-			<key>DropOEM_DSM</key>
-			<false/>
+			<key>Fixes</key>
+			<dict>
+				<key>NewWay_80000000</key>
+				<true/>
+				<key>FixRegions_10000000</key>
+				<true/>
+			</dict>
 		</dict>
 		<key>SSDT</key>
 		<dict>
@@ -107,6 +29,32 @@
 			<integer>1</integer>
 		</dict>
 	</dict>
+	<key>Boot</key>
+	<dict>
+		<key>Arguments</key>
+		<string>kext-dev-mode=1 dart=0</string>
+		<key>Legacy</key>
+		<string>PBR</string>
+		<key>Log</key>
+		<false/>
+		<key>NeverHibernate</key>
+		<true/>
+		<key>Timeout</key>
+		<integer>5</integer>
+		<key>Secure</key>
+		<false/>
+		<key>XMPDetection</key>
+		<false/>
+	</dict>
+	<key>CPU</key>
+	<dict>
+		<key>C2</key>
+		<true/>
+		<key>C4</key>
+		<true/>
+		<key>C6</key>
+		<true/>
+	</dict>
 	<key>Devices</key>
 	<dict>
 		<key>Audio</key>
@@ -114,25 +62,6 @@
 			<key>Inject</key>
 			<string>86</string>
 		</dict>
-		<key>FakeID</key>
-		<dict>
-			<key>ATI</key>
-			<string>0x0</string>
-			<key>IntelGFX</key>
-			<string>0x0</string>
-			<key>NVidia</key>
-			<string>0x0</string>
-			<key>LAN</key>
-			<string>0x0</string>
-			<key>SATA</key>
-			<string>0x0</string>
-			<key>WIFI</key>
-			<string>0x0</string>
-			<key>XHCI</key>
-			<string>0x0</string>
-		</dict>
-		<key>UseIntelHDMI</key>
-		<false/>
 		<key>USB</key>
 		<dict>
 			<key>Inject</key>
@@ -140,87 +69,221 @@
 			<key>FixOwnership</key>
 			<false/>
 			<key>AddClockID</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>DisableDrivers</key>
+	<array>
+		<string>VBoxHfs</string>
+	</array>
+	<key>Graphics</key>
+	<dict>
+		<key>ig-platform-id</key>
+		<string>0x0a260006</string>
+		<key>Inject</key>
+		<dict>
+			<key>Intel</key>
 			<true/>
 		</dict>
+	</dict>
+	<key>GUI</key>
+	<dict>
+		<key>Hide</key>
+		<array>
+			<string>\EFI\BOOT\BOOTX64.EFI</string>
+		</array>
+		<key>Mouse</key>
+		<dict>
+			<key>Enabled</key>
+			<false/>
+		</dict>
+		<key>Scan</key>
+		<dict>
+			<key>Entries</key>
+			<true/>
+			<key>Tool</key>
+			<true/>
+			<key>Legacy</key>
+			<false/>
+			<key>Kernel</key>
+			<string>All</string>
+		</dict>
+		<key>Theme</key>
+		<string>bluemac</string>
 	</dict>
 	<key>KernelAndKextPatches</key>
 	<dict>
 		<key>AppleRTC</key>
-		<true/>
-		<key>KernelLapic</key>
 		<true/>
 		<key>KernelPm</key>
 		<true/>
 		<key>KextsToPatch</key>
 		<array>
 			<dict>
+				<key>Comment</key>
+				<string>AR9285 rebranded as AR946x #1</string>
 				<key>Name</key>
-				<string>AppleUSBXHCI</string>
+				<string>disabled_AirPortAtheros40</string>
+				<key>Find</key>
+				<data>g8H5g/kp</data>
+				<key>Replace</key>
+				<data>g8Hwg/kp</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>AR9285 rebranded as AR946x #2</string>
+				<key>Name</key>
+				<string>disabled_AirPortAtheros40</string>
+				<key>Find</key>
+				<data>QYP6MA+HqQAAAA==</data>
+				<key>Replace</key>
+				<data>QborAAAAkJCQkA==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>AR9280 rebranded as AR946x #1</string>
+				<key>Name</key>
+				<string>AirPortAtheros40</string>
+				<key>Find</key>
+				<data>g8H5g/kp</data>
+				<key>Replace</key>
+				<data>g8Hvg/kp</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>AR9280 rebranded as AR946x #2</string>
+				<key>Name</key>
+				<string>AirPortAtheros40</string>
+				<key>Find</key>
+				<data>QYP6MA+HqQAAAA==</data>
+				<key>Replace</key>
+				<data>QboqAAAAkJCQkA==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Enable BCM943228 14e4:4359 #1</string>
+				<key>Name</key>
+				<string>disabled_AppleAirPortBrcm43224</string>
+				<key>Find</key>
+				<data>gcbvvP//</data>
+				<key>Replace</key>
+				<data>gcbpvP//</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Enable BCM943228 14e4:4359 #2</string>
+				<key>Name</key>
+				<string>disabled_AppleAirPortBrcm43224</string>
+				<key>Find</key>
+				<data>gcHtvP//</data>
+				<key>Replace</key>
+				<data>gcHnvP//</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Enable TRIM for non-Apple SSDs</string>
+				<key>Name</key>
+				<string>IOAHCIBlockStorage</string>
+				<key>Find</key>
+				<data>AEFQUExFIFNTRAA=</data>
+				<key>Replace</key>
+				<data>AAAAAAAAAAAAAAA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Enable USB3 post wake</string>
+				<key>Name</key>
+				<string>disabled_AppleUSBXHCI</string>
 				<key>Find</key>
 				<data>xoDIAAAAAQ==</data>
 				<key>Replace</key>
 				<data>xoDIAAAAAA==</data>
-				<key>Comment</key>
-				<string>Enable USB3 post wake</string>
 			</dict>
 			<dict>
+				<key>Comment</key>
+				<string>HDMI audio connector patch 10.9.2</string>
 				<key>Name</key>
 				<string>AppleIntelFramebufferAzul</string>
 				<key>Find</key>
 				<data>BgAmCgEDAwMAAAACAAAAAQAAYAAAAABA2QoAANkKAAAAAAAAAAAAAAAACAACAAAAMAAAAAEFCQAABAAAhwAAAAIECQAABAAAhwAAAP8AAAABAAAAQAAAAA8AAAABAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</data>
 				<key>Replace</key>
 				<data>BgAmCgEDAwMAAAACAAAAAQAAYAAAAABA2QoAANkKAAAAAAAAAAAAAAAACAACAAAAMAAAAAEFCQAABAAAhwAAAAIECQAACAAAhwAAAP8AAAABAAAAQAAAAA8AAAABAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</data>
-				<key>Comment</key>
-				<string>HDMI audio connector patch 10.9.2</string>
 			</dict>
 			<dict>
+				<key>Comment</key>
+				<string>HDMI audio connector patch 10.9.3/10.9.4/10.9.5/10.10</string>
 				<key>Name</key>
 				<string>AppleIntelFramebufferAzul</string>
 				<key>Find</key>
 				<data>BgAmCgEDAwMAAAACAAAwAQAAYAAAAABg2QoAANkKAAAAAAAAAAAAAAAACAACAAAAMAAAAAEFCQAABAAAhwAAAAIECQAABAAAhwAAAP8AAAABAAAAQAAAAA8AAAABAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</data>
 				<key>Replace</key>
 				<data>BgAmCgEDAwMAAAACAAAwAQAAYAAAAABg2QoAANkKAAAAAAAAAAAAAAAACAACAAAAMAAAAAEFCQAABAAAhwAAAAIECQAACAAAhwAAAP8AAAABAAAAQAAAAA8AAAABAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</data>
-				<key>Comment</key>
-				<string>HDMI audio connector patch 10.9.3</string>
 			</dict>
 			<dict>
+				<key>Comment</key>
+				<string>AppleHDA ALC283 patch #1</string>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Find</key>
 				<data>PYQI7BA=</data>
 				<key>Replace</key>
 				<data>PQAAAAA=</data>
-				<key>Comment</key>
-				<string>AppleHDA ALC283 patch #1</string>
 			</dict>
 			<dict>
+				<key>Comment</key>
+				<string>AppleHDA ALC283 patch #2</string>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Find</key>
 				<data>PYUI7BA=</data>
 				<key>Replace</key>
 				<data>PQAAAAA=</data>
-				<key>Comment</key>
-				<string>AppleHDA ALC283 patch #2</string>
 			</dict>
 			<dict>
+				<key>Comment</key>
+				<string>AppleHDA ALC283 patch #3</string>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Find</key>
 				<data>PYQZ1BE=</data>
 				<key>Replace</key>
 				<data>PYMC7BA=</data>
+			</dict>
+			<dict>
 				<key>Comment</key>
-				<string>AppleHDA ALC283 patch #3</string>
+				<string>Yosemite Logo #1</string>
+				<key>Name</key>
+				<string>IOGraphicsFamily</string>
+				<key>Find</key>
+				<data>hcB0XUg=</data>
+				<key>Replace</key>
+				<data>McB0W0g=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Yosemite Logo #2</string>
+				<key>Name</key>
+				<string>IOGraphicsFamily</string>
+				<key>Find</key>
+				<data>QYjE6wM=</data>
+				<key>Replace</key>
+				<data>QYjE6yM=</data>
 			</dict>
 		</array>
 	</dict>
+	<key>SMBIOS</key>
+	<dict>
+		<key>ProductName</key>
+		<string>MacBookAir6,2</string>
+		<key>Trust</key>
+		<false/>
+	</dict>
 	<key>SystemParameters</key>
 	<dict>
-		<key>InjectSystemID</key>
-		<true/>
 		<key>InjectKexts</key>
 		<string>Detect</string>
+		<key>InjectSystemID</key>
+		<true/>
 	</dict>
 </dict>
 </plist>

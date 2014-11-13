@@ -11,6 +11,7 @@
 		840152F0182AE46D00D58B0A /* disassemble.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = disassemble.sh; sourceTree = "<group>"; };
 		8406FCD6188627B8006D8DB7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		840EC0C518A1F03400A8D90D /* ssdt6.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssdt6.dsl; sourceTree = "<group>"; };
+		8434661519392FEF002D2B01 /* usb.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = usb.txt; path = patches/usb.txt; sourceTree = "<group>"; };
 		843B1BA718B9CC8400852306 /* sensors.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sensors.txt; path = patches/sensors.txt; sourceTree = "<group>"; };
 		8444F2C218B9DDD500D59FF1 /* DSDT.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DSDT.dsl; sourceTree = "<group>"; };
 		8444F2C318B9DDD500D59FF1 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
@@ -30,17 +31,20 @@
 		84517BE7186FC7A4003ACE44 /* ssdt4.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssdt4.dsl; sourceTree = "<group>"; };
 		845362E818B99935005C7C7B /* debug1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debug1.txt; path = patches/debug1.txt; sourceTree = "<group>"; };
 		8455352818E65265001ADBFD /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
+		845B736719509CF50094F3E3 /* ar92xx_wifi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ar92xx_wifi.txt; path = patches/ar92xx_wifi.txt; sourceTree = "<group>"; };
 		84678CB8189F965300B5C1BE /* audio.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = audio.txt; path = patches/audio.txt; sourceTree = "<group>"; };
 		8499623A1857F04D009A226D /* syntax_dsdt.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = syntax_dsdt.txt; path = patches/syntax_dsdt.txt; sourceTree = "<group>"; };
 		84ADB53718860F9600097B3C /* remove_wmi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = remove_wmi.txt; path = patches/remove_wmi.txt; sourceTree = "<group>"; };
 		84ADCC25187CB0A100720ACA /* keyboard.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = keyboard.txt; path = patches/keyboard.txt; sourceTree = "<group>"; };
 		84BD236218B97D73000FEB2B /* debug.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debug.txt; path = patches/debug.txt; sourceTree = "<group>"; };
+		84DC2FD81A148531003845F1 /* graphics.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = graphics.txt; path = patches/graphics.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		840152E4182AE40B00D58B0A = {
 			isa = PBXGroup;
 			children = (
+				8499623A1857F04D009A226D /* syntax_dsdt.txt */,
 				8406FCD6188627B8006D8DB7 /* README.md */,
 				840152F0182AE46D00D58B0A /* disassemble.sh */,
 				840152EF182AE45E00D58B0A /* makefile */,
@@ -54,14 +58,16 @@
 		840152FC182AE4C600D58B0A /* patches */ = {
 			isa = PBXGroup;
 			children = (
-				8499623A1857F04D009A226D /* syntax_dsdt.txt */,
 				84478746189E296B001EC85A /* cleanup.txt */,
 				84678CB8189F965300B5C1BE /* audio.txt */,
 				844B06C118A29060008660C6 /* hdmi_audio.txt */,
+				84DC2FD81A148531003845F1 /* graphics.txt */,
 				843B1BA718B9CC8400852306 /* sensors.txt */,
 				84ADCC25187CB0A100720ACA /* keyboard.txt */,
 				84ADB53718860F9600097B3C /* remove_wmi.txt */,
 				84BD236218B97D73000FEB2B /* debug.txt */,
+				8434661519392FEF002D2B01 /* usb.txt */,
+				845B736719509CF50094F3E3 /* ar92xx_wifi.txt */,
 				843A4C481884C49D009AF7FE /* not used */,
 			);
 			name = patches;
