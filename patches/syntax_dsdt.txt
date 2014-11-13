@@ -1,3 +1,10 @@
 # syntax fixes for dsdt.dsl
 
+# MMTB is not defined anywhere...
 into method label _INI parent_label _SB.PCI0 code_regex (Store\s\(\\_GPE\.MMTB.*) replace_matched begin // %1 end;
+
+# iasl bug causes these extra External declarations
+# External (_SB_.PCI0.PEG0, UnknownObj)
+# External (_SB_.PCI0.PEG0.PEGP, UnknownObj)
+into definitionblock code_regex External\s+\(_SB_\.PCI0\.PEG0,.*\) remove_matched;
+into definitionblock code_regex External\s+\(_SB_\.PCI0\.PEG0\.PEGP,.*\) remove_matched;

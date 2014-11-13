@@ -6,6 +6,8 @@ In fact, you will need to copy/clone that github repository to use this one.  So
 
 Because the ACPI files for this computer are highly dependentent on one another, I have taken a more "developer" approach, opting to use shell scripts and a makefile to process the files automatically.  I generally test out new ideas with MaciASL, but once I determine the final method, I integrate it into the makefile for automatic patching/building/installing.
 
+Note: These patches are for BIOS version 7ccn35ww.
+
 
 ### Setup:
 
@@ -49,7 +51,7 @@ My files break down as follows (NN = not necessary):
 
 You will need to inspect your files, especially if your laptop is of a different configuration than mine.  For example, you may have two graphics SSDTs if your laptop has the nvidia chip.  Mine does not, so ssdt4 contains the graphics code for Intel HD4600.  If you have nvidia, you will probably want to patch the SSDT that contains the code for it, to disable it since it is useless in OS X.
 
-After gathering these files from Linux, place them in the linux_native subdirectory of this project.  I have provided the linux_F24 subdirectory as a reference. The files there are my extracted linux_native files.  Do not use them for your own hack, they are just provided for reference... the case you want to compare them against your own, for example.
+After gathering these files from Linux, place them in the linux_native subdirectory of this project.
 
 Now you are ready to disassemble the files we need to patch.  The current code disassembles them all, even though we are only patching two of them (you may be patching more).  To disassemble them, type (in Terminal)
 
