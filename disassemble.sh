@@ -4,7 +4,7 @@
 #
 # Creates DSL files from raw Linux extract
 #
-# Part of DSDT paching process for Haswell Envy 15
+# Part of DSDT paching process for Haswell Lenovo u430 Touch
 #
 # Created by RehabMan
 #
@@ -24,7 +24,7 @@ cd ./tmp
 list=`echo *`
 
 for aml in $list; do
-    iasl -p ../unpatched/$aml.dsl -e ${list//$aml/} -d $aml
+    iasl -p ../unpatched/$aml.dsl -e ${list//$aml/} -d -dl $aml
 done
 
 cd ..
