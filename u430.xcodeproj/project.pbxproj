@@ -44,7 +44,6 @@
 		840152E4182AE40B00D58B0A = {
 			isa = PBXGroup;
 			children = (
-				8499623A1857F04D009A226D /* syntax_dsdt.txt */,
 				8406FCD6188627B8006D8DB7 /* README.md */,
 				840152F0182AE46D00D58B0A /* disassemble.sh */,
 				840152EF182AE45E00D58B0A /* makefile */,
@@ -58,6 +57,7 @@
 		840152FC182AE4C600D58B0A /* patches */ = {
 			isa = PBXGroup;
 			children = (
+				8499623A1857F04D009A226D /* syntax_dsdt.txt */,
 				84478746189E296B001EC85A /* cleanup.txt */,
 				84678CB8189F965300B5C1BE /* audio.txt */,
 				844B06C118A29060008660C6 /* hdmi_audio.txt */,
