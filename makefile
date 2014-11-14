@@ -1,10 +1,12 @@
 # makefile
 
 #
-# Patches/Installs/Builds DSDT patches for Haswell Envy 15
+# Patches/Installs/Builds DSDT patches for Lenovo u430
 #
 # Created by RehabMan 
 #
+
+# Note: SSDT6/IAOE has disassapeared in the new BIOS 7ccn35ww
 
 GFXSSDT=ssdt4
 EFIDIR=/Volumes/EFI
@@ -15,7 +17,8 @@ EXTRADIR=/Extra
 BUILDDIR=./build
 PATCHED=./patched
 UNPATCHED=./unpatched
-PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/ssdt6.aml
+#PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/ssdt6.aml
+PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml
 
 IASLFLAGS=-vr -w1
 IASL=iasl
@@ -29,8 +32,8 @@ $(BUILDDIR)/dsdt.aml: $(PATCHED)/dsdt.dsl
 $(BUILDDIR)/$(GFXSSDT).aml: $(PATCHED)/$(GFXSSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 	
-$(BUILDDIR)/ssdt6.aml: $(PATCHED)/ssdt6.dsl
-	$(IASL) $(IASLFLAGS) -p $@ $<
+#$(BUILDDIR)/ssdt6.aml: $(PATCHED)/ssdt6.dsl
+#	$(IASL) $(IASLFLAGS) -p $@ $<
 
 .PHONY: clean
 clean:
@@ -42,7 +45,7 @@ install_extra: $(PRODUCTS)
 	-rm $(EXTRADIR)/ssdt-*.aml
 	cp $(BUILDDIR)/dsdt.aml $(EXTRADIR)/dsdt.aml
 	cp $(BUILDDIR)/$(GFXSSDT).aml $(EXTRADIR)/ssdt-1.aml
-	cp $(BUILDDIR)/ssdt6.aml $(EXTRADIR)/ssdt-2.aml
+	#cp $(BUILDDIR)/ssdt6.aml $(EXTRADIR)/ssdt-2.aml
 	#cp $(BUILDDIR)/ssdt5.aml $(EXTRADIR)/ssdt-3.aml
 
 
@@ -52,7 +55,7 @@ install: $(PRODUCTS)
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint /Volumes/EFI $(EFIVOL); fi
 	cp $(BUILDDIR)/dsdt.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
 	cp $(BUILDDIR)/$(GFXSSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-4.aml
-	cp $(BUILDDIR)/ssdt6.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-6.aml
+	#cp $(BUILDDIR)/ssdt6.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-6.aml
 	diskutil unmount $(EFIDIR)
 	if [ -d "/Volumes/EFI" ]; then rmdir /Volumes/EFI; fi
 
@@ -60,11 +63,13 @@ install: $(PRODUCTS)
 # Patch with 'patchmatic'
 .PHONY: patch
 patch:
-	cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(UNPATCHED)/ssdt6.dsl $(PATCHED)
+	#cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(UNPATCHED)/ssdt6.dsl $(PATCHED)
+	cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(PATCHED)
 	patchmatic $(PATCHED)/dsdt.dsl patches/syntax_dsdt.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/dsdt.dsl patches/cleanup.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/dsdt.dsl patches/remove_wmi.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/$(GFXSSDT).dsl patches/cleanup.txt $(PATCHED)/$(GFXSSDT).dsl
+	patchmatic $(PATCHED)/dsdt.dsl patches/iaoe.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/dsdt.dsl patches/keyboard.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/dsdt.dsl patches/audio.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/dsdt.dsl patches/sensors.txt $(PATCHED)/dsdt.dsl
@@ -86,7 +91,7 @@ patch:
 	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_PNOT.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_IMEI.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/battery/battery_Lenovo-Ux10-Z580.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/ssdt6.dsl $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(PATCHED)/ssdt6.dsl
+	#patchmatic $(PATCHED)/ssdt6.dsl $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(PATCHED)/ssdt6.dsl
 	#patchmatic $(PATCHED)/dsdt.dsl patches/ar92xx_wifi.txt $(PATCHED)/dsdt.dsl
 
 
@@ -103,4 +108,5 @@ patch_debug:
 # ssdt3 - PM related
 # ssdt4 - graphics
 # ssdt5 - not sure
+# ssdt6 - was IAOE in early versions, now gone...
 # ssdt6, ssdt7, ssdt8 - loaded dynamically (PM related)

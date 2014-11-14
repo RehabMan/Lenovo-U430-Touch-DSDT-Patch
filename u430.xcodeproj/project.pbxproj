@@ -35,6 +35,7 @@
 		8455352818E65265001ADBFD /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		845B736719509CF50094F3E3 /* ar92xx_wifi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ar92xx_wifi.txt; path = patches/ar92xx_wifi.txt; sourceTree = "<group>"; };
 		845CCF5C19A2B0F000C6B5C0 /* ahhcd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ahhcd.plist; path = Resources/ahhcd.plist; sourceTree = "<group>"; };
+		84637D8F1A15A58A00D08D05 /* iaoe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = iaoe.txt; path = patches/iaoe.txt; sourceTree = "<group>"; };
 		84678CB8189F965300B5C1BE /* audio.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = audio.txt; path = patches/audio.txt; sourceTree = "<group>"; };
 		8499623A1857F04D009A226D /* syntax_dsdt.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = syntax_dsdt.txt; path = patches/syntax_dsdt.txt; sourceTree = "<group>"; };
 		84ADB53718860F9600097B3C /* remove_wmi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = remove_wmi.txt; path = patches/remove_wmi.txt; sourceTree = "<group>"; };
@@ -65,6 +66,7 @@
 			children = (
 				8499623A1857F04D009A226D /* syntax_dsdt.txt */,
 				84478746189E296B001EC85A /* cleanup.txt */,
+				84637D8F1A15A58A00D08D05 /* iaoe.txt */,
 				84678CB8189F965300B5C1BE /* audio.txt */,
 				844B06C118A29060008660C6 /* hdmi_audio.txt */,
 				84DC2FD81A148531003845F1 /* graphics.txt */,
