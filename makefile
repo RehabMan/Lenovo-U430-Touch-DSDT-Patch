@@ -6,9 +6,24 @@
 # Created by RehabMan 
 #
 
+# PATCHMATIC=1 will assume files in native_patchmatic come from 'patchmatic -extract'
+# Use PATCHMATIC=0 if using files from Linux at ./native_linux
+ifneq "$(wildcard native_patchmatic)" ""
+PATCHMATIC=1
+else
+PATCHMATIC=0
+endif
+
 # Note: SSDT6/IAOE has disassapeared in the new BIOS 7ccn35ww
 
+ifeq "$(PATCHMATIC)" "1"
+GFXSSDT=ssdt-3
+IAOESSDT=ssdt-5
+else
 GFXSSDT=ssdt4
+IAOESSDT=ssdt6
+endif
+
 EFIDIR=/Volumes/EFI
 EFIVOL=/dev/disk0s1
 LAPTOPGIT=../laptop.git
@@ -17,7 +32,7 @@ EXTRADIR=/Extra
 BUILDDIR=./build
 PATCHED=./patched
 UNPATCHED=./unpatched
-#PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/ssdt6.aml
+#PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/$(IAOESSDT).aml
 PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml
 
 IASLFLAGS=-vr -w1
@@ -32,7 +47,7 @@ $(BUILDDIR)/dsdt.aml: $(PATCHED)/dsdt.dsl
 $(BUILDDIR)/$(GFXSSDT).aml: $(PATCHED)/$(GFXSSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 	
-#$(BUILDDIR)/ssdt6.aml: $(PATCHED)/ssdt6.dsl
+#$(BUILDDIR)/$(IAOESSDT).aml: $(PATCHED)/$(IAOESSDT).dsl
 #	$(IASL) $(IASLFLAGS) -p $@ $<
 
 .PHONY: clean
@@ -45,8 +60,7 @@ install_extra: $(PRODUCTS)
 	-rm $(EXTRADIR)/ssdt-*.aml
 	cp $(BUILDDIR)/dsdt.aml $(EXTRADIR)/dsdt.aml
 	cp $(BUILDDIR)/$(GFXSSDT).aml $(EXTRADIR)/ssdt-1.aml
-	#cp $(BUILDDIR)/ssdt6.aml $(EXTRADIR)/ssdt-2.aml
-	#cp $(BUILDDIR)/ssdt5.aml $(EXTRADIR)/ssdt-3.aml
+	#cp $(BUILDDIR)/$(IAOESSDT).aml $(EXTRADIR)/ssdt-2.aml
 
 
 # Clover Install
@@ -55,7 +69,7 @@ install: $(PRODUCTS)
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint /Volumes/EFI $(EFIVOL); fi
 	cp $(BUILDDIR)/dsdt.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
 	cp $(BUILDDIR)/$(GFXSSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-4.aml
-	#cp $(BUILDDIR)/ssdt6.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-6.aml
+	#cp $(BUILDDIR)/$(IAOESSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-6.aml
 	diskutil unmount $(EFIDIR)
 	if [ -d "/Volumes/EFI" ]; then rmdir /Volumes/EFI; fi
 
@@ -63,7 +77,7 @@ install: $(PRODUCTS)
 # Patch with 'patchmatic'
 .PHONY: patch
 patch:
-	#cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(UNPATCHED)/ssdt6.dsl $(PATCHED)
+	#cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(UNPATCHED)/$(IAOESSDT).dsl $(PATCHED)
 	cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(PATCHED)
 	patchmatic $(PATCHED)/dsdt.dsl patches/syntax_dsdt.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/dsdt.dsl patches/cleanup.txt $(PATCHED)/dsdt.dsl
@@ -91,7 +105,7 @@ patch:
 	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_PNOT.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_IMEI.txt $(PATCHED)/dsdt.dsl
 	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/battery/battery_Lenovo-Ux10-Z580.txt $(PATCHED)/dsdt.dsl
-	#patchmatic $(PATCHED)/ssdt6.dsl $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(PATCHED)/ssdt6.dsl
+	#patchmatic $(PATCHED)/$(IAOESSDT).dsl $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(PATCHED)/$(IAOESSDT).dsl
 	#patchmatic $(PATCHED)/dsdt.dsl patches/ar92xx_wifi.txt $(PATCHED)/dsdt.dsl
 
 
@@ -102,7 +116,7 @@ patch_debug:
 	patchmatic $(PATCHED)/dsdt.dsl patches/debug.txt $(PATCHED)/dsdt.dsl
 	#patchmatic $(PATCHED)/dsdt.dsl patches/debug1.txt $(PATCHED)/dsdt.dsl
 
-# native correlations
+# native correlations (linux)
 # ssdt1 - PTID
 # ssdt2 - PM related
 # ssdt3 - PM related

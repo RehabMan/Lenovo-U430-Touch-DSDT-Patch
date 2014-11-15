@@ -51,7 +51,7 @@ My files break down as follows (NN = not necessary):
 
 You will need to inspect your files, especially if your laptop is of a different configuration than mine.  For example, you may have two graphics SSDTs if your laptop has the nvidia chip.  Mine does not, so ssdt4 contains the graphics code for Intel HD4600.  If you have nvidia, you will probably want to patch the SSDT that contains the code for it, to disable it since it is useless in OS X.
 
-After gathering these files from Linux, place them in the linux_native subdirectory of this project.
+After gathering these files from Linux, place them in the native_linux subdirectory of this project.
 
 Now you are ready to disassemble the files we need to patch.  The current code disassembles them all, even though we are only patching two of them (you may be patching more).  To disassemble them, type (in Terminal)
 

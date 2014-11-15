@@ -18,13 +18,19 @@ if [ -e tmp/* ]; then
     rm ./tmp/*
 fi
 
-cp ./linux_native/DSDT ./linux_native/SSDT* ./linux_native/dynamic/SSDT* ./tmp
-chmod +w ./tmp/*
+if [ -d native_patchmatic ]; then
+    cp ./native_patchmatic/*.aml ./tmp
+else
+    cp ./native_linux/DSDT ./native_linux/SSDT* ./native_linux/dynamic/SSDT* ./tmp
+    chmod +w ./tmp/*
+fi
+
 cd ./tmp
 list=`echo *`
 
+rm ../unpatched/*.dsl
 for aml in $list; do
-    iasl -p ../unpatched/$aml.dsl -e ${list//$aml/} -d -dl $aml
+    iasl -p ../unpatched/${aml//.aml/}.dsl -e ${list//$aml/} -d -dl $aml
 done
 
 cd ..
