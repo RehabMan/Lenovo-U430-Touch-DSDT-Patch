@@ -29,7 +29,7 @@ I like to use git to setup the directory structure.  The two projects must be se
     mkdir ~/Projects
     cd ~/Projects
     git clone https://github.com/RehabMan/Laptop-DSDT-Patch laptop.git
-    git clone https://github.com/RehabMan/HP-Lenovo-U430-Touch-DSDT-Patch u430.git
+    git clone https://github.com/RehabMan/Lenovo-U430-Touch-DSDT-Patch u430.git
 
 Now you have the following directory structure:
 
