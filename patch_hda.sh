@@ -19,13 +19,13 @@ function createAppleHDAInjector()
     ln -s /System/Library/Extensions/AppleHDA.kext/Contents/MacOS/AppleHDA AppleHDA_$1.kext/Contents/MacOS/AppleHDA
     cp ./Resources/layout/*.zlib AppleHDA_$1.kext/Contents/Resources/
     plist=AppleHDA_$1.kext/Contents/Info.plist
-    replace=`/usr/libexec/plistbuddy -c "Print :NSHumanReadableCopyright" $plist | perl -pi -e 's/(\d*\.\d*\.\d*)/900\1/g'`
+    replace=`/usr/libexec/plistbuddy -c "Print :NSHumanReadableCopyright" $plist | perl -p -e 's/(\d*\.\d*(\.\d*)?)/9\1/'`
     /usr/libexec/plistbuddy -c "Set :NSHumanReadableCopyright '$replace'" $plist
-    replace=`/usr/libexec/plistbuddy -c "Print :CFBundleGetInfoString" $plist | perl -pi -e 's/(\d*\.\d*\.\d*)/900\1/g'`
+    replace=`/usr/libexec/plistbuddy -c "Print :CFBundleGetInfoString" $plist | perl -p -e 's/(\d*\.\d*(\.\d*)?)/9\1/'`
     /usr/libexec/plistbuddy -c "Set :CFBundleGetInfoString '$replace'" $plist
-    replace=`/usr/libexec/plistbuddy -c "Print :CFBundleVersion" $plist | perl -pi -e 's/(\d*\.\d*\.\d*)/900\1/g'`
+    replace=`/usr/libexec/plistbuddy -c "Print :CFBundleVersion" $plist | perl -p -e 's/(\d*\.\d*(\.\d*)?)/9\1/'`
     /usr/libexec/plistbuddy -c "Set :CFBundleVersion '$replace'" $plist
-    replace=`/usr/libexec/plistbuddy -c "Print :CFBundleShortVersionString" $plist | perl -pi -e 's/(\d*\.\d*\.\d*)/900\1/g'`
+    replace=`/usr/libexec/plistbuddy -c "Print :CFBundleShortVersionString" $plist | perl -p -e 's/(\d*\.\d*(\.\d*)?)/9\1/'`
     /usr/libexec/plistbuddy -c "Set :CFBundleShortVersionString '$replace'" $plist
     /usr/libexec/plistbuddy -c "Add ':HardwareConfigDriver_Temp' dict" $plist
     /usr/libexec/plistbuddy -c "Merge $unpatched/AppleHDA.kext/Contents/PlugIns/AppleHDAHardwareConfigDriver.kext/Contents/Info.plist ':HardwareConfigDriver_Temp'" $plist
