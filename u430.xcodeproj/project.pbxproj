@@ -11,6 +11,7 @@
 		840152F0182AE46D00D58B0A /* disassemble.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = disassemble.sh; sourceTree = "<group>"; };
 		8406FCD6188627B8006D8DB7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		840EC0C518A1F03400A8D90D /* ssdt6.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssdt6.dsl; sourceTree = "<group>"; };
+		842CFE381A18307E00FE0519 /* ssdt-3.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ssdt-3.dsl"; sourceTree = "<group>"; };
 		8434661519392FEF002D2B01 /* usb.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = usb.txt; path = patches/usb.txt; sourceTree = "<group>"; };
 		843B1BA718B9CC8400852306 /* sensors.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = sensors.txt; path = patches/sensors.txt; sourceTree = "<group>"; };
 		8444F2C218B9DDD500D59FF1 /* DSDT.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DSDT.dsl; sourceTree = "<group>"; };
@@ -42,6 +43,9 @@
 		84ADCC25187CB0A100720ACA /* keyboard.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = keyboard.txt; path = patches/keyboard.txt; sourceTree = "<group>"; };
 		84BD236218B97D73000FEB2B /* debug.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debug.txt; path = patches/debug.txt; sourceTree = "<group>"; };
 		84DC2FD81A148531003845F1 /* graphics.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = graphics.txt; path = patches/graphics.txt; sourceTree = "<group>"; };
+		84FCD8221A1ADB98006940E4 /* nvidia_off.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = nvidia_off.txt; path = patches/nvidia_off.txt; sourceTree = "<group>"; };
+		84FCD8231A1B21D6006940E4 /* SSDT10.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SSDT10.dsl; sourceTree = "<group>"; };
+		84FCD8241A1B21E4006940E4 /* ssdt5.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssdt5.dsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -76,6 +80,7 @@
 				84BD236218B97D73000FEB2B /* debug.txt */,
 				8434661519392FEF002D2B01 /* usb.txt */,
 				845B736719509CF50094F3E3 /* ar92xx_wifi.txt */,
+				84FCD8221A1ADB98006940E4 /* nvidia_off.txt */,
 				843A4C481884C49D009AF7FE /* not used */,
 			);
 			name = patches;
@@ -92,8 +97,8 @@
 		8444F2C118B9DDD500D59FF1 /* unpatched */ = {
 			isa = PBXGroup;
 			children = (
-				8444F2C218B9DDD500D59FF1 /* DSDT.dsl */,
 				8444F2C318B9DDD500D59FF1 /* readme.txt */,
+				8444F2C218B9DDD500D59FF1 /* DSDT.dsl */,
 				8444F2C418B9DDD500D59FF1 /* SSDT1.dsl */,
 				8444F2C518B9DDD500D59FF1 /* SSDT2.dsl */,
 				8444F2C618B9DDD500D59FF1 /* SSDT3.dsl */,
@@ -103,6 +108,7 @@
 				8444F2CA18B9DDD500D59FF1 /* SSDT7.dsl */,
 				8444F2CB18B9DDD500D59FF1 /* SSDT8.dsl */,
 				8444F2CC18B9DDD500D59FF1 /* SSDT9.dsl */,
+				84FCD8231A1B21D6006940E4 /* SSDT10.dsl */,
 			);
 			path = unpatched;
 			sourceTree = "<group>";
@@ -110,8 +116,10 @@
 		84517BE4186FC7A4003ACE44 /* patched */ = {
 			isa = PBXGroup;
 			children = (
+				84FCD8241A1B21E4006940E4 /* ssdt5.dsl */,
 				84517BE6186FC7A4003ACE44 /* readme.txt */,
 				84517BE5186FC7A4003ACE44 /* dsdt.dsl */,
+				842CFE381A18307E00FE0519 /* ssdt-3.dsl */,
 				84517BE7186FC7A4003ACE44 /* ssdt4.dsl */,
 				840EC0C518A1F03400A8D90D /* ssdt6.dsl */,
 			);

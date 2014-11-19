@@ -6,23 +6,7 @@
 # Created by RehabMan 
 #
 
-# PATCHMATIC=1 will assume files in native_patchmatic come from 'patchmatic -extract'
-# Use PATCHMATIC=0 if using files from Linux at ./native_linux
-ifneq "$(wildcard native_patchmatic)" ""
-PATCHMATIC=1
-else
-PATCHMATIC=0
-endif
-
 # Note: SSDT6/IAOE has disassapeared in the new BIOS 7ccn35ww
-
-ifeq "$(PATCHMATIC)" "1"
-GFXSSDT=ssdt-3
-IAOESSDT=ssdt-5
-else
-GFXSSDT=ssdt4
-IAOESSDT=ssdt6
-endif
 
 EFIDIR=/Volumes/EFI
 EFIVOL=/dev/disk0s1
@@ -32,91 +16,144 @@ EXTRADIR=/Extra
 BUILDDIR=./build
 PATCHED=./patched
 UNPATCHED=./unpatched
-#PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/$(IAOESSDT).aml
-PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml
 
-IASLFLAGS=-vr -w1
+# DSDT is easy to find...
+DSDT=DSDT
+
+# Name(_ADR,0x0002000) identifies IGPU SSDT
+IGPU=$(shell grep -l Name.*_ADR.*0x00020000 $(UNPATCHED)/SSDT*.dsl)
+IGPU:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(IGPU)))
+
+# OperationRegion SGOP is defined in optimus SSDT
+PEGP=$(shell grep -l OperationRegion.*SGOP $(UNPATCHED)/SSDT*.dsl)
+PEGP:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(PEGP)))
+
+# Device(IAOE) identifies SSDT with IAOE
+IAOE=$(shell grep -l Device.*IAOE $(UNPATCHED)/SSDT*.dsl)
+IAOE:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(IAOE)))
+
+# Determine build products
+PRODUCTS=$(BUILDDIR)/$(DSDT).aml $(BUILDDIR)/$(IGPU).aml
+ifneq "$(PEGP)" ""
+	PRODUCTS:=$(PRODUCTS) $(BUILDDIR)/$(PEGP).aml
+endif
+ifneq "$(IAOE)" ""
+	PRODUCTS:=$(PRODUCTS) $(BUILDDIR)/$(IAOE).aml
+endif
+
+IASLFLAGS=-ve
 IASL=iasl
 
 .PHONY: all
 all: $(PRODUCTS)
 
-$(BUILDDIR)/dsdt.aml: $(PATCHED)/dsdt.dsl
+
+$(BUILDDIR)/DSDT.aml: $(PATCHED)/$(DSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 	
-$(BUILDDIR)/$(GFXSSDT).aml: $(PATCHED)/$(GFXSSDT).dsl
+$(BUILDDIR)/$(IGPU).aml: $(PATCHED)/$(IGPU).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
-	
-#$(BUILDDIR)/$(IAOESSDT).aml: $(PATCHED)/$(IAOESSDT).dsl
-#	$(IASL) $(IASLFLAGS) -p $@ $<
+
+ifneq "$(PEGP)" ""
+$(BUILDDIR)/$(PEGP).aml: $(PATCHED)/$(PEGP).dsl
+	$(IASL) $(IASLFLAGS) -p $@ $<
+endif
+
+ifneq "$(IAOE)" ""
+$(BUILDDIR)/$(IAOE).aml: $(PATCHED)/$(IAOE).dsl
+	$(IASL) $(IASLFLAGS) -p $@ $<
+endif
+
 
 .PHONY: clean
 clean:
-	rm $(PRODUCTS)
+	rm -f $(PATCHED)/*.dsl
+	rm -f $(BUILD)/*.dsl $(BUILD)/*.aml
 
-# Chameleon Install
-.PHONY: install_extra
-install_extra: $(PRODUCTS)
-	-rm $(EXTRADIR)/ssdt-*.aml
-	cp $(BUILDDIR)/dsdt.aml $(EXTRADIR)/dsdt.aml
-	cp $(BUILDDIR)/$(GFXSSDT).aml $(EXTRADIR)/ssdt-1.aml
-	#cp $(BUILDDIR)/$(IAOESSDT).aml $(EXTRADIR)/ssdt-2.aml
+.PHONY: cleanall
+cleanall:
+	make clean
+	rm -f $(UNPATCHED)/*.dsl
+	rm -f native_patchmatic/*.aml
 
 
 # Clover Install
 .PHONY: install
 install: $(PRODUCTS)
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint /Volumes/EFI $(EFIVOL); fi
-	cp $(BUILDDIR)/dsdt.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
-	cp $(BUILDDIR)/$(GFXSSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-4.aml
-	#cp $(BUILDDIR)/$(IAOESSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-6.aml
+	cp $(BUILDDIR)/$(DSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
+	cp $(BUILDDIR)/$(IGPU).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-4.aml
+ifneq "$(PEGP)" ""
+	cp $(BUILDDIR)/$(PEGP).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-5.aml
+endif
+ifneq "$(IAOE)" ""
+	cp $(BUILDDIR)/$(IAOE).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-7.aml
+endif
 	diskutil unmount $(EFIDIR)
 	if [ -d "/Volumes/EFI" ]; then rmdir /Volumes/EFI; fi
 
 
 # Patch with 'patchmatic'
-.PHONY: patch
-patch:
-	#cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(UNPATCHED)/$(IAOESSDT).dsl $(PATCHED)
-	cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(PATCHED)
-	patchmatic $(PATCHED)/dsdt.dsl patches/syntax_dsdt.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl patches/cleanup.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl patches/remove_wmi.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/$(GFXSSDT).dsl patches/cleanup.txt $(PATCHED)/$(GFXSSDT).dsl
-	patchmatic $(PATCHED)/dsdt.dsl patches/iaoe.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl patches/keyboard.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl patches/audio.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl patches/sensors.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_IRQ.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/$(GFXSSDT).dsl $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(PATCHED)/$(GFXSSDT).dsl
-	patchmatic $(PATCHED)/$(GFXSSDT).dsl $(LAPTOPGIT)/graphics/graphics_PNLF_haswell.txt $(PATCHED)/$(GFXSSDT).dsl
-	patchmatic $(PATCHED)/$(GFXSSDT).dsl patches/hdmi_audio.txt $(PATCHED)/$(GFXSSDT).dsl
-	patchmatic $(PATCHED)/$(GFXSSDT).dsl patches/graphics.txt $(PATCHED)/$(GFXSSDT).dsl
-	#patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/usb/usb_7-series.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl patches/usb.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_WAK2.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_OSYS.txt $(PATCHED)/dsdt.dsl
-	#patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_MCHC.txt $(PATCHED)/dsdt.dsl
-	#patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_HPET.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_RTC.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_SMBUS.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_Mutex.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_PNOT.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_IMEI.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/battery/battery_Lenovo-Ux10-Z580.txt $(PATCHED)/dsdt.dsl
-	#patchmatic $(PATCHED)/$(IAOESSDT).dsl $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(PATCHED)/$(IAOESSDT).dsl
-	#patchmatic $(PATCHED)/dsdt.dsl patches/ar92xx_wifi.txt $(PATCHED)/dsdt.dsl
+
+$(PATCHED)/$(DSDT).dsl: $(UNPATCHED)/$(DSDT).dsl
+	cp $(UNPATCHED)/$(DSDT).dsl $(PATCHED)
+	patchmatic $@ patches/syntax_dsdt.txt
+	patchmatic $@ patches/cleanup.txt
+	patchmatic $@ patches/remove_wmi.txt
+	patchmatic $@ patches/iaoe.txt
+	patchmatic $@ patches/keyboard.txt
+	patchmatic $@ patches/audio.txt
+	patchmatic $@ patches/sensors.txt
+	patchmatic $@ $(LAPTOPGIT)/system/system_IRQ.txt
+	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
+	#patchmatic $@ $(LAPTOPGIT)/usb/usb_7-series.txt
+	patchmatic $@ patches/usb.txt
+	patchmatic $@ $(LAPTOPGIT)/system/system_WAK2.txt
+	patchmatic $@ $(LAPTOPGIT)/system/system_OSYS.txt
+	#patchmatic $@ $(LAPTOPGIT)/system/system_MCHC.txt
+	#patchmatic $@ $(LAPTOPGIT)/system/system_HPET.txt
+	patchmatic $@ $(LAPTOPGIT)/system/system_RTC.txt
+	patchmatic $@ $(LAPTOPGIT)/system/system_SMBUS.txt
+	patchmatic $@ $(LAPTOPGIT)/system/system_Mutex.txt
+	patchmatic $@ $(LAPTOPGIT)/system/system_PNOT.txt
+	patchmatic $@ $(LAPTOPGIT)/system/system_IMEI.txt
+	patchmatic $@ $(LAPTOPGIT)/battery/battery_Lenovo-Ux10-Z580.txt
+	#patchmatic $@ patches/ar92xx_wifi.txt
+ifeq "$(DEBUG)" "1"
+	patchmatic $@ $(DEBUGGIT)/debug.txt
+	#patchmatic $@ patches/debug.txt
+	#patchmatic $@ patches/debug1.txt
+endif
+
+$(PATCHED)/$(IGPU).dsl: $(UNPATCHED)/$(DSDT).dsl
+	cp $(UNPATCHED)/$(IGPU).dsl $(PATCHED)
+	patchmatic $@ patches/cleanup.txt
+	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
+	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_PNLF_haswell.txt
+	patchmatic $@ patches/hdmi_audio.txt
+	patchmatic $@ patches/graphics.txt
+ifeq "$(DEBUG)" "1"
+	patchmatic $@ $(DEBUGGIT)/debug_extern.txt
+endif
+
+ifneq "$(IAOE)" ""
+$(PATCHED)/$(IAOE).dsl: $(UNPATCHED)/$(IAOE).dsl
+	cp $(UNPATCHED)/$(IAOE).dsl $(PATCHED)
+	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
+endif
+
+ifneq "$(PEGP)" ""
+$(PATCHED)/$(PEGP).dsl: $(UNPATCHED)/$(PEGP).dsl
+	cp $(UNPATCHED)/$(PEGP).dsl $(PATCHED)
+	patchmatic $@ patches/nvidia_off.txt
+	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
+ifeq "$(DEBUG)" "1"
+	patchmatic $@ $(DEBUGGIT)/debug_extern.txt
+endif
+endif
 
 
-.PHONY: patch_debug
-patch_debug:
-	make patch
-	patchmatic $(PATCHED)/dsdt.dsl $(DEBUGGIT)/debug.txt $(PATCHED)/dsdt.dsl
-	patchmatic $(PATCHED)/dsdt.dsl patches/debug.txt $(PATCHED)/dsdt.dsl
-	#patchmatic $(PATCHED)/dsdt.dsl patches/debug1.txt $(PATCHED)/dsdt.dsl
-
-# native correlations (linux)
+# native correlations (linux, non-optimus)
 # ssdt1 - PTID
 # ssdt2 - PM related
 # ssdt3 - PM related
