@@ -68,7 +68,7 @@ endif
 .PHONY: clean
 clean:
 	rm -f $(PATCHED)/*.dsl
-	rm -f $(BUILD)/*.dsl $(BUILD)/*.aml
+	rm -f $(BUILDDIR)/*.dsl $(BUILDDIR)/*.aml
 
 .PHONY: cleanall
 cleanall:
