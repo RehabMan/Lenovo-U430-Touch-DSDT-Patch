@@ -4,6 +4,11 @@
 <dict>
 	<key>ACPI</key>
 	<dict>
+		<key>disabled_DropTables</key>
+		<dict>
+			<key>Signature</key>
+			<string>DMAR</string>
+		</dict>
 		<key>DSDT</key>
 		<dict>
 			<key>Fixes</key>
@@ -16,6 +21,14 @@
 		</dict>
 		<key>SSDT</key>
 		<dict>
+			<key>EnableC2</key>
+			<true/>
+			<key>EnableC4</key>
+			<true/>
+			<key>EnableC6</key>
+			<true/>
+			<key>EnalbeC7</key>
+			<true/>
 			<key>DropOem</key>
 			<true/>
 			<key>Generate</key>
@@ -32,7 +45,7 @@
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>kext-dev-mode=1 dart=0</string>
+		<string>kext-dev-mode=1 nv_disable=1</string>
 		<key>Legacy</key>
 		<string>PBR</string>
 		<key>Log</key>
@@ -48,24 +61,20 @@
 	</dict>
 	<key>CPU</key>
 	<dict>
-		<key>C2</key>
-		<true/>
-		<key>C4</key>
-		<true/>
-		<key>C6</key>
-		<true/>
+		<key>disabled_FrequencyMHz</key>
+		<integer>1800</integer>
 	</dict>
 	<key>Devices</key>
 	<dict>
 		<key>Audio</key>
 		<dict>
 			<key>Inject</key>
-			<string>86</string>
+			<integer>0</integer>
 		</dict>
 		<key>USB</key>
 		<dict>
 			<key>Inject</key>
-			<true/>
+			<false/>
 			<key>FixOwnership</key>
 			<false/>
 			<key>AddClockID</key>
@@ -151,13 +160,23 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>AR9280 rebranded as AR946x #2</string>
+				<string>AR9280 rebranded as AR946x #2 (Yosemite)</string>
 				<key>Name</key>
 				<string>disabled_AirPortAtheros40</string>
 				<key>Find</key>
 				<data>QYP6MA+HqQAAAA==</data>
 				<key>Replace</key>
 				<data>QboqAAAAkJCQkA==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>AR9280 rebranded as AR946x #2 (Mavericks)</string>
+				<key>Name</key>
+				<string>disabled_AirPortAtheros40</string>
+				<key>Find</key>
+				<data>ZoP4MA+HpwAAAA==</data>
+				<key>Replace</key>
+				<data>ZrgqAJCQkJCQkA==</data>
 			</dict>
 			<dict>
 				<key>Comment</key>

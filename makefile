@@ -34,11 +34,14 @@ IAOE:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(IAOE)))
 
 # Determine build products
 PRODUCTS=$(BUILDDIR)/$(DSDT).aml $(BUILDDIR)/$(IGPU).aml
+ALL_PATCHED=$(PATCHED)/$(DSDT).dsl $(PATCHED)/$(IGPU).dsl
 ifneq "$(PEGP)" ""
 	PRODUCTS:=$(PRODUCTS) $(BUILDDIR)/$(PEGP).aml
+	ALL_PATCHED:=$(ALL_PATCHED) $(PATCHED)/$(PEGP).dsl
 endif
 ifneq "$(IAOE)" ""
 	PRODUCTS:=$(PRODUCTS) $(BUILDDIR)/$(IAOE).aml
+	ALL_PATCHED:=$(ALL_PATCHED) $(PATCHED)/$(IAOE).dsl
 endif
 
 IASLFLAGS=-ve
@@ -74,6 +77,10 @@ clean:
 cleanall:
 	make clean
 	rm -f $(UNPATCHED)/*.dsl
+
+.PHONY: cleanallex
+cleanallex:
+	make cleanall
 	rm -f native_patchmatic/*.aml
 
 
@@ -95,7 +102,10 @@ endif
 
 # Patch with 'patchmatic'
 
-$(PATCHED)/$(DSDT).dsl: $(UNPATCHED)/$(DSDT).dsl
+.PHONY: patch
+patch: $(ALL_PATCHED)
+
+$(PATCHED)/$(DSDT).dsl: $(UNPATCHED)/$(DSDT).dsl patches/syntax_dsdt.txt patches/cleanup.txt patches/remove_wmi.txt patches/iaoe.txt patches/keyboard.txt patches/audio.txt patches/sensors.txt $(LAPTOPGIT)/system/system_IRQ.txt $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(LAPTOPGIT)/usb/usb_7-series.txt patches/usb.txt $(LAPTOPGIT)/system/system_WAK2.txt $(LAPTOPGIT)/system/system_OSYS.txt $(LAPTOPGIT)/system/system_MCHC.txt $(LAPTOPGIT)/system/system_HPET.txt $(LAPTOPGIT)/system/system_RTC.txt $(LAPTOPGIT)/system/system_SMBUS.txt $(LAPTOPGIT)/system/system_Mutex.txt $(LAPTOPGIT)/system/system_PNOT.txt $(LAPTOPGIT)/system/system_IMEI.txt $(LAPTOPGIT)/battery/battery_Lenovo-Ux10-Z580.txt patches/ar92xx_wifi.txt
 	cp $(UNPATCHED)/$(DSDT).dsl $(PATCHED)
 	patchmatic $@ patches/syntax_dsdt.txt
 	patchmatic $@ patches/cleanup.txt
@@ -125,7 +135,7 @@ ifeq "$(DEBUG)" "1"
 	#patchmatic $@ patches/debug1.txt
 endif
 
-$(PATCHED)/$(IGPU).dsl: $(UNPATCHED)/$(DSDT).dsl
+$(PATCHED)/$(IGPU).dsl: $(UNPATCHED)/$(IGPU).dsl patches/cleanup.txt $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(LAPTOPGIT)/graphics/graphics_PNLF_haswell.txt patches/hdmi_audio.txt patches/graphics.txt
 	cp $(UNPATCHED)/$(IGPU).dsl $(PATCHED)
 	patchmatic $@ patches/cleanup.txt
 	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
@@ -137,13 +147,13 @@ ifeq "$(DEBUG)" "1"
 endif
 
 ifneq "$(IAOE)" ""
-$(PATCHED)/$(IAOE).dsl: $(UNPATCHED)/$(IAOE).dsl
+$(PATCHED)/$(IAOE).dsl: $(UNPATCHED)/$(IAOE).dsl $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
 	cp $(UNPATCHED)/$(IAOE).dsl $(PATCHED)
 	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
 endif
 
 ifneq "$(PEGP)" ""
-$(PATCHED)/$(PEGP).dsl: $(UNPATCHED)/$(PEGP).dsl
+$(PATCHED)/$(PEGP).dsl: $(UNPATCHED)/$(PEGP).dsl patches/nvidia_off.txt $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
 	cp $(UNPATCHED)/$(PEGP).dsl $(PATCHED)
 	patchmatic $@ patches/nvidia_off.txt
 	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
