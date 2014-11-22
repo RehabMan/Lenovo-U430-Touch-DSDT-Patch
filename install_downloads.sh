@@ -1,48 +1,86 @@
 #set -x
 
+SUDO=sudo
+#SUDO=echo
+
+function check_directory
+{
+    for x in $1; do
+        if [ -e "$x" ]; then
+            return 1
+        else
+            return 0
+        fi
+    done
+}
+
+function install_kext
+{
+    if [ "$1" != "" ]; then
+        echo installing $1 to /System/Library/Extensions
+        $SUDO rm -Rf /System/Library/Extensions/`basename $1`
+        $SUDO cp -Rf $1 /System/Library/Extensions
+    fi
+}
+
+function install_app
+{
+    if [ "$1" != "" ]; then
+        echo installing $1 to /Applications
+        $SUDO rm -Rf /Applications/`basename $1`
+        $SUDO cp -Rf $1 /Applications
+    fi
+}
+
+function install_binary
+{
+    if [ "$1" != "" ]; then
+        echo installing $1 to /usr/bin
+        $SUDO rm -f /usr/bin/`basename $1`
+        $SUDO cp -f $1 /usr/bin
+    fi
+}
+
 function install
 {
     installed=0
     out=${1/.zip/}
     rm -Rf $out/* && unzip -q -d $out $1
-    if [ -d $out/Release/*.kext ]; then
-        echo installing $out/Release/*.kext to /System/Library/Extensions
+    check_directory $out/Release/*.kext
+    if [ $? -ne 0 ]; then
         for kext in $out/Release/*.kext; do
-            sudo rm -Rf /System/Library/Extensions/`basename $kext`
+            install_kext $kext
         done
-        sudo cp -Rf $out/Release/*.kext /System/Library/Extensions
         installed=1
     fi
-    if [ -d $out/*.kext ]; then
-        echo installing $out/*.kext to /System/Library/Extensions
+    check_directory $out/*.kext
+    if [ $? -ne 0 ]; then
         for kext in $out/*.kext; do
-            sudo rm -Rf /System/Library/Extensions/`basename $kext`
+            install_kext $kext
         done
-        sudo cp -Rf $out/*.kext /System/Library/Extensions
         installed=1
     fi
-    if [ -d $out/Release/*.app ]; then
-        echo installing $out/Release/*.app to /Applications
+    check_directory $out/Release/*.app
+    if [ $? -ne 0 ]; then
         for app in $out/Release/*.app; do
-            sudo rm -Rf /Applications/`basename $app`
+            install_app $app
         done
-        sudo cp -Rf $out/Release/*.app /Applications
         installed=1
     fi
-    if [ -d $out/*.app ]; then
-        echo installing $out/*.app to /Applications
+    check_directory $out/*.app
+    if [ $? -ne 0 ]; then
         for app in $out/*.app; do
-            sudo rm -Rf /Applications/`basename $app`
+            install_app $app
         done
-        sudo cp -Rf $out/*.app /Applications
         installed=1
     fi
     if [ $installed -eq 0 ]; then
-        echo installing $out/* to /usr/bin
-        for tool in $out/*; do
-            sudo rm /usr/bin/`basename $tool`
-        done
-        sudo cp -f $out/* /usr/bin
+        check_directory $out/*
+        if [ $? -ne 0 ]; then
+            for tool in $out/*; do
+                install_binary $1
+            done
+        fi
     fi
 }
 
@@ -51,7 +89,8 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # unzip/install kexts
-if [ -d ./downloads/kexts ]; then
+check_directory ./downloads/kexts/*.zip
+if [ $? -ne 0 ]; then
     echo Installing kexts...
     cd ./downloads/kexts
     for kext in *.zip; do
@@ -59,12 +98,21 @@ if [ -d ./downloads/kexts ]; then
     done
     cd ../..
 fi
+
+# install (injector) kexts in the repo itself
+check_directory *.kext
+if [ $? -ne 0 ]; then
+    for kext in *.kext; do
+        install_kext $kext
+    done
+fi
+
 # force cache rebuild with output
-sudo touch /System/Library/Extensions
-sudo kextcache -u /
+$SUDO touch /System/Library/Extensions && $SUDO kextcache -u /
 
 # unzip/install tools
-if [ -d ./downloads/tools ]; then
+check_directory ./downloads/tools/*.zip
+if [ $? -ne 0 ]; then
     echo Installing tools...
     cd ./downloads/tools
     for tool in *.zip; do
@@ -72,3 +120,4 @@ if [ -d ./downloads/tools ]; then
     done
     cd ../..
 fi
+
