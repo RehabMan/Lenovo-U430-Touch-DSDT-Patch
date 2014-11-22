@@ -6,23 +6,43 @@ function install
     out=${1/.zip/}
     rm -Rf $out/* && unzip -q -d $out $1
     if [ -d $out/Release/*.kext ]; then
-        echo sudo cp $out/Release/*.kext /System/Library/Extensions
+        echo installing $out/Release/*.kext to /System/Library/Extensions
+        for kext in $out/Release/*.kext; do
+            sudo rm -Rf /System/Library/Extensions/`basename $kext`
+        done
+        sudo cp -Rf $out/Release/*.kext /System/Library/Extensions
         installed=1
     fi
     if [ -d $out/*.kext ]; then
-        echo sudo cp $out/*.kext /System/Library/Extensions
+        echo installing $out/*.kext to /System/Library/Extensions
+        for kext in $out/*.kext; do
+            sudo rm -Rf /System/Library/Extensions/`basename $kext`
+        done
+        sudo cp -Rf $out/*.kext /System/Library/Extensions
         installed=1
     fi
     if [ -d $out/Release/*.app ]; then
-        echo sudo cp $out/Release/*.app /Applications
+        echo installing $out/Release/*.app to /Applications
+        for app in $out/Release/*.app; do
+            sudo rm -Rf /Applications/`basename $app`
+        done
+        sudo cp -Rf $out/Release/*.app /Applications
         installed=1
     fi
     if [ -d $out/*.app ]; then
-        echo sudo cp $out/*.app /Applications
+        echo installing $out/*.app to /Applications
+        for app in $out/*.app; do
+            sudo rm -Rf /Applications/`basename $app`
+        done
+        sudo cp -Rf $out/*.app /Applications
         installed=1
     fi
     if [ $installed -eq 0 ]; then
-        echo sudo cp $out/* /usr/bin
+        echo installing $out/* to /usr/bin
+        for tool in $out/*; do
+            sudo rm /usr/bin/`basename $tool`
+        done
+        sudo cp -f $out/* /usr/bin
     fi
 }
 
@@ -32,7 +52,7 @@ fi
 
 # unzip/install kexts
 if [ -d ./downloads/kexts ]; then
-    echo kexts...
+    echo Installing kexts...
     cd ./downloads/kexts
     for kext in *.zip; do
         install $kext
@@ -40,12 +60,12 @@ if [ -d ./downloads/kexts ]; then
     cd ../..
 fi
 # force cache rebuild with output
-echo sudo touch /System/Library/Extensions
-echo sudo kextcache -u /
+sudo touch /System/Library/Extensions
+sudo kextcache -u /
 
 # unzip/install tools
 if [ -d ./downloads/tools ]; then
-    echo tools...
+    echo Installing tools...
     cd ./downloads/tools
     for tool in *.zip; do
         install $tool
