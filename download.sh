@@ -8,7 +8,7 @@ function download()
     url=https://bitbucket.org$scrape
     echo $url
     if [ "$3" == "" ]; then
-        curl -O --progress-bar --location "$url"
+        curl --remote-name --progress-bar --location "$url"
     else
         curl --output "$3" --progress-bar --location "$url"
     fi
