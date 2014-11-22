@@ -78,7 +78,7 @@ function install
         check_directory $out/*
         if [ $? -ne 0 ]; then
             for tool in $out/*; do
-                install_binary $1
+                install_binary $tool
             done
         fi
     fi
