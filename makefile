@@ -8,7 +8,7 @@
 
 # Note: SSDT6/IAOE has disassapeared in the new BIOS 7ccn35ww
 
-EFIDIR=$(shell sudo ./mount_efi.sh /)
+EFIDIR:=$(shell sudo ./mount_efi.sh /)
 LAPTOPGIT=../laptop.git
 DEBUGGIT=../debug.git
 BUILDDIR=./build
