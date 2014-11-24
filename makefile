@@ -8,11 +8,9 @@
 
 # Note: SSDT6/IAOE has disassapeared in the new BIOS 7ccn35ww
 
-EFIDIR=/Volumes/EFI
-EFIVOL=/dev/disk0s1
+EFIDIR=$(shell sudo ./mount_efi.sh /)
 LAPTOPGIT=../laptop.git
 DEBUGGIT=../debug.git
-EXTRADIR=/Extra
 BUILDDIR=./build
 PATCHED=./patched
 UNPATCHED=./unpatched
@@ -87,7 +85,6 @@ cleanallex:
 # Clover Install
 .PHONY: install
 install: $(PRODUCTS)
-	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint /Volumes/EFI $(EFIVOL); fi
 	cp $(BUILDDIR)/$(DSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
 	cp $(BUILDDIR)/$(IGPU).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-4.aml
 ifneq "$(PEGP)" ""
@@ -96,8 +93,6 @@ endif
 ifneq "$(IAOE)" ""
 	cp $(BUILDDIR)/$(IAOE).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-7.aml
 endif
-	diskutil unmount $(EFIDIR)
-	if [ -d "/Volumes/EFI" ]; then rmdir /Volumes/EFI; fi
 
 
 # Patch with 'patchmatic'

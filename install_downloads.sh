@@ -85,7 +85,8 @@ function install
 }
 
 if [ "$(id -u)" != "0" ]; then
-    echo "This script requires superuser access to install"
+    echo "This script requires superuser access, use: 'sudo $0 $@'"
+    exit 1
 fi
 
 # unzip/install kexts
