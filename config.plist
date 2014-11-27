@@ -44,8 +44,10 @@
 	</dict>
 	<key>Boot</key>
 	<dict>
+		<key>Arguments-Comment</key>
+		<string>Keeping -gux_defer_usb2 just in case of USB WiFi which requires GenericUSBXHCI.kext</string>
 		<key>Arguments</key>
-		<string>kext-dev-mode=1 nv_disable=1</string>
+		<string>kext-dev-mode=1 nv_disable=1 -gux_defer_usb2</string>
 		<key>Legacy</key>
 		<string>PBR</string>
 		<key>Log</key>
