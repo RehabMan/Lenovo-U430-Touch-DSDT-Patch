@@ -14,6 +14,7 @@ Method (_DSM, 4, NotSerialized)\n
     Return (Package()\n
     {\n
         //"vendor-id", Buffer() { 0x8c, 0x16, 0x00, 0x00 },\n
+        "RM,device-id", Buffer() { 0x2a, 0x00, 0x00, 0x00 },\n
         "device-id", Buffer() { 0x2a, 0x00, 0x00, 0x00 },\n
         "compatible", "pci168c,2a",\n
         "IOName", "pci168c,2a",\n

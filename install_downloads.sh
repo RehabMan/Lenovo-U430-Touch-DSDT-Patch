@@ -2,6 +2,7 @@
 
 SUDO=sudo
 #SUDO=echo
+#SUDO=nothing
 
 function check_directory
 {
@@ -12,6 +13,11 @@ function check_directory
             return 0
         fi
     done
+}
+
+function nothing
+{
+    :
 }
 
 function install_kext
@@ -49,7 +55,9 @@ function install
     check_directory $out/Release/*.kext
     if [ $? -ne 0 ]; then
         for kext in $out/Release/*.kext; do
-            install_kext $kext
+            if [[ "$2" == "" || "`echo $kext | grep -vE "$2"`" != "" ]]; then
+                install_kext $kext
+            fi
         done
         installed=1
     fi
@@ -85,8 +93,7 @@ function install
 }
 
 if [ "$(id -u)" != "0" ]; then
-    echo "This script requires superuser access, use: 'sudo $0 $@'"
-    exit 1
+    echo "This script requires superuser access..."
 fi
 
 # unzip/install kexts
@@ -95,18 +102,22 @@ if [ $? -ne 0 ]; then
     echo Installing kexts...
     cd ./downloads/kexts
     for kext in *.zip; do
-        install $kext
+        install $kext "FakePCIID_BCM|FakePCIID_Intel_HDMI_Audio"
     done
     cd ../..
 fi
 
 # install (injector) kexts in the repo itself
-check_directory *.kext
-if [ $? -ne 0 ]; then
-    for kext in *.kext; do
-        install_kext $kext
-    done
-fi
+
+install_kext AppleHDA_ALC283.kext
+#install_kext AirPort_AR9280_as_AR946x.kext
+
+#check_directory *.kext
+#if [ $? -ne 0 ]; then
+#    for kext in *.kext; do
+#        install_kext $kext
+#    done
+#fi
 
 # force cache rebuild with output
 $SUDO touch /System/Library/Extensions && $SUDO kextcache -u /

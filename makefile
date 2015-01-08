@@ -30,8 +30,16 @@ PEGP:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(PEGP)))
 IAOE=$(shell grep -l Device.*IAOE $(UNPATCHED)/SSDT*.dsl)
 IAOE:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(IAOE)))
 
+# Name(_PPC, ...) identifies SSDT with _PPC
+PPC=$(shell grep -l Name.*_PPC $(UNPATCHED)/SSDT*.dsl)
+PPC:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(PPC)))
+
+# Name(SSDT, Package...) identifies SSDT with dynamic SSDTs
+DYN=$(shell grep -l Name.*SSDT.*Package $(UNPATCHED)/SSDT*.dsl)
+DYN:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(DYN)))
+
 # Determine build products
-PRODUCTS=$(BUILDDIR)/$(DSDT).aml $(BUILDDIR)/$(IGPU).aml
+PRODUCTS=$(BUILDDIR)/$(DSDT).aml $(BUILDDIR)/$(IGPU).aml $(BUILDDIR)/$(PPC).aml $(BUILDDIR)/$(DYN).aml
 ALL_PATCHED=$(PATCHED)/$(DSDT).dsl $(PATCHED)/$(IGPU).dsl
 ifneq "$(PEGP)" ""
 	PRODUCTS:=$(PRODUCTS) $(BUILDDIR)/$(PEGP).aml
@@ -53,6 +61,12 @@ $(BUILDDIR)/DSDT.aml: $(PATCHED)/$(DSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 	
 $(BUILDDIR)/$(IGPU).aml: $(PATCHED)/$(IGPU).dsl
+	$(IASL) $(IASLFLAGS) -p $@ $<
+
+$(BUILDDIR)/$(PPC).aml: $(PATCHED)/$(PPC).dsl
+	$(IASL) $(IASLFLAGS) -p $@ $<
+
+$(BUILDDIR)/$(DYN).aml: $(PATCHED)/$(DYN).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
 ifneq "$(PEGP)" ""
@@ -86,6 +100,8 @@ cleanallex:
 .PHONY: install
 install: $(PRODUCTS)
 	cp $(BUILDDIR)/$(DSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
+	cp $(BUILDDIR)/$(PPC).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-2.aml
+	cp $(BUILDDIR)/$(DYN).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-3.aml
 	cp $(BUILDDIR)/$(IGPU).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-4.aml
 ifneq "$(PEGP)" ""
 	cp $(BUILDDIR)/$(PEGP).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-5.aml
@@ -120,7 +136,7 @@ $(PATCHED)/$(DSDT).dsl: $(UNPATCHED)/$(DSDT).dsl patches/syntax_dsdt.txt patches
 	patchmatic $@ $(LAPTOPGIT)/system/system_RTC.txt
 	patchmatic $@ $(LAPTOPGIT)/system/system_SMBUS.txt
 	patchmatic $@ $(LAPTOPGIT)/system/system_Mutex.txt
-	patchmatic $@ $(LAPTOPGIT)/system/system_PNOT.txt
+	#patchmatic $@ $(LAPTOPGIT)/system/system_PNOT.txt
 	patchmatic $@ $(LAPTOPGIT)/system/system_IMEI.txt
 	patchmatic $@ $(LAPTOPGIT)/battery/battery_Lenovo-Ux10-Z580.txt
 	#patchmatic $@ patches/ar92xx_wifi.txt
@@ -137,6 +153,19 @@ $(PATCHED)/$(IGPU).dsl: $(UNPATCHED)/$(IGPU).dsl patches/cleanup.txt $(LAPTOPGIT
 	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_PNLF_haswell.txt
 	patchmatic $@ patches/hdmi_audio.txt
 	patchmatic $@ patches/graphics.txt
+ifeq "$(DEBUG)" "1"
+	patchmatic $@ $(DEBUGGIT)/debug_extern.txt
+endif
+
+$(PATCHED)/$(PPC).dsl: $(UNPATCHED)/$(PPC).dsl patches/syntax_ppc.txt
+	cp $(UNPATCHED)/$(PPC).dsl $(PATCHED)
+	patchmatic $@ patches/syntax_ppc.txt
+ifeq "$(DEBUG)" "1"
+	patchmatic $@ $(DEBUGGIT)/debug_extern.txt
+endif
+
+$(PATCHED)/$(DYN).dsl: $(UNPATCHED)/$(DYN).dsl
+	cp $(UNPATCHED)/$(DYN).dsl $(PATCHED)
 ifeq "$(DEBUG)" "1"
 	patchmatic $@ $(DEBUGGIT)/debug_extern.txt
 endif

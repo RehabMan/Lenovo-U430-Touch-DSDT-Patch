@@ -8,16 +8,25 @@ Because the ACPI files for this computer are highly dependentent on one another,
 
 Note: These patches are for BIOS version 7ccn35ww.
 
+Note: Read this entire README before starting.
 
-### Setup:
+
+### Installation
+
+Refer to this guide for creating your USB and performing the initial installation of Yosemite or Mavericks.
+
+http://www.tonymacx86.com/yosemite-laptop-support/148093-guide-booting-os-x-installer-laptops-clover-uefi.html
+
+
+### Post-Install Setup:
 
 What you'll need:
 - this repo: https://github.com/RehabMan/HP-Lenovo-U430-Touch-DSDT-Patch
 - laptop repo: https://github.com/RehabMan/Laptop-DSDT-Patch
 - patchmatic: https://github.com/RehabMan/OS-X-MaciASL-patchmatic
 - MaciASL: https://github.com/RehabMan/OS-X-MaciASL-patchmatic (always useful, even in this case)
-- Xcode developer tools
 - iasl: https://bitbucket.org/RehabMan/acpica/downloads
+- Xcode developer tools
 - optional: git
 
 You can get Xcode for free by registering as a developer at developer.apple.com. Or, I think the command line tools will be installed automatically if you attempt to use them (eg. type 'make' in Terminal, and follow the prompts for downloading).
@@ -49,15 +58,13 @@ My files break down as follows (NN = not necessary):
 - ssdt6: IAOE (needed for sleep)
 - ssdt7, ssdt8, ssdt9: PM related (NN)
 
-You will need to inspect your files, especially if your laptop is of a different configuration than mine.  For example, you may have two graphics SSDTs if your laptop has the nvidia chip.  Mine does not, so ssdt4 contains the graphics code for Intel HD4600.  If you have nvidia, you will probably want to patch the SSDT that contains the code for it, to disable it since it is useless in OS X.
-
 After gathering these files from Linux, place them in the native_linux subdirectory of this project.
+
+Note: You can also extract your native files in OS X using 'patchmatic -extract'.  In fact, if disassemble.sh finds no files in native_linux, it will do this automatically to native_patchmatic.
 
 Now you are ready to disassemble the files we need to patch.  The current code disassembles them all, even though we are only patching two of them (you may be patching more).  To disassemble them, type (in Terminal)
 
-
     ./disassemble.sh
-
 
 After it runs, all disassembled files will be in the current directory (flattened... no more dynamic directory).  You can then inspect them with MaciASL, try to compile them, even patch them by hand to test things out if you want.
 
@@ -80,17 +87,10 @@ Assuming you have a valid set of AML files in subdirectory 'build', you can inst
 
     make install
 
-or
 
-    make install_extra
+make install: mounts the EFI partition and copies the files to EFI/CLOVER/ACPI/patched (dsdt.aml, ssdt-4.aml, ssdt6.aml)
 
-
-make install: mounts /dev/disk0s1 as EFI volume and copies the files to EFI/CLOVER/ACPI/patched (dsdt.aml, ssdt-4.aml, ssdt6.aml)
-make install_extra: copies to /Extra (dsdt.aml, ssdt-1.aml)
-
-Obviously 'make install' is used for Clover, and 'make install_extra' is used for Chameleon.
-
-Note: I do not recommend Chimera or Chameleon.  Save yourself some frustration and use Clover.
+Note: I do not supporting Chameleon or Chimera.  Save yourself some frustration and use Clover.
 
 
 Note: All the patching/building/installing could be done with MaciASL, Patch, File Save As, etc.  Refer to the makefile to see what patches from the laptop repo I'm using.  Patches specific to this laptop are located in the 'patches' subdirectory.
@@ -99,6 +99,35 @@ Note: All the patching/building/installing could be done with MaciASL, Patch, Fi
 ### Clover config.plist
 
 There is a config.plist for Clover UEFI configuration.
+
+
+### Kexts required
+
+These are the kexts I use for this build:
+
+- FakeSMC: https://github.com/RehabMan/OS-X-FakeSMC-kozlek
+- VoodooPS2Controller: https://github.com/RehabMan/OS-X-Voodoo-PS2-Controller
+- RealtekRTL8111: https://github.com/RehabMan/OS-X-Realtek-Network
+- ACPIBacklight: https://github.com/RehabMan/OS-X-ACPI-Backlight
+- ACPIBatteryManager: https://github.com/RehabMan/OS-X-ACPI-Battery-Driver
+- CodecCommander: https://github.com/RehabMan/EAPD-Codec-Commander
+- FakePCIID: https://github.com/RehabMan/OS-X-Fake-PCI-ID
+- ACPIDebug (for debugging DSDT/SSDTs only): https://github.com/RehabMan/OS-X-ACPI-Debug
+
+The current version of all kexts can be downloaded with the provided download.sh script"
+
+./download.sh
+
+The latest version of all files (kexts and tools) will be placed in ./downloads
+
+You can install them automatically with the provided install_downloads.sh:
+
+./install_downloads.sh
+
+
+### CPU power management
+
+You should generate a custom SSDT for your CPU.  Use ssdtPRgen.sh script here: https://github.com/Piker-Alpha/ssdtPRGen.sh.
 
 
 ### Audio
@@ -115,39 +144,9 @@ The Lenovo U430 implemenets a BIOS whitelist.  None of the WiFi cards on the whi
 In order to make native WiFi work we use a rebranded AR9280:
 - rebrand an AR5BHB92 (AR9280) as 168c:0034 17aa:3114, which are the IDs for the Lenovo WB222 (AR946x).
 - use an injector to load the native kext for AR9280
-- patch the kext (using Clover config.plist patches) to make the kext treat it as AR9280
+- use FakePCIID.kext to fake the original PCIID
 
-The injector, AirPort_AR9280_as_AR946x.kext, is provided in this repository.  Due to the nature of the patches, they are in the provided config.plist, but disabled.  Unless you actually have an AR9280 branded as an AR946x installed, do not enable the patches.  If you do have the rebranded hardware installed, WiFi will not work until you enable the patches in your config.plist.
-
-
-### Other Kexts required
-
-These are the kexts I use for this build:
-
-- FakeSMC: https://github.com/RehabMan/OS-X-FakeSMC-kozlek
-- VoodooPS2Controller: https://github.com/RehabMan/OS-X-Voodoo-PS2-Controller
-- RealtekRTL8111: https://github.com/RehabMan/OS-X-Realtek-Network
-- ACPIBacklight: https://github.com/RehabMan/OS-X-ACPI-Backlight
-- ACPIBatteryManager: https://github.com/RehabMan/OS-X-ACPI-Battery-Driver
-- CodecCommander: https://github.com/RehabMan/EAPD-Codec-Commander
-- ACPIDebug (for debugging DSDT/SSDTs only): https://github.com/RehabMan/OS-X-ACPI-Debug
-
-
-### Other patching
-
-Although HD4600 is supported by Yosemite, it is not supported by one of the OpenCL framework's dylib.
-
-You can use patch_opencl.sh:
-
-    ./patch_opencl.sh
-
-Background: http://www.tonymacx86.com/yosemite-laptop-support/145427-fix-intel-hd4400-hd4600-mobile-yosemite.html
-
-### CPU power management
-
-You should generate a custom SSDT for your CPU.  Use ssdtPRgen.sh script here: https://github.com/Piker-Alpha/ssdtPRGen.sh
-
-Note: I find the best results with both APSS/ACST injections via the ssdtPRgen.sh script and Clover's SSDT/Generate options.'
+Note: The last two requirements are provided by the single kext FakePCIID_AR9280_as_AR946x.kext from the FakePCIID project.
 
 
 ### Feedback:
@@ -161,13 +160,21 @@ Guide thread: TBD
 
 ### Known Issues
 
-- The headphone port does not work correctly (issue is in the 
+- The headphone port does not work correctly (issue is in the patched AppleHDA xml files)
 
 
 ### Change Log:
 
-2014-11-12 Updated for AppleUSBXHCI.kext, rebranded native WiFi, and updated patches/config.plist
+2015-01-08
+
+- using OEM provided CPU power management SSDTs
+- using FakePCIID for HD4400 and WiFi (instead of binary patching)
+
+2014-11-12
+
+- Updated for AppleUSBXHCI.kext
+- rebranded native WiFi
+- and updated patches/config.plist
 
 2014-03-23 Initial Release
-
 
