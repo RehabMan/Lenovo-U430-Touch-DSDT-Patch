@@ -44,9 +44,9 @@
 			<key>Generate</key>
 			<dict>
 				<key>PStates</key>
-				<true/>
+				<false/>
 				<key>CStates</key>
-				<true/>
+				<false/>
 			</dict>
 			<key>PluginType</key>
 			<integer>1</integer>
