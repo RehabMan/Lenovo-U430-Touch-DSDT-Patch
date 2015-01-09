@@ -35,7 +35,7 @@
 		845362E818B99935005C7C7B /* debug1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debug1.txt; path = patches/debug1.txt; sourceTree = "<group>"; };
 		8455352818E65265001ADBFD /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		845B736719509CF50094F3E3 /* ar92xx_wifi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ar92xx_wifi.txt; path = patches/ar92xx_wifi.txt; sourceTree = "<group>"; };
-		845CCF5C19A2B0F000C6B5C0 /* ahhcd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ahhcd.plist; path = Resources/ahhcd.plist; sourceTree = "<group>"; };
+		845CCF5C19A2B0F000C6B5C0 /* ahhcd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ahhcd.plist; path = Resources_ALC283/ahhcd.plist; sourceTree = "<group>"; };
 		84637D8F1A15A58A00D08D05 /* iaoe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = iaoe.txt; path = patches/iaoe.txt; sourceTree = "<group>"; };
 		84678CB8189F965300B5C1BE /* audio.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = audio.txt; path = patches/audio.txt; sourceTree = "<group>"; };
 		8467C38E1A23A9FC00FCF396 /* mount_efi.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mount_efi.sh; sourceTree = "<group>"; };

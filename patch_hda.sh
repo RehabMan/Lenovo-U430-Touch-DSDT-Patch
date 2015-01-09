@@ -42,4 +42,4 @@ function createAppleHDAInjector()
 
 createAppleHDAInjector "ALC283"
 
-createAppleHDAInjector "ALC283b"
+#createAppleHDAInjector "ALC283b"
