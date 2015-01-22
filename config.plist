@@ -142,73 +142,13 @@
 		<array>
 			<dict>
 				<key>Comment</key>
-				<string>AR9285 rebranded as AR946x #1</string>
+				<string>HDMI-audio, port 0204, 0x0a260005 0x0a260006</string>
 				<key>Name</key>
-				<string>disabled_AirPortAtheros40</string>
+				<string>AppleIntelFramebufferAzul</string>
 				<key>Find</key>
-				<data>g8H5g/kp</data>
+				<data>AgQJAAAEAACHAAAA</data>
 				<key>Replace</key>
-				<data>g8Hwg/kp</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AR9285 rebranded as AR946x #2</string>
-				<key>Name</key>
-				<string>disabled_AirPortAtheros40</string>
-				<key>Find</key>
-				<data>QYP6MA+HqQAAAA==</data>
-				<key>Replace</key>
-				<data>QborAAAAkJCQkA==</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AR9280 rebranded as AR946x #1</string>
-				<key>Name</key>
-				<string>disabled_AirPortAtheros40</string>
-				<key>Find</key>
-				<data>g8H5g/kp</data>
-				<key>Replace</key>
-				<data>g8Hvg/kp</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AR9280 rebranded as AR946x #2 (Yosemite)</string>
-				<key>Name</key>
-				<string>disabled_AirPortAtheros40</string>
-				<key>Find</key>
-				<data>QYP6MA+HqQAAAA==</data>
-				<key>Replace</key>
-				<data>QboqAAAAkJCQkA==</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AR9280 rebranded as AR946x #2 (Mavericks)</string>
-				<key>Name</key>
-				<string>disabled_AirPortAtheros40</string>
-				<key>Find</key>
-				<data>ZoP4MA+HpwAAAA==</data>
-				<key>Replace</key>
-				<data>ZrgqAJCQkJCQkA==</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Enable BCM943228 14e4:4359 #1</string>
-				<key>Name</key>
-				<string>disabled_AppleAirPortBrcm43224</string>
-				<key>Find</key>
-				<data>gcbvvP//</data>
-				<key>Replace</key>
-				<data>gcbpvP//</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Enable BCM943228 14e4:4359 #2</string>
-				<key>Name</key>
-				<string>disabled_AppleAirPortBrcm43224</string>
-				<key>Find</key>
-				<data>gcHtvP//</data>
-				<key>Replace</key>
-				<data>gcHnvP//</data>
+				<data>AgQJAAAIAACHAAAA</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -219,36 +159,6 @@
 				<data>AEFQUExFIFNTRAA=</data>
 				<key>Replace</key>
 				<data>AAAAAAAAAAAAAAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Enable USB3 post wake</string>
-				<key>Name</key>
-				<string>disabled_AppleUSBXHCI</string>
-				<key>Find</key>
-				<data>xoDIAAAAAQ==</data>
-				<key>Replace</key>
-				<data>xoDIAAAAAA==</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>HDMI audio connector patch 10.9.2</string>
-				<key>Name</key>
-				<string>AppleIntelFramebufferAzul</string>
-				<key>Find</key>
-				<data>BgAmCgEDAwMAAAACAAAAAQAAYAAAAABA2QoAANkKAAAAAAAAAAAAAAAACAACAAAAMAAAAAEFCQAABAAAhwAAAAIECQAABAAAhwAAAP8AAAABAAAAQAAAAA8AAAABAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</data>
-				<key>Replace</key>
-				<data>BgAmCgEDAwMAAAACAAAAAQAAYAAAAABA2QoAANkKAAAAAAAAAAAAAAAACAACAAAAMAAAAAEFCQAABAAAhwAAAAIECQAACAAAhwAAAP8AAAABAAAAQAAAAA8AAAABAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>HDMI audio connector patch 10.9.3/10.9.4/10.9.5/10.10</string>
-				<key>Name</key>
-				<string>AppleIntelFramebufferAzul</string>
-				<key>Find</key>
-				<data>BgAmCgEDAwMAAAACAAAwAQAAYAAAAABg2QoAANkKAAAAAAAAAAAAAAAACAACAAAAMAAAAAEFCQAABAAAhwAAAAIECQAABAAAhwAAAP8AAAABAAAAQAAAAA8AAAABAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</data>
-				<key>Replace</key>
-				<data>BgAmCgEDAwMAAAACAAAwAQAAYAAAAABg2QoAANkKAAAAAAAAAAAAAAAACAACAAAAMAAAAAEFCQAABAAAhwAAAAIECQAACAAAhwAAAP8AAAABAAAAQAAAAA8AAAABAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
