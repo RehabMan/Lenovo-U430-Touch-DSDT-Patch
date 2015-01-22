@@ -90,7 +90,7 @@ Assuming you have a valid set of AML files in subdirectory 'build', you can inst
 
 make install: mounts the EFI partition and copies the files to EFI/CLOVER/ACPI/patched (dsdt.aml, ssdt-4.aml, ssdt6.aml)
 
-Note: I do not supporting Chameleon or Chimera.  Save yourself some frustration and use Clover.
+Note: I do not recommend Chameleon or Chimera.  Save yourself some frustration and use Clover.
 
 
 Note: All the patching/building/installing could be done with MaciASL, Patch, File Save As, etc.  Refer to the makefile to see what patches from the laptop repo I'm using.  Patches specific to this laptop are located in the 'patches' subdirectory.
@@ -114,15 +114,19 @@ These are the kexts I use for this build:
 - FakePCIID: https://github.com/RehabMan/OS-X-Fake-PCI-ID
 - ACPIDebug (for debugging DSDT/SSDTs only): https://github.com/RehabMan/OS-X-ACPI-Debug
 
-The current version of all kexts can be downloaded with the provided download.sh script"
+The current version of all kexts can be downloaded with the provided download.sh script:
 
+```
 ./download.sh
+```
 
 The latest version of all files (kexts and tools) will be placed in ./downloads
 
 You can install them automatically with the provided install_downloads.sh:
 
+```
 ./install_downloads.sh
+```
 
 
 ### CPU power management
@@ -154,6 +158,8 @@ Note: The last two requirements are provided by the single kext FakePCIID_AR9280
 Please use this thread on tonymacx86.com for feedback, questions, and help:
 
 Development thread: http://www.tonymacx86.com/laptop-compatibility/121632-lenovo-ideapad-u430-mavericks.html
+
+A mini guide is at post #422: http://www.tonymacx86.com/laptop-compatibility/121632-lenovo-ideapad-u430-mavericks-43.html#post928795
 
 Guide thread: TBD
 
