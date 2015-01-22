@@ -142,6 +142,16 @@
 		<array>
 			<dict>
 				<key>Comment</key>
+				<string>0x0a260006 9MB cursor bytes patch</string>
+				<key>Name</key>
+				<string>AppleIntelFramebufferAzul</string>
+				<key>Find</key>
+				<data>BgAmCgEDAwMAAAACAAAwAQAAYAA=</data>
+				<key>Replace</key>
+				<data>BgAmCgEDAwMAAAACAAAwAQAAkAA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>HDMI-audio, port 0204, 0x0a260005 0x0a260006</string>
 				<key>Name</key>
 				<string>AppleIntelFramebufferAzul</string>
