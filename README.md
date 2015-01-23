@@ -161,7 +161,8 @@ Development thread: http://www.tonymacx86.com/laptop-compatibility/121632-lenovo
 
 A mini guide is at post #422: http://www.tonymacx86.com/laptop-compatibility/121632-lenovo-ideapad-u430-mavericks-43.html#post928795
 
-Guide thread: TBD
+***
+New Guide thread: http://www.tonymacx86.com/yosemite-laptop-support/155106-guide-lenovo-ideapad-u330-u430-u530-using-clover-uefi.html
 
 
 ### Known Issues
