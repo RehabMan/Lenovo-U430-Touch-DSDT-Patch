@@ -209,7 +209,7 @@
 				<key>Comment</key>
 				<string>Boot graphics glitch, 10.10.0/10.10.1 (1 of 2)</string>
 				<key>Name</key>
-				<string>IOGraphicsFamily</string>
+				<string>#IOGraphicsFamily</string>
 				<key>Find</key>
 				<data>hcB0XUg=</data>
 				<key>Replace</key>
@@ -219,7 +219,7 @@
 				<key>Comment</key>
 				<string>Boot graphics glitch, 10.10.0/10.10.1 (2 of 2)</string>
 				<key>Name</key>
-				<string>IOGraphicsFamily</string>
+				<string>#IOGraphicsFamily</string>
 				<key>Find</key>
 				<data>QYjE6wM=</data>
 				<key>Replace</key>
@@ -237,9 +237,9 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Boot graphics glitch, 10.10.2 (2 of 2)</string>
+				<string>Boot graphics glitch, 10.10.2 (2 of 2) (seems to have no effect)</string>
 				<key>Name</key>
-				<string>IOGraphicsFamily</string>
+				<string>#IOGraphicsFamily</string>
 				<key>Find</key>
 				<data>hcB0a0g=</data>
 				<key>Replace</key>
