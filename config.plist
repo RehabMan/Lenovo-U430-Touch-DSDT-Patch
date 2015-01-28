@@ -172,7 +172,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>AppleHDA ALC283 patch #1</string>
+				<string>AppleHDA ALC283 (1 of 3)</string>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Find</key>
@@ -182,7 +182,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>AppleHDA ALC283 patch #2</string>
+				<string>AppleHDA ALC283 (2 of 3)</string>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Find</key>
@@ -192,7 +192,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>AppleHDA ALC283 patch #3</string>
+				<string>AppleHDA ALC283 (3 of 3)</string>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Find</key>
@@ -202,7 +202,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Yosemite Logo #1</string>
+				<string>Boot graphics glitch, 10.10.0/10.10.1 (1 of 2)</string>
 				<key>Name</key>
 				<string>IOGraphicsFamily</string>
 				<key>Find</key>
@@ -212,13 +212,33 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Yosemite Logo #2</string>
+				<string>Boot graphics glitch, 10.10.0/10.10.1 (2 of 2)</string>
 				<key>Name</key>
 				<string>IOGraphicsFamily</string>
 				<key>Find</key>
 				<data>QYjE6wM=</data>
 				<key>Replace</key>
 				<data>QYjE6yM=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Boot graphics glitch, 10.10.2 (1 of 2)</string>
+				<key>Name</key>
+				<string>IOGraphicsFamily</string>
+				<key>Find</key>
+				<data>QYjE6xE=</data>
+				<key>Replace</key>
+				<data>QYjE6zE=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Boot graphics glitch, 10.10.2 (2 of 2)</string>
+				<key>Name</key>
+				<string>IOGraphicsFamily</string>
+				<key>Find</key>
+				<data>hcB0a0g=</data>
+				<key>Replace</key>
+				<data>McB0W0g=</data>
 			</dict>
 		</array>
 	</dict>
