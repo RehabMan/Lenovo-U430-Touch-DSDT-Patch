@@ -14,11 +14,12 @@ Method (_DSM, 4, NotSerialized)\n
         //"AAPL00,override-no-edid", 0,\n
         //"AAPL00,override-no-connect", 0,\n
         "AAPL00,test-edid", 0,\n
+        "device-id", Buffer() { 0x12, 0x04, 0x00, 0x00 },\n
         //"RM,device-id", Buffer() { 0x12, 0x04, 0x00, 0x00 },\n
-        "subsystem-id", Buffer() { 0x1b, 0x01, 0x00, 0x00 },\n
-        "subsystem-vendor-id", Buffer() { 0x6b, 0x10, 0x00, 0x00 },\n
-        "RM,subsystem-id", Buffer() { 0x1b, 0x01, 0x00, 0x00 },\n
-        "RM,subsystem-vendor-id", Buffer() { 0x6b, 0x10, 0x00, 0x00 },\n
+        //"subsystem-id", Buffer() { 0x1b, 0x01, 0x00, 0x00 },\n
+        //"subsystem-vendor-id", Buffer() { 0x6b, 0x10, 0x00, 0x00 },\n
+        //"RM,subsystem-id", Buffer() { 0x1b, 0x01, 0x00, 0x00 },\n
+        //"RM,subsystem-vendor-id", Buffer() { 0x6b, 0x10, 0x00, 0x00 },\n
         "AAPL,ig-platform-id", Buffer() { 0x06, 0x00, 0x26, 0x0a },\n
         "hda-gfx", Buffer() { "onboard-1" },\n
         "model", Buffer() { "Intel HD Graphics 4400" },\n
