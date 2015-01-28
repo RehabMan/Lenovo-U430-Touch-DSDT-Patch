@@ -78,6 +78,11 @@
 	</dict>
 	<key>Devices</key>
 	<dict>
+		<key>FakeID</key>
+		<dict>
+			<key>IntelGFX</key>
+			<string>0x04128086</string>
+		</dict>
 		<key>Audio</key>
 		<dict>
 			<key>Inject</key>
