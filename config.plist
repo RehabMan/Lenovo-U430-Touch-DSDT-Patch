@@ -147,6 +147,26 @@
 		<array>
 			<dict>
 				<key>Comment</key>
+				<string>10.10.2-5Ghz US FCC the-darkvoid</string>
+				<key>Find</key>
+				<data>QYP8/3QsSA==</data>
+				<key>Replace</key>
+				<data>ZscGVVPrKw==</data>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>10.10.2-BT4LE-Handoff-Hotspot</string>
+				<key>Find</key>
+				<data>SIXAdFwPt0g=</data>
+				<key>Name</key>
+				<string>IOBluetoothFamily</string>
+				<key>Replace</key>
+				<data>Qb4PAAAA61k=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>0x0a260006 9MB cursor bytes patch</string>
 				<key>Name</key>
 				<string>AppleIntelFramebufferAzul</string>
