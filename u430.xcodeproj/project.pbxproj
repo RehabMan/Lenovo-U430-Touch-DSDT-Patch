@@ -45,6 +45,7 @@
 		84BD236218B97D73000FEB2B /* debug.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debug.txt; path = patches/debug.txt; sourceTree = "<group>"; };
 		84C95FCD1A3C10F100118E8C /* syntax_ppc.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = syntax_ppc.txt; path = patches/syntax_ppc.txt; sourceTree = "<group>"; };
 		84DC2FD81A148531003845F1 /* graphics.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = graphics.txt; path = patches/graphics.txt; sourceTree = "<group>"; };
+		84DE48971A9D721300FB4F90 /* bcm_wifi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bcm_wifi.txt; path = patches/bcm_wifi.txt; sourceTree = "<group>"; };
 		84FCD8221A1ADB98006940E4 /* nvidia_off.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = nvidia_off.txt; path = patches/nvidia_off.txt; sourceTree = "<group>"; };
 		84FCD8231A1B21D6006940E4 /* SSDT10.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SSDT10.dsl; sourceTree = "<group>"; };
 		84FCD8241A1B21E4006940E4 /* ssdt5.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssdt5.dsl; sourceTree = "<group>"; };
@@ -87,6 +88,7 @@
 				84BD236218B97D73000FEB2B /* debug.txt */,
 				8434661519392FEF002D2B01 /* usb.txt */,
 				845B736719509CF50094F3E3 /* ar92xx_wifi.txt */,
+				84DE48971A9D721300FB4F90 /* bcm_wifi.txt */,
 				84FCD8221A1ADB98006940E4 /* nvidia_off.txt */,
 				84C95FCD1A3C10F100118E8C /* syntax_ppc.txt */,
 				843A4C481884C49D009AF7FE /* not used */,
