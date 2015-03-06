@@ -9,7 +9,11 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
-DestVolume="$1"
+if [ "$1" == "" ]; then
+    DestVolume=/
+else
+    DestVolume="$1"
+fi
 DiskDevice=$(LC_ALL=C diskutil info "$DestVolume" 2>/dev/null | sed -n 's/.*Part [oO]f Whole: *//p')
 if [ -z "$DiskDevice" ]; then
     echo "Can't find volume with the name $DestVolume"
