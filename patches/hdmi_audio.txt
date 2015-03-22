@@ -1,3 +1,9 @@
+# for DSDT
+
+into method label _WAK code_regex B0D3 replaceall_matched begin HDAU end;
+into definitionblock code_regex B0D3 replaceall_matched begin HDAU end;
+
+# for GFX0 SSDT
 
 # inject "hda-gfx"="onboard-1" into IGPU (GFX0 originally)
 into method label _DSM parent_adr 0x00020000 remove_entry;
