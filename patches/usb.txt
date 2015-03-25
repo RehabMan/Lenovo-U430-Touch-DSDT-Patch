@@ -5,6 +5,11 @@ into method label _PRW parent_adr 0x001A0000 remove_entry;
 into method label _PRW parent_adr 0x00140000 remove_entry;
 into method label _PRW parent_adr 0x001B0000 remove_entry;
 
+into device name_adr 0x001D0000 insert begin Name(_PRW, Package() { 0x6D, 0 }) end;
+into device name_adr 0x001A0000 insert begin Name(_PRW, Package() { 0x6D, 0 }) end;
+into device name_adr 0x00140000 insert begin Name(_PRW, Package() { 0x6D, 0 }) end;
+into device name_adr 0x001B0000 insert begin Name(_PRW, Package() { 0x6D, 0 }) end;
+
 # rename XHC to XHC1
 
 into device label XHC set_label begin XHC1 end;
