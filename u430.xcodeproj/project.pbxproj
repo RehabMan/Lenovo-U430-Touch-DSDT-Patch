@@ -126,11 +126,11 @@
 		84517BE4186FC7A4003ACE44 /* patched */ = {
 			isa = PBXGroup;
 			children = (
-				84FCD8241A1B21E4006940E4 /* ssdt5.dsl */,
 				84517BE6186FC7A4003ACE44 /* readme.txt */,
 				84517BE5186FC7A4003ACE44 /* dsdt.dsl */,
 				842CFE381A18307E00FE0519 /* ssdt-3.dsl */,
 				84517BE7186FC7A4003ACE44 /* ssdt4.dsl */,
+				84FCD8241A1B21E4006940E4 /* ssdt5.dsl */,
 				840EC0C518A1F03400A8D90D /* ssdt6.dsl */,
 			);
 			path = patched;
