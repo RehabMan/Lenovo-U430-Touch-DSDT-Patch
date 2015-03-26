@@ -27,3 +27,4 @@ If (CondRefOf(\\_SB.IAOE)) {\n
 }
 end;
 
+into method label _WAK code_regex If\s+\(LEqual\s+\(\\_SB\.IAOE\.ITMR,\s+(Zero|0x00)\)\)\s+\{\} remove_matched;
