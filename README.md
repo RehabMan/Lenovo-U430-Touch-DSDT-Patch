@@ -6,7 +6,7 @@ In fact, you will need to copy/clone that github repository to use this one.  So
 
 Because the ACPI files for this computer are highly dependentent on one another, I have taken a more "developer" approach, opting to use shell scripts and a makefile to process the files automatically.  I generally test out new ideas with MaciASL, but once I determine the final method, I integrate it into the makefile for automatic patching/building/installing.
 
-Note: These patches are for BIOS version 7ccn35ww.
+Note: These patches are for BIOS version 7ccn35ww and newer.
 
 Note: Read this entire README before starting.
 
@@ -128,6 +128,8 @@ You can install them automatically with the provided install_downloads.sh:
 ./install_downloads.sh
 ```
 
+Note: install_downloads.sh will tag each file installed to /S/L/E and /Applications with a "Gray" colored tag.  This makes the foreign binaries easy to identify in Finder.  This functionality is courtesy of jdberry's tag utility: https://github.com/jdberry/tag.  A prebuilt binary is at tools/tag and is used by the script.
+
 
 ### CPU power management
 
@@ -152,6 +154,8 @@ In order to make native WiFi work we use a rebranded AR9280:
 
 Note: The last two requirements are provided by the single kext FakePCIID_AR9280_as_AR946x.kext from the FakePCIID project.
 
+This repo also supports BCM94352HMB.  See guide thread below for more informaton.
+
 
 ### Feedback:
 
@@ -171,6 +175,32 @@ New Guide thread: http://www.tonymacx86.com/yosemite-laptop-support/155106-guide
 
 
 ### Change Log:
+
+2014-03-29
+
+- add "gray" tagging to files installed to /S/L/E and /Applications
+
+2014-03-26
+
+- instead of deleting _PRW objects, add them back but with sleep state 0.  This eliminates the disrupting call to the associated _GPE event during the sleep process.
+
+- use "Windows 2012" instead of "Windows 2006".  This makes USB2 devices connect to AppleUSBEHCI instead of AppleUSBEHCI.
+
+2014-03-06
+
+- add new WiFi+Bluetooth option BCM94352HMB
+
+2014-02-23
+
+- use "one-shot" PS2 notify methods to PS2K.  This eliminates a problem with F9.
+
+2014-01-28
+
+- update for Yosemite 10.10.2
+
+2014-01-21
+
+- add "9mb cursor bytes" patch.  Eliminates glitches with 1080p screens such as on the u530.
 
 2015-01-08
 

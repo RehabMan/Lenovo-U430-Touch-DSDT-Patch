@@ -3,6 +3,7 @@
 SUDO=sudo
 #SUDO=echo
 #SUDO=nothing
+TAG=`pwd`/tools/tag
 
 function check_directory
 {
@@ -26,6 +27,7 @@ function install_kext
         echo installing $1 to /System/Library/Extensions
         $SUDO rm -Rf /System/Library/Extensions/`basename $1`
         $SUDO cp -Rf $1 /System/Library/Extensions
+        $SUDO $TAG -a Gray /System/Library/Extensions/`basename $1`
     fi
 }
 
@@ -35,6 +37,7 @@ function install_app
         echo installing $1 to /Applications
         $SUDO rm -Rf /Applications/`basename $1`
         $SUDO cp -Rf $1 /Applications
+        $SUDO $TAG -a Gray /Applications/`basename $1`
     fi
 }
 
