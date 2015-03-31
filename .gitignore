@@ -1,4 +1,5 @@
 .DS_Store
+stash/*
 ssdt?.dsl
 dsdt.dsl
 downloads/*
@@ -6,7 +7,7 @@ patched/ssdt*.dsl
 patched/dsdt.dsl
 unpatched/ssdt*.dsl
 patched/dsdt.dsl
-build/*.aml
+build/*
 Resources_ALC283/layout/*.zlib
 u430.xcodeproj/project.xcworkspace/xcuserdata
 u430.xcodeproj/project.xcworkspace/xcshareddata/u430.xccheckout
