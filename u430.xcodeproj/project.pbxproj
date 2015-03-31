@@ -27,7 +27,6 @@
 		8444F2CC18B9DDD500D59FF1 /* SSDT9.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SSDT9.dsl; sourceTree = "<group>"; };
 		84478746189E296B001EC85A /* cleanup.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cleanup.txt; path = patches/cleanup.txt; sourceTree = "<group>"; };
 		84490D5D1A14945B000E1BFB /* patch_hda.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_hda.sh; sourceTree = "<group>"; };
-		84490D5E1A149480000E1BFB /* patch_opencl.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_opencl.sh; sourceTree = "<group>"; };
 		844B06C118A29060008660C6 /* hdmi_audio.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = hdmi_audio.txt; path = patches/hdmi_audio.txt; sourceTree = "<group>"; };
 		84517BE5186FC7A4003ACE44 /* dsdt.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsdt.dsl; sourceTree = "<group>"; };
 		84517BE6186FC7A4003ACE44 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
@@ -42,6 +41,8 @@
 		8499623A1857F04D009A226D /* syntax_dsdt.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = syntax_dsdt.txt; path = patches/syntax_dsdt.txt; sourceTree = "<group>"; };
 		84ADB53718860F9600097B3C /* remove_wmi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = remove_wmi.txt; path = patches/remove_wmi.txt; sourceTree = "<group>"; };
 		84ADCC25187CB0A100720ACA /* keyboard.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = keyboard.txt; path = patches/keyboard.txt; sourceTree = "<group>"; };
+		84B540361ACB34A200D8ABAE /* layout86.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = layout86.plist; path = Resources_ALC283/layout/layout86.plist; sourceTree = "<group>"; };
+		84B540371ACB34A200D8ABAE /* Platforms.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Platforms.plist; path = Resources_ALC283/layout/Platforms.plist; sourceTree = "<group>"; };
 		84BD236218B97D73000FEB2B /* debug.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debug.txt; path = patches/debug.txt; sourceTree = "<group>"; };
 		84C95FCD1A3C10F100118E8C /* syntax_ppc.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = syntax_ppc.txt; path = patches/syntax_ppc.txt; sourceTree = "<group>"; };
 		84DC2FD81A148531003845F1 /* graphics.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = graphics.txt; path = patches/graphics.txt; sourceTree = "<group>"; };
@@ -59,14 +60,12 @@
 			children = (
 				8406FCD6188627B8006D8DB7 /* README.md */,
 				8455352818E65265001ADBFD /* config.plist */,
-				840152F0182AE46D00D58B0A /* disassemble.sh */,
 				840152EF182AE45E00D58B0A /* makefile */,
+				840152F0182AE46D00D58B0A /* disassemble.sh */,
 				8467C38E1A23A9FC00FCF396 /* mount_efi.sh */,
-				84490D5E1A149480000E1BFB /* patch_opencl.sh */,
-				84490D5D1A14945B000E1BFB /* patch_hda.sh */,
-				845CCF5C19A2B0F000C6B5C0 /* ahhcd.plist */,
 				ED3F518B1A2029DE0060691A /* download.sh */,
 				ED3F518A1A2029DE0060691A /* install_downloads.sh */,
+				84B540381ACB34B600D8ABAE /* audio */,
 				840152FC182AE4C600D58B0A /* patches */,
 				8444F2C118B9DDD500D59FF1 /* unpatched */,
 				84517BE4186FC7A4003ACE44 /* patched */,
@@ -134,6 +133,17 @@
 				840EC0C518A1F03400A8D90D /* ssdt6.dsl */,
 			);
 			path = patched;
+			sourceTree = "<group>";
+		};
+		84B540381ACB34B600D8ABAE /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				84B540361ACB34A200D8ABAE /* layout86.plist */,
+				84B540371ACB34A200D8ABAE /* Platforms.plist */,
+				84490D5D1A14945B000E1BFB /* patch_hda.sh */,
+				845CCF5C19A2B0F000C6B5C0 /* ahhcd.plist */,
+			);
+			name = audio;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

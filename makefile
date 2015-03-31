@@ -14,6 +14,7 @@ DEBUGGIT=../debug.git
 BUILDDIR=./build
 PATCHED=./patched
 UNPATCHED=./unpatched
+RESOURCES=./Resources_ALC283
 
 # DSDT is easy to find...
 DSDT=DSDT
@@ -54,8 +55,7 @@ IASLFLAGS=-ve
 IASL=iasl
 
 .PHONY: all
-all: $(PRODUCTS)
-
+all: $(PRODUCTS) AppleHDA_ALC283.kext
 
 $(BUILDDIR)/DSDT.aml: $(PATCHED)/$(DSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
@@ -110,6 +110,27 @@ ifneq "$(IAOE)" ""
 	cp $(BUILDDIR)/$(IAOE).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-7.aml
 endif
 
+AppleHDA_ALC283.kext: $(RESOURCES)/ahhcd.plist $(RESOURCES)/layout/Platforms.xml.zlib $(RESOURCES)/layout/layout86.xml.zlib ./patch_hda.sh
+	./patch_hda.sh
+	touch $@
+
+$(RESOURCES)/layout/Platforms.xml.zlib: $(RESOURCES)/layout/Platforms.plist
+	./tools/zlib deflate $< >$@
+
+$(RESOURCES)/layout/layout86.xml.zlib: $(RESOURCES)/layout/layout86.plist
+	./tools/zlib deflate $< >$@
+
+.PHONY: update_kernelcache
+update_kernelcache:
+	sudo touch /System/Library/Extensions
+	sudo kextcache -update-volume /
+
+.PHONY: install_hda
+install_hda:
+	sudo rm -Rf /System/Library/Extensions/AppleHDA_ALC283.kext
+	sudo cp -R ./AppleHDA_ALC283.kext /System/Library/Extensions
+	if [ "`which tag`" != "" ]; then sudo tag -a Blue /System/Library/Extensions/AppleHDA_ALC283.kext; fi
+	make update_kernelcache
 
 # Patch with 'patchmatic'
 
