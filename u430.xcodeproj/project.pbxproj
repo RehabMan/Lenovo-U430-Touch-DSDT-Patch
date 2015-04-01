@@ -38,6 +38,7 @@
 		84637D8F1A15A58A00D08D05 /* iaoe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = iaoe.txt; path = patches/iaoe.txt; sourceTree = "<group>"; };
 		84678CB8189F965300B5C1BE /* audio.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = audio.txt; path = patches/audio.txt; sourceTree = "<group>"; };
 		8467C38E1A23A9FC00FCF396 /* mount_efi.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mount_efi.sh; sourceTree = "<group>"; };
+		84800CE41ACC2341003B53C2 /* card_reader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = card_reader.txt; path = patches/card_reader.txt; sourceTree = "<group>"; };
 		8499623A1857F04D009A226D /* syntax_dsdt.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = syntax_dsdt.txt; path = patches/syntax_dsdt.txt; sourceTree = "<group>"; };
 		84ADB53718860F9600097B3C /* remove_wmi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = remove_wmi.txt; path = patches/remove_wmi.txt; sourceTree = "<group>"; };
 		84ADCC25187CB0A100720ACA /* keyboard.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = keyboard.txt; path = patches/keyboard.txt; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 				8434661519392FEF002D2B01 /* usb.txt */,
 				845B736719509CF50094F3E3 /* ar92xx_wifi.txt */,
 				84DE48971A9D721300FB4F90 /* bcm_wifi.txt */,
+				84800CE41ACC2341003B53C2 /* card_reader.txt */,
 				84FCD8221A1ADB98006940E4 /* nvidia_off.txt */,
 				84C95FCD1A3C10F100118E8C /* syntax_ppc.txt */,
 				843A4C481884C49D009AF7FE /* not used */,
