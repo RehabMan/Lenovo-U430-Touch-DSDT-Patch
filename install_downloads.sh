@@ -47,6 +47,7 @@ function install_binary
         echo installing $1 to /usr/bin
         $SUDO rm -f /usr/bin/`basename $1`
         $SUDO cp -f $1 /usr/bin
+        $SUDO $TAG -a Gray /usr/bin/`basename $1`
     fi
 }
 
@@ -137,9 +138,10 @@ if [ $? -ne 0 ]; then
 fi
 
 # install VoodooPS2Daemon
+echo Installing VoodooPS2Daemon to /usr/bin and /Library/LaunchDaemons...
 cd ./downloads/kexts/RehabMan-Voodoo-*
 $SUDO cp ./Release/VoodooPS2Daemon /usr/bin
 $SUDO $TAG -a Gray /usr/bin/VoodooPS2Daemon
-$SUDO ./org.rehabman.voodoo.driver.Daemon.plist /Library/LaunchDaemons
+$SUDO cp ./org.rehabman.voodoo.driver.Daemon.plist /Library/LaunchDaemons
 $SUDO $TAG -a Gray /Library/LaunchDaemons/org.rehabman.voodoo.driver.Daemon.plist
 cd ../..
