@@ -243,7 +243,7 @@
 					</dict>
 				</dict>
 			</dict>
-			<key>LineOut</key>
+			<key>#LineOut</key>
 			<dict>
 				<key>AmpPostDelay</key>
 				<integer>100</integer>
@@ -3325,8 +3325,8 @@
 			</dict>
 			<key>Outputs</key>
 			<array>
-				<string>Headphone</string>
 				<string>IntSpeaker</string>
+				<string>Headphone</string>
 			</array>
 			<key>PathMapID</key>
 			<integer>283</integer>

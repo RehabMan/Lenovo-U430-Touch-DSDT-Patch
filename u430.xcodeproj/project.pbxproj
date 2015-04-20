@@ -140,9 +140,9 @@
 		84B540381ACB34B600D8ABAE /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				84490D5D1A14945B000E1BFB /* patch_hda.sh */,
 				84B540361ACB34A200D8ABAE /* layout86.plist */,
 				84B540371ACB34A200D8ABAE /* Platforms.plist */,
-				84490D5D1A14945B000E1BFB /* patch_hda.sh */,
 				845CCF5C19A2B0F000C6B5C0 /* ahhcd.plist */,
 			);
 			name = audio;

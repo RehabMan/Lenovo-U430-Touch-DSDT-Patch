@@ -114,8 +114,11 @@ AppleHDA_ALC283.kext: $(RESOURCES)/ahhcd.plist $(RESOURCES)/layout/Platforms.xml
 	./patch_hda.sh
 	touch $@
 
-$(RESOURCES)/layout/Platforms.xml.zlib: $(RESOURCES)/layout/Platforms.plist
-	./tools/zlib deflate $< >$@
+$(RESOURCES)/layout/Platforms.xml.zlib: $(RESOURCES)/layout/Platforms.plist /System/Library/Extensions/AppleHDA.kext/Contents/Resources/Platforms.xml.zlib
+	./tools/zlib inflate /System/Library/Extensions/AppleHDA.kext/Contents/Resources/Platforms.xml.zlib >/tmp/rm_Platforms.plist
+	/usr/libexec/plistbuddy -c "Delete ':PathMaps'" /tmp/rm_Platforms.plist
+	/usr/libexec/plistbuddy -c "Merge $(RESOURCES)/layout/Platforms.plist" /tmp/rm_Platforms.plist
+	./tools/zlib deflate /tmp/rm_Platforms.plist >$@
 
 $(RESOURCES)/layout/layout86.xml.zlib: $(RESOURCES)/layout/layout86.plist
 	./tools/zlib deflate $< >$@
