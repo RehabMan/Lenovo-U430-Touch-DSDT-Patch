@@ -92,6 +92,8 @@
 					<data>
 					AwAAAA==
 					</data>
+					<key>Codec</key>
+					<string>Mirone/RehabMan - Realtek ALC233</string>
 					<key>CodecID</key>
 					<integer>283902595</integer>
 					<key>ConfigData</key>
