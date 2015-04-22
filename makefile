@@ -15,6 +15,8 @@ BUILDDIR=./build
 PATCHED=./patched
 UNPATCHED=./unpatched
 RESOURCES=./Resources_ALC283
+HDAINJECT=AppleHDA_ALC283.kext
+HDALAYOUT=layout86
 
 # DSDT is easy to find...
 DSDT=DSDT
@@ -55,7 +57,7 @@ IASLFLAGS=-ve
 IASL=iasl
 
 .PHONY: all
-all: $(PRODUCTS) AppleHDA_ALC283.kext
+all: $(PRODUCTS) $(HDAINJECT)
 
 $(BUILDDIR)/DSDT.aml: $(PATCHED)/$(DSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
@@ -110,7 +112,7 @@ ifneq "$(IAOE)" ""
 	cp $(BUILDDIR)/$(IAOE).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-7.aml
 endif
 
-AppleHDA_ALC283.kext: $(RESOURCES)/ahhcd.plist $(RESOURCES)/layout/Platforms.xml.zlib $(RESOURCES)/layout/layout86.xml.zlib ./patch_hda.sh
+$(HDAINJECT): $(RESOURCES)/ahhcd.plist $(RESOURCES)/layout/Platforms.xml.zlib $(RESOURCES)/layout/$(HDALAYOUT).xml.zlib ./patch_hda.sh
 	./patch_hda.sh
 	touch $@
 
@@ -120,7 +122,7 @@ $(RESOURCES)/layout/Platforms.xml.zlib: $(RESOURCES)/layout/Platforms.plist /Sys
 	/usr/libexec/plistbuddy -c "Merge $(RESOURCES)/layout/Platforms.plist" /tmp/rm_Platforms.plist
 	./tools/zlib deflate /tmp/rm_Platforms.plist >$@
 
-$(RESOURCES)/layout/layout86.xml.zlib: $(RESOURCES)/layout/layout86.plist
+$(RESOURCES)/layout/$(HDALAYOUT).xml.zlib: $(RESOURCES)/layout/$(HDALAYOUT).plist
 	./tools/zlib deflate $< >$@
 
 .PHONY: update_kernelcache
@@ -130,9 +132,9 @@ update_kernelcache:
 
 .PHONY: install_hda
 install_hda:
-	sudo rm -Rf /System/Library/Extensions/AppleHDA_ALC283.kext
-	sudo cp -R ./AppleHDA_ALC283.kext /System/Library/Extensions
-	if [ "`which tag`" != "" ]; then sudo tag -a Blue /System/Library/Extensions/AppleHDA_ALC283.kext; fi
+	sudo rm -Rf /System/Library/Extensions/$(HDAINJECT)
+	sudo cp -R ./$(HDAINJECT) /System/Library/Extensions
+	if [ "`which tag`" != "" ]; then sudo tag -a Blue /System/Library/Extensions/$(HDAINJECT); fi
 	make update_kernelcache
 
 # Patch with 'patchmatic'

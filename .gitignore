@@ -1,7 +1,5 @@
 .DS_Store
 stash/*
-ssdt?.dsl
-dsdt.dsl
 downloads/*
 patched/ssdt*.dsl
 patched/dsdt.dsl
