@@ -40,6 +40,7 @@
 		8467C38E1A23A9FC00FCF396 /* mount_efi.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mount_efi.sh; sourceTree = "<group>"; };
 		84800CE41ACC2341003B53C2 /* card_reader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = card_reader.txt; path = patches/card_reader.txt; sourceTree = "<group>"; };
 		8499623A1857F04D009A226D /* syntax_dsdt.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = syntax_dsdt.txt; path = patches/syntax_dsdt.txt; sourceTree = "<group>"; };
+		849F78781AEE6B0A006B721E /* refs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = refs.txt; sourceTree = "<group>"; };
 		84ADB53718860F9600097B3C /* remove_wmi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = remove_wmi.txt; path = patches/remove_wmi.txt; sourceTree = "<group>"; };
 		84ADCC25187CB0A100720ACA /* keyboard.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = keyboard.txt; path = patches/keyboard.txt; sourceTree = "<group>"; };
 		84B540361ACB34A200D8ABAE /* layout86.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = layout86.plist; path = Resources_ALC283/layout/layout86.plist; sourceTree = "<group>"; };
@@ -63,6 +64,7 @@
 				8455352818E65265001ADBFD /* config.plist */,
 				840152EF182AE45E00D58B0A /* makefile */,
 				840152F0182AE46D00D58B0A /* disassemble.sh */,
+				849F78781AEE6B0A006B721E /* refs.txt */,
 				8467C38E1A23A9FC00FCF396 /* mount_efi.sh */,
 				ED3F518B1A2029DE0060691A /* download.sh */,
 				ED3F518A1A2029DE0060691A /* install_downloads.sh */,
