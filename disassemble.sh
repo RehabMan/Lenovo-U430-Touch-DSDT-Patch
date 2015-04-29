@@ -39,7 +39,7 @@ fi
 
 cd ./tmp
 rm ../unpatched/*.dsl
-iasl -da -dl *
+iasl -da -dl -fe ../refs.txt *
 mv *.dsl ../unpatched
 
 cd ..
