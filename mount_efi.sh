@@ -30,7 +30,7 @@ fi
 # Get the index of the EFI partition
 EFIIndex=$(LC_ALL=C /usr/sbin/gpt -r show "/dev/$DiskDevice" 2>/dev/null | awk 'toupper($7) == "C12A7328-F81F-11D2-BA4B-00A0C93EC93B" {print $3; exit}')
 [ -z "$EFIIndex" ] && EFIIndex=$(LC_ALL=C diskutil list "$DiskDevice" 2>/dev/null | awk '$2 == "EFI" {print $1; exit}' | cut -d : -f 1)
-[ -z "$EFIIndex" ] && EFIIndex=$(LC_ALL=C grep "EFI"|awk '{print $1}'|cut -d : -f 1)
+[ -z "$EFIIndex" ] && EFIIndex=$(LC_ALL=C diskutil list "$DiskDevice" 2>/dev/null | grep "EFI"|awk '{print $1}'|cut -d : -f 1)
 [ -z "$EFIIndex" ] && EFIIndex=1 # if not found use the index 1
 
 # Define the EFIDevice
