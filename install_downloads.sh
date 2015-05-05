@@ -1,7 +1,7 @@
 #set -x
 
 SUDO=sudo
-#SUDO=echo
+#SUDO='echo #'
 #SUDO=nothing
 TAG=`pwd`/tools/tag
 
