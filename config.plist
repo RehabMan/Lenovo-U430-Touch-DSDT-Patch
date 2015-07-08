@@ -206,7 +206,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>AppleHDA ALC283 (1 of 3)</string>
+				<string>AppleHDA ALC283 (1 of 4)</string>
 				<key>Find</key>
 				<data>PYQI7BA=</data>
 				<key>Name</key>
@@ -216,7 +216,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>AppleHDA ALC283 (2 of 3)</string>
+				<string>AppleHDA ALC283 (2 of 4)</string>
 				<key>Find</key>
 				<data>PYUI7BA=</data>
 				<key>Name</key>
@@ -226,13 +226,23 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>AppleHDA ALC283 (3 of 3)</string>
+				<string>AppleHDA ALC283 (3 of 4)</string>
 				<key>Find</key>
 				<data>PYQZ1BE=</data>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Replace</key>
 				<data>PYMC7BA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>AppleHDA ALC283 patch #4 of 4 (new in 10.11, credit lisai9093)</string>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Find</key>
+				<data>gxnUEQ==</data>
+				<key>Replace</key>
+				<data>AAAAAA==</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
