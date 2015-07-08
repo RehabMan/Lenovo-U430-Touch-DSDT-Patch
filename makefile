@@ -17,6 +17,7 @@ UNPATCHED=./unpatched
 RESOURCES=./Resources_ALC283
 HDAINJECT=AppleHDA_ALC283.kext
 HDALAYOUT=layout86
+USBINJECT=USBXHC_u430.kext
 
 # DSDT is easy to find...
 DSDT=DSDT
@@ -136,6 +137,14 @@ install_hda:
 	sudo cp -R ./$(HDAINJECT) /System/Library/Extensions
 	if [ "`which tag`" != "" ]; then sudo tag -a Blue /System/Library/Extensions/$(HDAINJECT); fi
 	make update_kernelcache
+
+.PHONY: install_usb
+install_usb:
+	sudo rm -Rf /System/Library/Extensions/$(USBINJECT)
+	sudo cp -R ./$(USBINJECT) /System/Library/Extensions
+	if [ "`which tag`" != "" ]; then sudo tag -a Blue /System/Library/Extensions/$(USBINJECT); fi
+	make update_kernelcache
+
 
 # Patch with 'patchmatic'
 

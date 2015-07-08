@@ -24,10 +24,10 @@ into device name_adr 0x00190000 insert begin Name(_PRW, Package() { 0x6D, 0 }) e
 
 # rename XHC to XHC1
 
-into device label XHC set_label begin XHC1 end;
-into_all all code_regex XHC\. replaceall_matched begin XHC1. end;
-into_all all code_regex XHC_\. replaceall_matched begin XHC1. end;
-into_all all code_regex \.XHC, replaceall_matched begin .XHC1, end;
+#into device label XHC set_label begin XHC1 end;
+#into_all all code_regex XHC\. replaceall_matched begin XHC1. end;
+#into_all all code_regex XHC_\. replaceall_matched begin XHC1. end;
+#into_all all code_regex \.XHC, replaceall_matched begin .XHC1, end;
 
 #Maintained by: RehabMan for: Laptop Patches
 #usb_USB_7-series.txt

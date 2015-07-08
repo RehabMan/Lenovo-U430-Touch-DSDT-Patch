@@ -106,8 +106,15 @@ if [ $? -ne 0 ]; then
     echo Installing kexts...
     cd ./downloads/kexts
     for kext in *.zip; do
-        install $kext "FakePCIID_BCM57XX|FakePCIID_Intel"
+        install $kext "FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector"
     done
+    cd RehabMan-BrcmPatchRAM*
+    if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
+        install_kext BrcmBluetoothInjector.kext
+    else
+        install_kext BrcmPatchRAM.kext
+    fi
+    cd ..
     cd ../..
 fi
 
@@ -115,6 +122,10 @@ fi
 
 install_kext AppleHDA_ALC283.kext
 #install_kext AirPort_AR9280_as_AR946x.kext
+
+if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
+    install_kext USBXHC_u430.kext
+fi
 
 #check_directory *.kext
 #if [ $? -ne 0 ]; then
