@@ -54,6 +54,8 @@
 		84FCD8241A1B21E4006940E4 /* ssdt5.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssdt5.dsl; sourceTree = "<group>"; };
 		ED3F518A1A2029DE0060691A /* install_downloads.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_downloads.sh; sourceTree = "<group>"; };
 		ED3F518B1A2029DE0060691A /* download.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = download.sh; sourceTree = "<group>"; };
+		ED5F40D91B4F2FAE0041A26A /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_backlight.sh; sourceTree = "<group>"; };
+		ED5F40DA1B4F32440041A26A /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Backlight.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -68,6 +70,7 @@
 				8467C38E1A23A9FC00FCF396 /* mount_efi.sh */,
 				ED3F518B1A2029DE0060691A /* download.sh */,
 				ED3F518A1A2029DE0060691A /* install_downloads.sh */,
+				ED5F40DB1B4F324A0041A26A /* backlight */,
 				84B540381ACB34B600D8ABAE /* audio */,
 				840152FC182AE4C600D58B0A /* patches */,
 				8444F2C118B9DDD500D59FF1 /* unpatched */,
@@ -148,6 +151,15 @@
 				845CCF5C19A2B0F000C6B5C0 /* ahhcd.plist */,
 			);
 			name = audio;
+			sourceTree = "<group>";
+		};
+		ED5F40DB1B4F324A0041A26A /* backlight */ = {
+			isa = PBXGroup;
+			children = (
+				ED5F40D91B4F2FAE0041A26A /* patch_backlight.sh */,
+				ED5F40DA1B4F32440041A26A /* Backlight.plist */,
+			);
+			name = backlight;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

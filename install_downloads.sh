@@ -106,15 +106,16 @@ if [ $? -ne 0 ]; then
     echo Installing kexts...
     cd ./downloads/kexts
     for kext in *.zip; do
-        install $kext "FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector"
+        install $kext "FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector|ACPIBacklight"
     done
-    cd RehabMan-BrcmPatchRAM*
     if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
-        install_kext BrcmBluetoothInjector.kext
+        # 10.11 needs only bluetooth injector
+        cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmBluetoothInjector.kext && cd ../..
     else
-        install_kext BrcmPatchRAM.kext
+        # prior to 10.11, need uploader and ACPIBacklight.kext
+        cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmPatchRAM.kext && cd ../..
+        cd RehabMan-ACPIBacklight*/Release && install_kext ACPIBacklight.kext && cd ../..
     fi
-    cd ..
     cd ../..
 fi
 
@@ -125,6 +126,11 @@ install_kext AppleHDA_ALC283.kext
 
 if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
     install_kext USBXHC_u430.kext
+    install_kext AppleBacklightInjector.kext
+    # remove ACPIBacklight.kext if it is installed (doesn't work with 10.11)
+    if [ -d /System/Library/Extensions/ACPIBacklight.kext ]; then
+        $SUDO rm -Rf /System/Library/Extensions/ACPIBacklight.kext
+    fi
 fi
 
 #check_directory *.kext

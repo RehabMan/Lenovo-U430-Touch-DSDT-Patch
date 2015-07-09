@@ -18,6 +18,7 @@ RESOURCES=./Resources_ALC283
 HDAINJECT=AppleHDA_ALC283.kext
 HDALAYOUT=layout86
 USBINJECT=USBXHC_u430.kext
+BACKLIGHTINJECT=AppleBacklightInjector.kext
 
 # DSDT is easy to find...
 DSDT=DSDT
@@ -58,7 +59,7 @@ IASLFLAGS=-ve
 IASL=iasl
 
 .PHONY: all
-all: $(PRODUCTS) $(HDAINJECT)
+all: $(PRODUCTS) $(HDAINJECT) $(BACKLIGHTINJECT)
 
 $(BUILDDIR)/DSDT.aml: $(PATCHED)/$(DSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
@@ -117,6 +118,10 @@ $(HDAINJECT): $(RESOURCES)/ahhcd.plist $(RESOURCES)/layout/Platforms.xml.zlib $(
 	./patch_hda.sh
 	touch $@
 
+$(BACKLIGHTINJECT): Backlight.plist patch_backlight.sh
+	./patch_backlight.sh
+	touch $@
+
 $(RESOURCES)/layout/Platforms.xml.zlib: $(RESOURCES)/layout/Platforms.plist /System/Library/Extensions/AppleHDA.kext/Contents/Resources/Platforms.xml.zlib
 	./tools/zlib inflate /System/Library/Extensions/AppleHDA.kext/Contents/Resources/Platforms.xml.zlib >/tmp/rm_Platforms.plist
 	/usr/libexec/plistbuddy -c "Delete ':PathMaps'" /tmp/rm_Platforms.plist
@@ -143,6 +148,13 @@ install_usb:
 	sudo rm -Rf /System/Library/Extensions/$(USBINJECT)
 	sudo cp -R ./$(USBINJECT) /System/Library/Extensions
 	if [ "`which tag`" != "" ]; then sudo tag -a Blue /System/Library/Extensions/$(USBINJECT); fi
+	make update_kernelcache
+
+.PHONY: install_backlight
+install_backlight:
+	sudo rm -Rf /System/Library/Extensions/$(BACKLIGHTINJECT)
+	sudo cp -R ./$(BACKLIGHTINJECT) /System/Library/Extensions
+	if [ "`which tag`" != "" ]; then sudo tag -a Blue /System/Library/Extensions/$(BACKLIGHTINJECT); fi
 	make update_kernelcache
 
 
