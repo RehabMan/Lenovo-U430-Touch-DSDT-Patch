@@ -1,16 +1,19 @@
 #!/bin/bash
 
-# set -x
+#set -x
 
 uid=15
 vanilla=/System/Library/Extensions/AppleBacklight.kext
 
 ioreg -n AppleBacklightDisplay -arxw0>/tmp/org.rehabman.display.plist
-id=`/usr/libexec/PlistBuddy -c "Print :0:DisplayProductID" /tmp/org.rehabman.display.plist`
-if [ $id == "Error Reading File"* ]; then
+if [ ! -s /tmp/org.rehabman.display.plist ]; then
     ioreg -n AppleDisplay -arxw0>/tmp/org.rehabman.display.plist
-    id=`/usr/libexec/PlistBuddy -c "Print :0:DisplayProductID" /tmp/org.rehabman.display.plist`
 fi
+if [ ! -s /tmp/org.rehabman.display.plist ]; then
+    echo Error generating AppleBaclightInjector.kext; not able to determine display-id!
+    exit 1
+fi
+id=`/usr/libexec/PlistBuddy -c "Print :0:DisplayProductID" /tmp/org.rehabman.display.plist`
 id=`printf "F%02dT%04x" $uid $id`
 sed "s/F99T1234/$id/g" Backlight.plist >/tmp/org.rehabman.merge.plist
 
