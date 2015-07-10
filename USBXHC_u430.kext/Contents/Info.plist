@@ -99,8 +99,6 @@
 			<string>AppleUSBXHCIPCI</string>
 			<key>IOProviderMergeProperties</key>
 			<dict>
-				<key>kUSBSleepSupported</key>
-				<true/>
 				<key>kUSBMuxEnabled</key>
 				<true/>
 				<key>port-count</key>
@@ -109,8 +107,6 @@
 				<dict>
 					<key>HS01</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>255</integer>
 						<key>port</key>
@@ -118,8 +114,6 @@
 					</dict>
 					<key>HS02</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>0</integer>
 						<key>port</key>
@@ -127,8 +121,6 @@
 					</dict>
 					<key>HS03</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>0</integer>
 						<key>port</key>
@@ -136,8 +128,6 @@
 					</dict>
 					<key>HS04</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>255</integer>
 						<key>port</key>
@@ -145,8 +135,6 @@
 					</dict>
 					<key>HS05</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>255</integer>
 						<key>port</key>
@@ -154,8 +142,6 @@
 					</dict>
 					<key>HS06</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>255</integer>
 						<key>port</key>
@@ -163,8 +149,6 @@
 					</dict>
 					<key>HS07</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>0</integer>
 						<key>port</key>
@@ -172,8 +156,6 @@
 					</dict>
 					<key>HS08</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>0</integer>
 						<key>port</key>
@@ -181,8 +163,6 @@
 					</dict>
 					<key>HS09</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>255</integer>
 						<key>port</key>
@@ -190,8 +170,6 @@
 					</dict>
 					<key>SSP1</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>3</integer>
 						<key>port</key>
@@ -199,8 +177,6 @@
 					</dict>
 					<key>SSP2</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>255</integer>
 						<key>port</key>
@@ -208,8 +184,6 @@
 					</dict>
 					<key>SSP3</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>255</integer>
 						<key>port</key>
@@ -217,8 +191,6 @@
 					</dict>
 					<key>SSP4</key>
 					<dict>
-						<key>UsbMux</key>
-						<true/>
 						<key>UsbConnector</key>
 						<integer>255</integer>
 						<key>port</key>
