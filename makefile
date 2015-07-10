@@ -118,10 +118,6 @@ $(HDAINJECT): $(RESOURCES)/ahhcd.plist $(RESOURCES)/layout/Platforms.xml.zlib $(
 	./patch_hda.sh
 	touch $@
 
-$(BACKLIGHTINJECT): Backlight.plist patch_backlight.sh
-	./patch_backlight.sh
-	touch $@
-
 $(RESOURCES)/layout/Platforms.xml.zlib: $(RESOURCES)/layout/Platforms.plist /System/Library/Extensions/AppleHDA.kext/Contents/Resources/Platforms.xml.zlib
 	./tools/zlib inflate /System/Library/Extensions/AppleHDA.kext/Contents/Resources/Platforms.xml.zlib >/tmp/rm_Platforms.plist
 	/usr/libexec/plistbuddy -c "Delete ':PathMaps'" /tmp/rm_Platforms.plist
@@ -130,6 +126,10 @@ $(RESOURCES)/layout/Platforms.xml.zlib: $(RESOURCES)/layout/Platforms.plist /Sys
 
 $(RESOURCES)/layout/$(HDALAYOUT).xml.zlib: $(RESOURCES)/layout/$(HDALAYOUT).plist
 	./tools/zlib deflate $< >$@
+
+$(BACKLIGHTINJECT): Backlight.plist patch_backlight.sh
+	./patch_backlight.sh
+	touch $@
 
 .PHONY: update_kernelcache
 update_kernelcache:
