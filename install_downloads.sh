@@ -1,7 +1,7 @@
 #set -x
 
-SUDO=sudo
-#SUDO='echo #'
+#SUDO=sudo
+SUDO='echo #'
 #SUDO=nothing
 TAG=`pwd`/tools/tag
 
@@ -111,10 +111,13 @@ if [ $? -ne 0 ]; then
     if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
         # 10.11 needs only bluetooth injector
         cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmBluetoothInjector.kext && cd ../..
+        $SUDO rm -Rf /System/Library/Extensions/BrcmPatchRAM.kext
     else
         # prior to 10.11, need uploader and ACPIBacklight.kext
         cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmPatchRAM.kext && cd ../..
-        cd RehabMan-ACPIBacklight*/Release && install_kext ACPIBacklight.kext && cd ../..
+        cd RehabMan-Backlight*/Release && install_kext ACPIBacklight.kext && cd ../..
+        # remove injector just in case
+        $SUDO rm -Rf /System/Library/Extensions/BrcmBluetoothInjector.kext
     fi
     cd ../..
 fi

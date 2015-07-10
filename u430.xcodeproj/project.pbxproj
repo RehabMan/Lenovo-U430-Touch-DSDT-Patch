@@ -56,6 +56,7 @@
 		ED3F518B1A2029DE0060691A /* download.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = download.sh; sourceTree = "<group>"; };
 		ED5F40D91B4F2FAE0041A26A /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_backlight.sh; sourceTree = "<group>"; };
 		ED5F40DA1B4F32440041A26A /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Backlight.plist; sourceTree = "<group>"; };
+		EDCE1AC61B4F2C98006D67D7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = USBXHC_u430.kext/Contents/Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -71,6 +72,7 @@
 				ED3F518B1A2029DE0060691A /* download.sh */,
 				ED3F518A1A2029DE0060691A /* install_downloads.sh */,
 				ED5F40DB1B4F324A0041A26A /* backlight */,
+				EDCE1AC51B4F2C81006D67D7 /* USBXHC_u430.kext */,
 				84B540381ACB34B600D8ABAE /* audio */,
 				840152FC182AE4C600D58B0A /* patches */,
 				8444F2C118B9DDD500D59FF1 /* unpatched */,
@@ -160,6 +162,14 @@
 				ED5F40DA1B4F32440041A26A /* Backlight.plist */,
 			);
 			name = backlight;
+            sourceTree = "<group>";
+        };
+		EDCE1AC51B4F2C81006D67D7 /* USBXHC_u430.kext */ = {
+			isa = PBXGroup;
+			children = (
+				EDCE1AC61B4F2C98006D67D7 /* Info.plist */,
+			);
+			name = USBXHC_u430.kext;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
