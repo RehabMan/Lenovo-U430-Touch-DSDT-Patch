@@ -111,6 +111,7 @@ if [ $? -ne 0 ]; then
     if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
         # 10.11 needs only bluetooth injector
         cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmBluetoothInjector.kext && cd ../..
+        # remove uploader just in case
         $SUDO rm -Rf /System/Library/Extensions/BrcmPatchRAM.kext
     else
         # prior to 10.11, need uploader and ACPIBacklight.kext
@@ -123,9 +124,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # install (injector) kexts in the repo itself
-
 install_kext AppleHDA_ALC283.kext
-#install_kext AirPort_AR9280_as_AR946x.kext
 
 if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
     install_kext USBXHC_u430.kext
