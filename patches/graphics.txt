@@ -74,8 +74,14 @@ end;
 # Make a slight change to the backlight patch...
 # by changing LMAX to 0, will use the BIOS value (0x3a9)
 #
+into device label PNLF code_regex Name.*\(LMAX,.*\) replace_matched begin Name(LMAX, 0) end;
 
-into device label PNLF code_regex Name.*\(LMAX,.*\) replace_matched begin Name (LMAX, 0) end;
+#
+# Make another slight change.
+# by changing XOPT=6, we enable IntelBacklightHandler even on Yosemite (and prior)
+# normally, it would be used only on 10.11.
+#
+into device label PNLF code_regex Name.*\(XOPT,.*\) replace_matched begin Name(XOPT, 0x06) end;
 
 #into device label PNLF insert
 #begin
