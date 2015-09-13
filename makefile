@@ -16,7 +16,7 @@ PATCHED=./patched
 UNPATCHED=./unpatched
 RESOURCES=./Resources_ALC283
 HDAINJECT=AppleHDA_ALC283.kext
-HDALAYOUT=layout86
+HDALAYOUT=layout3
 USBINJECT=USBXHC_u430.kext
 BACKLIGHTINJECT=AppleBacklightInjector.kext
 
