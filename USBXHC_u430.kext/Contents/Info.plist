@@ -50,7 +50,7 @@
 			<key>model</key>
 			<string>MacBookAir6,2</string>
 		</dict>
-		<key>MacBookAir6,2-PRT1-hub</key>
+		<key>MacBookAir6,2-PR01-hub</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
 			<string>com.apple.driver.AppleUSBMergeNub</string>

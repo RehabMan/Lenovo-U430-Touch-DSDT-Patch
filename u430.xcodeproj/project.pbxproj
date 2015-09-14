@@ -32,6 +32,7 @@
 		84517BE6186FC7A4003ACE44 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		84517BE7186FC7A4003ACE44 /* ssdt4.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssdt4.dsl; sourceTree = "<group>"; };
 		845362E818B99935005C7C7B /* debug1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debug1.txt; path = patches/debug1.txt; sourceTree = "<group>"; };
+		845367311B99EEE1001942C8 /* graphics_experiment.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = graphics_experiment.txt; path = patches/graphics_experiment.txt; sourceTree = "<group>"; };
 		8455352818E65265001ADBFD /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		845B736719509CF50094F3E3 /* ar92xx_wifi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ar92xx_wifi.txt; path = patches/ar92xx_wifi.txt; sourceTree = "<group>"; };
 		845CCF5C19A2B0F000C6B5C0 /* ahhcd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ahhcd.plist; path = Resources_ALC283/ahhcd.plist; sourceTree = "<group>"; };
@@ -89,6 +90,7 @@
 				84678CB8189F965300B5C1BE /* audio.txt */,
 				844B06C118A29060008660C6 /* hdmi_audio.txt */,
 				84DC2FD81A148531003845F1 /* graphics.txt */,
+				845367311B99EEE1001942C8 /* graphics_experiment.txt */,
 				843B1BA718B9CC8400852306 /* sensors.txt */,
 				84ADCC25187CB0A100720ACA /* keyboard.txt */,
 				84ADB53718860F9600097B3C /* remove_wmi.txt */,
@@ -162,8 +164,8 @@
 				ED5F40DA1B4F32440041A26A /* Backlight.plist */,
 			);
 			name = backlight;
-            sourceTree = "<group>";
-        };
+			sourceTree = "<group>";
+		};
 		EDCE1AC51B4F2C81006D67D7 /* USBXHC_u430.kext */ = {
 			isa = PBXGroup;
 			children = (

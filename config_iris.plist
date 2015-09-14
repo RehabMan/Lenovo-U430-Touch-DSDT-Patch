@@ -85,7 +85,7 @@
 		<key>FakeID</key>
 		<dict>
 			<key>IntelGFX</key>
-			<string>0x04128086</string>
+			<string>0x0</string>
 		</dict>
 		<key>USB</key>
 		<dict>
