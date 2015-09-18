@@ -196,11 +196,12 @@ ifeq "$(DEBUG)" "1"
 	#patchmatic $@ patches/debug1.txt
 endif
 
-$(PATCHED)/$(IGPU).dsl: $(UNPATCHED)/$(IGPU).dsl patches/cleanup.txt $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(LAPTOPGIT)/graphics/graphics_PNLF_haswell.txt patches/hdmi_audio.txt patches/graphics.txt
+$(PATCHED)/$(IGPU).dsl: $(UNPATCHED)/$(IGPU).dsl patches/cleanup.txt $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(LAPTOPGIT)/graphics/graphics_PNLF_haswell.txt $(LAPTOPGIT)/graphics/graphics_PNLF.txt patches/hdmi_audio.txt patches/graphics.txt
 	cp $(UNPATCHED)/$(IGPU).dsl $(PATCHED)
 	patchmatic $@ patches/cleanup.txt
 	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
-	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_PNLF_haswell.txt
+	#patchmatic $@ $(LAPTOPGIT)/graphics/graphics_PNLF_haswell.txt
+	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_PNLF.txt
 	patchmatic $@ patches/hdmi_audio.txt
 	patchmatic $@ patches/graphics.txt
 ifeq "$(DEBUG)" "1"
