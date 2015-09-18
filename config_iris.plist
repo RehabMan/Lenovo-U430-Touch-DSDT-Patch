@@ -260,7 +260,7 @@
 				<key>Find</key>
 				<data>QYjE6xE=</data>
 				<key>Name</key>
-				<string>IOGraphicsFamily</string>
+				<string>#IOGraphicsFamily</string>
 				<key>Replace</key>
 				<data>QYjE6zE=</data>
 			</dict>
@@ -273,6 +273,16 @@
 				<string>#IOGraphicsFamily</string>
 				<key>Replace</key>
 				<data>McB0W0g=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Boot graphics glitch, 10.10.x/10.11.x, credit lisai9093</string>
+				<key>Find</key>
+				<data>AQAAdRc=</data>
+				<key>Name</key>
+				<string>IOGraphicsFamily</string>
+				<key>Replace</key>
+				<data>AQAAdBc=</data>
 			</dict>
 		</array>
 	</dict>
