@@ -8,11 +8,11 @@
 			<key>#AFGLowPowerState</key>
 			<data>AwAAAA==</data>
 			<key>Codec</key>
-			<string>Mirone - Realtek ALC283</string>
+			<string>Mirone - Realtek ALC283 - extmic</string>
 			<key>CodecID</key>
 			<integer>283902595</integer>
 			<key>ConfigData</key>
-			<data>ASccEAEnHQEBJx6gAScfkAFHHEABRx0BAUceFwFHH5ABdxzwAXcdAAF3HgABdx9AAYcc8AGHHQABhx4AAYcfQAGXHPABlx0AAZceAAGXH0ABpxzwAacdAAGnHgABpx8AAbcc8AG3HQABtx4AAbcfQAHXHPAB1x0AAdceAAHXH0AB5xzwAecdAAHnHgAB5x9AAhccUAIXHRACFx4hAhcfAwFHDAICFwwC</data>
+			<data>ASccEAEnHQEBJx6gAScfkAFHHEABRx0BAUceFwFHH5ACFxxQAhcdEAIXHisCFx8CAZcc8AGXHQABlx6LAZcfAgFHDAICFwwC</data>
 			<key>FuncGroup</key>
 			<integer>1</integer>
 			<key>LayoutID</key>

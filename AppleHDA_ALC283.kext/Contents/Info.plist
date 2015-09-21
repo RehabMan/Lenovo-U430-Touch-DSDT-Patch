@@ -93,18 +93,14 @@
 					AwAAAA==
 					</data>
 					<key>Codec</key>
-					<string>Mirone - Realtek ALC283</string>
+					<string>Mirone - Realtek ALC283 - extmic</string>
 					<key>CodecID</key>
 					<integer>283902595</integer>
 					<key>ConfigData</key>
 					<data>
 					ASccEAEnHQEBJx6gAScfkAFHHEABRx0BAUce
-					FwFHH5ABdxzwAXcdAAF3HgABdx9AAYcc8AGH
-					HQABhx4AAYcfQAGXHPABlx0AAZceAAGXH0AB
-					pxzwAacdAAGnHgABpx8AAbcc8AG3HQABtx4A
-					AbcfQAHXHPAB1x0AAdceAAHXH0AB5xzwAecd
-					AAHnHgAB5x9AAhccUAIXHRACFx4hAhcfAwFH
-					DAICFwwC
+					FwFHH5ACFxxQAhcdEAIXHisCFx8CAZcc8AGX
+					HQABlx6LAZcfAgFHDAICFwwC
 					</data>
 					<key>FuncGroup</key>
 					<integer>1</integer>
