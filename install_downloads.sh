@@ -62,7 +62,7 @@ function install
         for kext in $out/Release/*.kext; do
             # install the kext when it exists regardless of filter
             if [[ -e "$SLE/`basename $kext`" || "$2" == "" || "`echo $kext | grep -vE "$2"`" != "" ]]; then
-                install_kext $kext "$2
+                install_kext $kext
             fi
         done
         installed=1
@@ -72,7 +72,7 @@ function install
         for kext in $out/*.kext; do
             # install the kext when it exists regardless of filter
             if [[ -e "$SLE/`basename $kext`" || "$2" == "" || "`echo $kext | grep -vE "$2"`" != "" ]]; then
-                install_kext $kext "$2"
+                install_kext $kext
             fi
         done
         installed=1
@@ -105,6 +105,9 @@ if [ "$(id -u)" != "0" ]; then
     echo "This script requires superuser access..."
 fi
 
+# extract minor version (eg. 10.9 vs. 10.10 vs. 10.11)
+MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+)\. ]] && echo ${BASH_REMATCH[1]})
+
 # unzip/install kexts
 check_directory ./downloads/kexts/*.zip
 if [ $? -ne 0 ]; then
@@ -113,7 +116,7 @@ if [ $? -ne 0 ]; then
     for kext in *.zip; do
         install $kext "Sensors|FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector"
     done
-    if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
+    if [[ $MINOR_VER -ge 11 ]]; then
         # 10.11 needs BrcmPatchRAM2.kext
         cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmPatchRAM2.kext && cd ../..
         # remove BrcPatchRAM.kext just in case
@@ -136,7 +139,7 @@ fi
 # install (injector) kexts in the repo itself
 install_kext AppleHDA_ALC283.kext
 
-if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
+if [[ $MINOR_VER -ge 11 ]]; then
     install_kext USBXHC_u430.kext
     # create custom AppleBacklightInjector.kext and install
     #./patch_backlight.sh
