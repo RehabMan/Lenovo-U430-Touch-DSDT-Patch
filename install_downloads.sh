@@ -4,6 +4,7 @@ SUDO=sudo
 #SUDO='echo #'
 #SUDO=nothing
 TAG=`pwd`/tools/tag
+SLE=/System/Library/Extensions
 
 function check_directory
 {
@@ -24,10 +25,10 @@ function nothing
 function install_kext
 {
     if [ "$1" != "" ]; then
-        echo installing $1 to /System/Library/Extensions
-        $SUDO rm -Rf /System/Library/Extensions/`basename $1`
-        $SUDO cp -Rf $1 /System/Library/Extensions
-        $SUDO $TAG -a Gray /System/Library/Extensions/`basename $1`
+        echo installing $1 to $SLE
+        $SUDO rm -Rf $SLE/`basename $1`
+        $SUDO cp -Rf $1 $SLE
+        $SUDO $TAG -a Gray $SLE/`basename $1`
     fi
 }
 
@@ -59,8 +60,9 @@ function install
     check_directory $out/Release/*.kext
     if [ $? -ne 0 ]; then
         for kext in $out/Release/*.kext; do
-            if [[ "$2" == "" || "`echo $kext | grep -vE "$2"`" != "" ]]; then
-                install_kext $kext
+            # install the kext when it exists regardless of filter
+            if [[ -e "$SLE/`basename $kext`" || "$2" == "" || "`echo $kext | grep -vE "$2"`" != "" ]]; then
+                install_kext $kext "$2
             fi
         done
         installed=1
@@ -68,7 +70,10 @@ function install
     check_directory $out/*.kext
     if [ $? -ne 0 ]; then
         for kext in $out/*.kext; do
-            install_kext $kext
+            # install the kext when it exists regardless of filter
+            if [[ -e "$SLE/`basename $kext`" || "$2" == "" || "`echo $kext | grep -vE "$2"`" != "" ]]; then
+                install_kext $kext "$2"
+            fi
         done
         installed=1
     fi
@@ -106,25 +111,25 @@ if [ $? -ne 0 ]; then
     echo Installing kexts...
     cd ./downloads/kexts
     for kext in *.zip; do
-        install $kext "FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector"
+        install $kext "Sensors|FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector"
     done
     if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
         # 10.11 needs BrcmPatchRAM2.kext
         cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmPatchRAM2.kext && cd ../..
         # remove BrcPatchRAM.kext just in case
-        $SUDO rm -Rf /System/Library/Extensions/BrcmPatchRAM.kext
+        $SUDO rm -Rf $SLE/BrcmPatchRAM.kext
         # remove injector just in case
-        $SUDO rm -Rf /System/Library/Extensions/BrcmBluetoothInjector.kext
+        $SUDO rm -Rf $SLE/BrcmBluetoothInjector.kext
     else
         # prior to 10.11, need BrcmPatchRAM.kext
         cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmPatchRAM.kext && cd ../..
         # remove BrcPatchRAM2.kext just in case
-        $SUDO rm -Rf /System/Library/Extensions/BrcmPatchRAM2.kext
+        $SUDO rm -Rf $SLE/BrcmPatchRAM2.kext
         # remove injector just in case
-        $SUDO rm -Rf /System/Library/Extensions/BrcmBluetoothInjector.kext
+        $SUDO rm -Rf $SLE/BrcmBluetoothInjector.kext
     fi
     # now using IntelBacklight.kext instead of ACPIBacklight.kext
-    $SUDO rm -Rf /System/Library/Extensions/ACPIBacklight.kext
+    $SUDO rm -Rf $SLE/ACPIBacklight.kext
     cd ../..
 fi
 
@@ -137,8 +142,8 @@ if [[ "`sw_vers -productVersion`" == 10.11* ]]; then
     #./patch_backlight.sh
     #install_kext AppleBacklightInjector.kext
     # remove ACPIBacklight.kext if it is installed (doesn't work with 10.11)
-    #if [ -d /System/Library/Extensions/ACPIBacklight.kext ]; then
-    #    $SUDO rm -Rf /System/Library/Extensions/ACPIBacklight.kext
+    #if [ -d $SLE/ACPIBacklight.kext ]; then
+    #    $SUDO rm -Rf $SLE/ACPIBacklight.kext
     #fi
 fi
 
@@ -150,7 +155,7 @@ fi
 #fi
 
 # force cache rebuild with output
-$SUDO touch /System/Library/Extensions && $SUDO kextcache -u /
+$SUDO touch $SLE && $SUDO kextcache -u /
 
 # unzip/install tools
 check_directory ./downloads/tools/*.zip
