@@ -390,8 +390,6 @@
 	<key>SMBIOS</key>
 	<dict>
 		<key>ProductName</key>
-		<string>MacBookPro11,1</string>
-		<key>#ProductName-MacBookAir</key>
 		<string>MacBookAir6,2</string>
 	</dict>
 	<key>SystemParameters</key>
