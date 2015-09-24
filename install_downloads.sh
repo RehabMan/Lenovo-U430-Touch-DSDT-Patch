@@ -5,7 +5,7 @@ SUDO=sudo
 #SUDO=nothing
 TAG=`pwd`/tools/tag
 SLE=/System/Library/Extensions
-EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareStore"
+EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData"
 
 function check_directory
 {
