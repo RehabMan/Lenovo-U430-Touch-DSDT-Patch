@@ -93,22 +93,23 @@
 					AwAAAA==
 					</data>
 					<key>Codec</key>
-					<string>Mirone/RehabMan - Realtek ALC233</string>
+					<string>Mirone - Realtek ALC283</string>
 					<key>CodecID</key>
 					<integer>283902595</integer>
 					<key>ConfigData</key>
 					<data>
 					ASccEAEnHQEBJx6gAScfkAFHHEABRx0BAUce
-					FwFHH5ABdxwIAXcdAAF3HgIBdx9AAYcc8AGH
+					FwFHH5ABdxzwAXcdAAF3HgABdx9AAYcc8AGH
 					HQABhx4AAYcfQAGXHPABlx0AAZceAAGXH0AB
 					pxzwAacdAAGnHgABpx8AAbcc8AG3HQABtx4A
 					AbcfQAHXHPAB1x0AAdceAAHXH0AB5xzwAecd
-					AAHnHgAB5x9AAhccUAIXHRACFx4hAhcfAw==
+					AAHnHgAB5x9AAhccUAIXHRACFx4hAhcfAwFH
+					DAICFwwC
 					</data>
 					<key>FuncGroup</key>
 					<integer>1</integer>
 					<key>LayoutID</key>
-					<integer>86</integer>
+					<integer>3</integer>
 				</dict>
 			</array>
 			<key>IOClass</key>
