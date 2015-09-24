@@ -5,6 +5,7 @@ SUDO=sudo
 #SUDO=nothing
 TAG=`pwd`/tools/tag
 SLE=/System/Library/Extensions
+EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareStore"
 
 function check_directory
 {
@@ -114,7 +115,7 @@ if [ $? -ne 0 ]; then
     echo Installing kexts...
     cd ./downloads/kexts
     for kext in *.zip; do
-        install $kext "Sensors|FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector"
+        install $kext "$EXCEPTIONS"
     done
     if [[ $MINOR_VER -ge 11 ]]; then
         # 10.11 needs BrcmPatchRAM2.kext
