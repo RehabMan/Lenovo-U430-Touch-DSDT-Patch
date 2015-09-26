@@ -44,7 +44,6 @@
 		849F78781AEE6B0A006B721E /* refs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = refs.txt; sourceTree = "<group>"; };
 		84ADB53718860F9600097B3C /* remove_wmi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = remove_wmi.txt; path = patches/remove_wmi.txt; sourceTree = "<group>"; };
 		84ADCC25187CB0A100720ACA /* keyboard.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = keyboard.txt; path = patches/keyboard.txt; sourceTree = "<group>"; };
-		84B540361ACB34A200D8ABAE /* layout86.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = layout86.plist; path = Resources_ALC283/layout/layout86.plist; sourceTree = "<group>"; };
 		84B540371ACB34A200D8ABAE /* Platforms.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Platforms.plist; path = Resources_ALC283/layout/Platforms.plist; sourceTree = "<group>"; };
 		84BD236218B97D73000FEB2B /* debug.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debug.txt; path = patches/debug.txt; sourceTree = "<group>"; };
 		84C95FCD1A3C10F100118E8C /* syntax_ppc.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = syntax_ppc.txt; path = patches/syntax_ppc.txt; sourceTree = "<group>"; };
@@ -57,6 +56,7 @@
 		ED3F518B1A2029DE0060691A /* download.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = download.sh; sourceTree = "<group>"; };
 		ED5F40D91B4F2FAE0041A26A /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_backlight.sh; sourceTree = "<group>"; };
 		ED5F40DA1B4F32440041A26A /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Backlight.plist; sourceTree = "<group>"; };
+		ED9F2E701BB6F89C00A269C0 /* layout3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = layout3.plist; path = Resources_ALC283/layout/layout3.plist; sourceTree = "<group>"; };
 		EDCE1AC61B4F2C98006D67D7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = USBXHC_u430.kext/Contents/Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,8 +149,8 @@
 		84B540381ACB34B600D8ABAE /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				ED9F2E701BB6F89C00A269C0 /* layout3.plist */,
 				84490D5D1A14945B000E1BFB /* patch_hda.sh */,
-				84B540361ACB34A200D8ABAE /* layout86.plist */,
 				84B540371ACB34A200D8ABAE /* Platforms.plist */,
 				845CCF5C19A2B0F000C6B5C0 /* ahhcd.plist */,
 			);
