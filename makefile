@@ -54,6 +54,7 @@ ifneq "$(IAOE)" ""
 	PRODUCTS:=$(PRODUCTS) $(BUILDDIR)/$(IAOE).aml
 	ALL_PATCHED:=$(ALL_PATCHED) $(PATCHED)/$(IAOE).dsl
 endif
+PRODUCTS:=$(PRODUCTS) $(BUILDDIR)/SSDT-HACK.aml
 
 IASLFLAGS=-ve
 IASL=iasl
@@ -83,6 +84,8 @@ $(BUILDDIR)/$(IAOE).aml: $(PATCHED)/$(IAOE).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 endif
 
+$(BUILDDIR)/SSDT-HACK.aml: ./SSDT-HACK.dsl
+	$(IASL) $(IASLFLAGS) -p $@ $<
 
 .PHONY: clean
 clean:
@@ -103,6 +106,8 @@ cleanallex:
 # Clover Install
 .PHONY: install
 install: $(PRODUCTS)
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-HACK.aml
+ifeq "$(FULLPATCH)" "1"
 	cp $(BUILDDIR)/$(DSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
 	cp $(BUILDDIR)/$(PPC).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-2.aml
 	cp $(BUILDDIR)/$(DYN).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-3.aml
@@ -112,6 +117,15 @@ ifneq "$(PEGP)" ""
 endif
 ifneq "$(IAOE)" ""
 	cp $(BUILDDIR)/$(IAOE).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-7.aml
+endif
+else
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/DSDT.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-2.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-3.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-4.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-5.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-7.aml
+	cp $(BUILDDIR)/SSDT-HACK.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-HACK.aml
 endif
 
 $(HDAINJECT): $(RESOURCES)/ahhcd.plist $(RESOURCES)/layout/Platforms.xml.zlib $(RESOURCES)/layout/$(HDALAYOUT).xml.zlib ./patch_hda.sh
@@ -175,21 +189,21 @@ $(PATCHED)/$(DSDT).dsl: $(UNPATCHED)/$(DSDT).dsl patches/syntax_dsdt.txt patches
 	patchmatic $@ $(LAPTOPGIT)/system/system_IRQ.txt
 	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
 	patchmatic $@ patches/hdmi_audio.txt
-	#patchmatic $@ $(LAPTOPGIT)/usb/usb_7-series.txt
+#	patchmatic $@ $(LAPTOPGIT)/usb/usb_7-series.txt
 	patchmatic $@ patches/usb.txt
 	patchmatic $@ $(LAPTOPGIT)/system/system_WAK2.txt
 	patchmatic $@ $(LAPTOPGIT)/system/system_OSYS_win7.txt
-	#patchmatic $@ $(LAPTOPGIT)/system/system_MCHC.txt
-	#patchmatic $@ $(LAPTOPGIT)/system/system_HPET.txt
+#	patchmatic $@ $(LAPTOPGIT)/system/system_MCHC.txt
+#	patchmatic $@ $(LAPTOPGIT)/system/system_HPET.txt
 	patchmatic $@ $(LAPTOPGIT)/system/system_RTC.txt
 	patchmatic $@ $(LAPTOPGIT)/system/system_SMBUS.txt
 	patchmatic $@ $(LAPTOPGIT)/system/system_Mutex.txt
-	#patchmatic $@ $(LAPTOPGIT)/system/system_PNOT.txt
+#	patchmatic $@ $(LAPTOPGIT)/system/system_PNOT.txt
 	patchmatic $@ $(LAPTOPGIT)/system/system_IMEI.txt
 	patchmatic $@ $(LAPTOPGIT)/battery/battery_Lenovo-Ux10-Z580.txt
-	#patchmatic $@ patches/ar92xx_wifi.txt
-	#patchmatic $@ patches/bcm_wifi.txt
-	#patchmatic $@ patches/card_reader.txt
+#	patchmatic $@ patches/ar92xx_wifi.txt
+#	patchmatic $@ patches/bcm_wifi.txt
+#	patchmatic $@ patches/card_reader.txt
 ifeq "$(DEBUG)" "1"
 	patchmatic $@ $(DEBUGGIT)/debug.txt
 	patchmatic $@ patches/debug.txt
@@ -200,7 +214,7 @@ $(PATCHED)/$(IGPU).dsl: $(UNPATCHED)/$(IGPU).dsl patches/cleanup.txt $(LAPTOPGIT
 	cp $(UNPATCHED)/$(IGPU).dsl $(PATCHED)
 	patchmatic $@ patches/cleanup.txt
 	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt
-	#patchmatic $@ $(LAPTOPGIT)/graphics/graphics_PNLF_haswell.txt
+#	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_PNLF_haswell.txt
 	patchmatic $@ $(LAPTOPGIT)/graphics/graphics_PNLF.txt
 	patchmatic $@ patches/hdmi_audio.txt
 	patchmatic $@ patches/graphics.txt
