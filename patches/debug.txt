@@ -32,6 +32,14 @@ begin
 \\rmdt.p1("_PTS exit")\n
 end;
 
+# instrument PNOT
+into method label PNOT code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("PNOT enter")\n
+%1\n
+\\rmdt.p1("PNOT exit")\n
+end;
+
 # instrument EC query methods
 into method label _Q09 parent_label EC0 code_regex ([\s\S]*) replace_matched
 begin
