@@ -8,7 +8,7 @@
 
 # Note: SSDT6/IAOE has disassapeared in the new BIOS 7ccn35ww
 
-EFIDIR=$(shell sudo ./mount_efi.sh /)
+EFIDIR:=$(shell sudo ./mount_efi.sh /)
 LAPTOPGIT=../laptop.git
 DEBUGGIT=../debug.git
 BUILDDIR=./build
@@ -21,29 +21,31 @@ USBINJECT=USBXHC_u430.kext
 BACKLIGHTINJECT=AppleBacklightInjector.kext
 
 # DSDT is easy to find...
-DSDT=DSDT
+DSDT:=DSDT
 
 # Name(_ADR,0x0002000) identifies IGPU SSDT
-IGPU=$(shell grep -l Name.*_ADR.*0x00020000 $(UNPATCHED)/SSDT*.dsl)
+IGPU:=$(shell grep -l Name.*_ADR.*0x00020000 $(UNPATCHED)/SSDT*.dsl)
 IGPU:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(IGPU)))
 
 # OperationRegion SGOP is defined in optimus SSDT
-PEGP=$(shell grep -l OperationRegion.*SGOP $(UNPATCHED)/SSDT*.dsl)
+PEGP:=$(shell grep -l OperationRegion.*SGOP $(UNPATCHED)/SSDT*.dsl)
 PEGP:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(PEGP)))
 
 # Device(IAOE) identifies SSDT with IAOE
-IAOE=$(shell grep -l Device.*IAOE $(UNPATCHED)/SSDT*.dsl)
+IAOE:=$(shell grep -l Device.*IAOE $(UNPATCHED)/SSDT*.dsl)
 IAOE:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(IAOE)))
 
 # Name(_PPC, ...) identifies SSDT with _PPC
-PPC=$(shell grep -l Name.*_PPC $(UNPATCHED)/SSDT*.dsl)
+PPC:=$(shell grep -l Name.*_PPC $(UNPATCHED)/SSDT*.dsl)
 PPC:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(PPC)))
 
 # Name(SSDT, Package...) identifies SSDT with dynamic SSDTs
-DYN=$(shell grep -l Name.*SSDT.*Package $(UNPATCHED)/SSDT*.dsl)
+DYN:=$(shell grep -l Name.*SSDT.*Package $(UNPATCHED)/SSDT*.dsl)
 DYN:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(DYN)))
 
 # Determine build products
+PRODUCTS=
+ifeq "$(FULLPATCH)" "1"
 PRODUCTS=$(BUILDDIR)/$(DSDT).aml $(BUILDDIR)/$(IGPU).aml $(BUILDDIR)/$(PPC).aml $(BUILDDIR)/$(DYN).aml
 ALL_PATCHED=$(PATCHED)/$(DSDT).dsl $(PATCHED)/$(IGPU).dsl
 ifneq "$(PEGP)" ""
@@ -53,6 +55,7 @@ endif
 ifneq "$(IAOE)" ""
 	PRODUCTS:=$(PRODUCTS) $(BUILDDIR)/$(IAOE).aml
 	ALL_PATCHED:=$(ALL_PATCHED) $(PATCHED)/$(IAOE).dsl
+endif
 endif
 PRODUCTS:=$(PRODUCTS) $(BUILDDIR)/SSDT-HACK.aml
 

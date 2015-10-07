@@ -36,7 +36,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         // simulation targets
         // source: (google 'Microsoft Windows _OSI')
         //  http://download.microsoft.com/download/7/E/7/7E7662CF-CBEA-470B-A97E-CE7CE0D98DC2/WinACPI_OSI.docx
-        Name(WINV, Package()
+        Store(Package()
         {
             "Windows",              // generic Windows query
             "Windows 2001",         // Windows XP
@@ -50,8 +50,8 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             //"Windows 2012",       // Windows 8/Windows Sesrver 2012
             //"Windows 2013",       // Windows 8.1/Windows Server 2012 R2
             //"Windows 2015",       // Windows 10/Windows Server TP
-        })
-        Return (LNotEqual(Match(WINV, MEQ, Arg0, MTR, 0, 0), Ones))
+        }, Local0)
+        Return (LNotEqual(Match(Local0, MEQ, Arg0, MTR, 0, 0), Ones))
     }
 
     // In DSDT, native GPRW is renamed to XPRW with Clover binpatch.
