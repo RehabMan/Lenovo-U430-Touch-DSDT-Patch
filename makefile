@@ -8,7 +8,6 @@
 
 # Note: SSDT6/IAOE has disassapeared in the new BIOS 7ccn35ww
 
-EFIDIR:=$(shell sudo ./mount_efi.sh /)
 LAPTOPGIT=../laptop.git
 DEBUGGIT=../debug.git
 BUILDDIR=./build
@@ -109,6 +108,7 @@ cleanallex:
 # Clover Install
 .PHONY: install
 install: $(PRODUCTS)
+	$(eval EFIDIR:=$(shell sudo ./mount_efi.sh /))
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-HACK.aml
 ifeq "$(FULLPATCH)" "1"
 	cp $(BUILDDIR)/$(DSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
