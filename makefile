@@ -19,6 +19,7 @@ HDALAYOUT=layout3
 USBINJECT=USBXHC_u430.kext
 BACKLIGHTINJECT=AppleBacklightInjector.kext
 
+ifeq "$(FULLPATCH)" "1"
 # DSDT is easy to find...
 DSDT:=DSDT
 
@@ -41,6 +42,7 @@ PPC:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(PPC)))
 # Name(SSDT, Package...) identifies SSDT with dynamic SSDTs
 DYN:=$(shell grep -l Name.*SSDT.*Package $(UNPATCHED)/SSDT*.dsl)
 DYN:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(DYN)))
+endif
 
 # Determine build products
 PRODUCTS=
@@ -64,6 +66,7 @@ IASL=iasl
 .PHONY: all
 all: $(PRODUCTS) $(HDAINJECT) $(BACKLIGHTINJECT)
 
+ifeq "$(FULLPATCH)" "1"
 $(BUILDDIR)/DSDT.aml: $(PATCHED)/$(DSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 	
@@ -84,6 +87,7 @@ endif
 ifneq "$(IAOE)" ""
 $(BUILDDIR)/$(IAOE).aml: $(PATCHED)/$(IAOE).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
+endif
 endif
 
 $(BUILDDIR)/SSDT-HACK.aml: ./SSDT-HACK.dsl
@@ -175,6 +179,8 @@ install_backlight:
 	make update_kernelcache
 
 
+ifeq "$(FULLPATCH)" "1"
+
 # Patch with 'patchmatic'
 
 .PHONY: patch
@@ -254,6 +260,7 @@ ifeq "$(DEBUG)" "1"
 endif
 endif
 
+endif
 
 # native correlations (linux, non-optimus)
 # ssdt1 - PTID
