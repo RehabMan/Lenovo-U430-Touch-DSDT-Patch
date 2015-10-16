@@ -239,6 +239,24 @@
 			<key>model</key>
 			<string>MacBookAir6,2</string>
 		</dict>
+		<key>Touchscreen USB</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>com.apple.driver.AppleUSBMergeNub</string>
+			<key>IOClass</key>
+			<string>AppleUSBMergeNub</string>
+			<key>IOProviderClass</key>
+			<string>IOUSBDevice</string>
+			<key>IOProviderMergeProperties</key>
+			<dict>
+				<key>non-removable</key>
+				<string>yes</string>
+			</dict>
+			<key>idProduct</key>
+			<integer>127</integer>
+			<key>idVendor</key>
+			<integer>1267</integer>
+		</dict>
 	</dict>
 	<key>OSBundleRequired</key>
 	<string>Root</string>

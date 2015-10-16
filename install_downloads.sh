@@ -144,8 +144,12 @@ fi
 # install (injector) kexts in the repo itself
 install_kext AppleHDA_ALC283.kext
 
-if [[ $MINOR_VER -ge 11 ]]; then
-    install_kext USBXHC_u430.kext
+# USBXHC_u430 is mostly specific to 10.11, but it does inject non-removable=yes
+# for the touchscreen
+
+install_kext USBXHC_u430.kext
+
+#if [[ $MINOR_VER -ge 11 ]]; then
     # create custom AppleBacklightInjector.kext and install
     #./patch_backlight.sh
     #install_kext AppleBacklightInjector.kext
@@ -153,7 +157,7 @@ if [[ $MINOR_VER -ge 11 ]]; then
     #if [ -d $SLE/ACPIBacklight.kext ]; then
     #    $SUDO rm -Rf $SLE/ACPIBacklight.kext
     #fi
-fi
+#fi
 
 #check_directory *.kext
 #if [ $? -ne 0 ]; then
