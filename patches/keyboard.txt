@@ -15,6 +15,148 @@ Method (_DSM, 4, NotSerialized)\n
 }\n
 end;
 
+# overrides for VoodooPS2 configuration...
+into device label PS2K insert
+begin
+Name(RMCF, Package()\n
+{\n
+    "Controller", Package()\n
+    {\n
+        "WakeDelay", 0,\n
+    },\n
+    "Sentelic FSP", Package()\n
+    {\n
+        "DisableDevice", ">y",\n
+    },\n
+    "ALPS GlidePoint", Package()\n
+    {\n
+        "DisableDevice", ">y",\n
+    },\n
+    "Mouse", Package()\n
+    {\n
+        "DisableDevice", ">y",\n
+    },\n
+    "Synaptics TouchPad", Package()\n
+    {\n
+        "MultiFingerVerticalDivisor", 9,\n
+        "MultiFingerHorizontalDivisor", 9,\n
+        "MomentumScrollThreshY", 12,\n
+    },\n
+    "Keyboard", Package()\n
+    {\n
+        "Breakless PS2", Package()\n
+        {\n
+            Package(){}, // indicates array\n
+            "e064",\n
+            "e065",\n
+            "e068",\n
+            "e06a",\n
+            "e027",\n
+        },\n
+        "MaximumMacroTime", 25000000,\n
+        "Macro Inversion", Package()\n
+        {\n
+            Package(){},\n
+            // Fn+F4\n
+            Buffer() { 0xff, 0xff, 0x02, 0x64, 0x00, 0x00, 0x00, 0x00, 0x01, 0x38, 0x01, 0x3e },\n
+            Buffer() { 0xff, 0xff, 0x02, 0xe4, 0x00, 0x00, 0x00, 0x00, 0x01, 0xbe, 0x01, 0xb8 },\n
+            // F5 (without Fn)\n
+            Buffer() { 0xff, 0xff, 0x02, 0x65, 0x01, 0x00, 0x00, 0x00, 0x01, 0x3f },\n
+            Buffer() { 0xff, 0xff, 0x02, 0xe5, 0x01, 0x00, 0x00, 0x00, 0x01, 0xbf },\n
+            // Fn+Ctrl+F6\n
+            Buffer() { 0xff, 0xff, 0x02, 0x27, 0x00, 0x03, 0xff, 0xff, 0x02, 0x66 },\n
+            Buffer() { 0xff, 0xff, 0x02, 0xa7, 0x00, 0x03, 0xff, 0xff, 0x02, 0xe6 },\n
+            // Ctrl+F6\n
+            Buffer() { 0xff, 0xff, 0x02, 0x27, 0x00, 0x03, 0xff, 0xff, 0x02, 0x40 },\n
+            Buffer() { 0xff, 0xff, 0x02, 0xa7, 0x00, 0x03, 0xff, 0xff, 0x02, 0xc0 },\n
+            // Fn+F8\n
+            Buffer() { 0xff, 0xff, 0x02, 0x68, 0x00, 0x00, 0x00, 0x00, 0x02, 0x1d, 0x01, 0x38, 0x01, 0x0f },\n
+            Buffer() { 0xff, 0xff, 0x02, 0xe8, 0x00, 0x00, 0x00, 0x00, 0x01, 0x8f, 0x01, 0xb8, 0x02, 0x9d },\n
+            // Fn+F10\n
+            Buffer() { 0xff, 0xff, 0x02, 0x6a, 0x00, 0x00, 0x00, 0x00, 0x02, 0x5b, 0x01, 0x19 },\n
+            Buffer() { 0xff, 0xff, 0x02, 0xea, 0x00, 0x00, 0x00, 0x00, 0x01, 0x99, 0x02, 0xdb },\n
+        },\n
+        "Custom ADB Map", Package()\n
+        {\n
+            Package(){},\n
+            "e063=3f", // Apple Fn\n
+            "e064=6b", // F14\n
+            "e065=71", // F15\n
+            "e068=4f", // F18\n
+            "e0f2=65", // special F9\n
+            "e0fb=91", // brightness down\n
+            "e0fc=90", // brightness up\n
+            "e06a=70", // video mirror\n
+        },\n
+        "Custom PS2 Map", Package()\n
+        {\n
+            Package(){},\n
+            "e037=64", // PrtSc=F13\n
+        },\n
+        "Function Keys Special", Package()\n
+        {\n
+            Package(){},\n
+            // The following 12 items map Fn+fkeys to Fn+fkeys\n
+            "e020=e020",\n
+            "e02e=e02e",\n
+            "e030=e030",\n
+            "e064=e064",\n
+            "e065=e065",\n
+            "e066=e028",\n
+            "e067=e067",\n
+            "e068=e068",\n
+            "e069=e0f0",\n
+            "e06a=e06a",\n
+            "e06b=e0fb",\n
+            "e06c=e0fc",\n
+            // The following 12 items map fkeys to fkeys\n
+            "3b=3b",\n
+            "3c=3c",\n
+            "3d=3d",\n
+            "3e=3e",\n
+            "3f=3f",\n
+            "40=40",\n
+            "41=41",\n
+            "42=42",\n
+            "43=43",\n
+            "44=44",\n
+            "57=57",\n
+            "58=58",\n
+        },\n
+        "Function Keys Standard", Package()\n
+        {\n
+            Package(){},\n
+            // The following 12 items map Fn+fkeys to fkeys\n
+            "e020=3b",\n
+            "e02e=3c",\n
+            "e030=3d",\n
+            "e064=3e",\n
+            "e065=3f",\n
+            "e066=40",\n
+            "e067=41",\n
+            "e068=42",\n
+            "e069=e0f2",\n
+            "e06a=44",\n
+            "e06b=57",\n
+            "e06c=58",\n
+            // The following 12 items map fkeys to Fn+fkeys\n
+            "3b=e020",\n
+            "3c=e02e",\n
+            "3d=e030",\n
+            "3e=e064",\n
+            "3f=e065",\n
+            "40=e028",\n
+            "41=e067",\n
+            "42=e068",\n
+            "43=e0f1",\n
+            "44=e06a",\n
+            "57=e0fb",\n
+            "58=e0fc",\n
+        },\n
+    },\n
+})\n
+end;
+
 # Make EC-based brightness up/down work with RehabMan VoodooPS2 ACPI keyboard mechanism
 
 # _Q91 (Fn+F11) called on brightness down key
