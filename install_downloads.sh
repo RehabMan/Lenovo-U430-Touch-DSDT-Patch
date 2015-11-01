@@ -146,9 +146,14 @@ if [ $? -ne 0 ]; then
     $SUDO rm -Rf $SLE/BrcmFirmwareData.kext $KEXTDEST/BrcmFirmwareData.kext
     # now using IntelBacklight.kext instead of ACPIBacklight.kext
     $SUDO rm -Rf $SLE/ACPIBacklight.kext $KEXTDEST/ACPIBacklight.kext
+    # deal with some renames
     if [[ -e $KEXTDEST/FakePCIID_Broadcom_WiFi.kext ]]; then
         # remove old FakePCIID_BCM94352Z_as_BCM94360CS2.kext
         $SUDO rm -Rf $SLE/FakePCIID_BCM94352Z_as_BCM94360CS2.kext $KEXTDEST/FakePCIID_BCM94352Z_as_BCM94360CS2.kext
+    fi
+    if [[ -e $KEXTDEST/FakePCIID_Intel_HD_Graphics.kext ]]; then
+        # remove old FakePCIID_HD4600_HD4400.kext
+        $SUDO rm -Rf $SLE/FakePCIID_HD4600_HD4400.kext $KEXTDEST/FakePCIID_HD4600_HD4400.kext
     fi
     cd ../..
 fi
