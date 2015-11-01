@@ -6,7 +6,7 @@ SUDO='echo #'
 TAG=`pwd`/tools/tag
 SLE=/System/Library/Extensions
 LE=/Library/Extensions
-EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData"
+EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData"
 
 # extract minor version (eg. 10.9 vs. 10.10 vs. 10.11)
 MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})

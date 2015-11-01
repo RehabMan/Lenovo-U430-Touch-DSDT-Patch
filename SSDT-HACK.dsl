@@ -10,23 +10,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
 {
     External(\_SB.PCI0, DeviceObj)
     External(\_SB.PCI0.LPCB, DeviceObj)
-    External(\_SB.PCI0.LPCB.PS2K, DeviceObj)
-    External(\_SB.PCI0.LPCB.EC0, DeviceObj)
-    External(\_SB.PCI0.LPCB.EC0.XQ94, MethodObj)
-    External(\_SB.PCI0.LPCB.EC0.TPDS, FieldUnitObj)
-    External(\_SB.PCI0.LPCB.EC0.BLIS, FieldUnitObj)
-    External(\_SB.PCI0.LPCB.EC0.ECOK, IntObj)
-    External(\_SB.PCI0.LPCB.EC0.RTMP, FieldUnitObj)
 
-    External(\_SB.PCI0.HDEF, DeviceObj)
-    External(\_SB.PCI0.HDAU, DeviceObj)
-    External(\_SB.PCI0.IGPU, DeviceObj)
-    External(\_SB.PCI0.EH01, DeviceObj)
-    External(\_SB.PCI0.EH02, DeviceObj)
-    External(\_SB.PCI0.XHC, DeviceObj)
-
-    External(\_SB.BAT1, DeviceObj)
- 
     // All _OSI calls in DSDT are routed to XOSI...
     // XOSI simulates "Windows 2009" (which is Windows 7)
     // Note: According to ACPI spec, _OSI("Windows") must also return true
@@ -92,6 +76,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
     }
 
+    External(\_SB.PCI0.LPCB.PS2K, DeviceObj)
     Scope (\_SB.PCI0.LPCB.PS2K)
     {
         // Select specific keyboard map in VoodooPS2Keyboard.kext
@@ -287,6 +272,13 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
     }
 
+    External(\_SB.PCI0.LPCB.EC0, DeviceObj)
+    External(\_SB.PCI0.LPCB.EC0.XQ94, MethodObj)
+    External(\_SB.PCI0.LPCB.EC0.TPDS, FieldUnitObj)
+    External(\_SB.PCI0.LPCB.EC0.BLIS, FieldUnitObj)
+    External(\_SB.PCI0.LPCB.EC0.ECOK, IntObj)
+    External(\_SB.PCI0.LPCB.EC0.RTMP, FieldUnitObj)
+
     Scope(\_SB.PCI0.LPCB.EC0)
     {
         // The native _Qxx methods in DSDT are renamed XQxx,
@@ -407,6 +399,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         Method (\B1B2, 2, NotSerialized) { Return (Or (Arg0, ShiftLeft (Arg1, 8))) }
         
         External(\_SB.BATM, MutexObj)
+        External(\_SB.BAT1, DeviceObj)
         External(\_SB.BAT1.PBIF, PkgObj)
         External(\_SB.PCI0.LPCB.EC0.WAEC, MethodObj)
         External(\_SB.PCI0.LPCB.EC0.WADR, MethodObj)
@@ -522,8 +515,9 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
 
 // Note: All the _DSM injects below could be done in config.plist/Devices/Arbitrary
 //  For now, using config.plist instead of _DSM methods.
-/*
+#if 0
         // inject properties for onboard audio
+        External(\_SB.PCI0.HDEF, DeviceObj)
         Method(HDEF._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -535,6 +529,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
 
         // inject properties for HDMI audio on HDAU
+        External(\_SB.PCI0.HDAU, DeviceObj)
         Method(HDAU._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -546,6 +541,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
 
         // inject properties for HDMI audio on IGPU
+        External(\_SB.PCI0.IGPU, DeviceObj)
         Method(IGPU._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -556,6 +552,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
 
         // inject properties for USB: EHC1/EHC2/XHC
+        External(\_SB.PCI0.EH01, DeviceObj)
         Method(EH01._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -572,6 +569,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
 
         // Note: EHCI #2 is not really active on the u430
+        External(\_SB.PCI0.EH02, DeviceObj)
         Method(EH02._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -587,6 +585,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             })
         }
 
+        External(\_SB.PCI0.XHC, DeviceObj)
         Method(XHC._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -601,7 +600,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
                 "AAPL,max-port-current-in-sleep", 2100,
             })
         }
- */
+#endif
     }
 
     Device (SMCD)
