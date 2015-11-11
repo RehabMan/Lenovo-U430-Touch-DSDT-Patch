@@ -38,6 +38,70 @@ into device label EHC2 set_label begin EH02 end;
 into_all all code_regex EHC2\. replaceall_matched begin EH02. end;
 into_all all code_regex \.EHC2, replaceall_matched begin .EH02, end;
 
+# make XSEL do nothing
+into method label XSEL replace_content begin // nothing end;
+
+into definitionblock code_regex . insert
+begin
+// Override for USBInjectAll.kext\n
+Device(UIAC)\n
+{\n
+    Name(_HID, "UIA00000")\n
+    Name(RMCF, Package()\n
+    {\n
+        // EH01 has no ports (XHCIMux not being used)\n
+        "EH01", Package()\n
+        {\n
+            "port-count", Buffer() { 0, 0, 0, 0 },\n
+            "ports", Package() { },\n
+        },\n
+        // XHC overrides\n
+        "8086_9xxx", Package()\n
+        {\n
+            "port-count", Buffer() { 0x0d, 0, 0, 0},\n
+            "ports", Package()\n
+            {\n
+                "HS01", Package() // touchscreen\n
+                {\n
+                    "UsbConnector", 255,\n
+                    "port", Buffer() { 0x01, 0, 0, 0 },\n
+                },\n
+                "HS02", Package() // HS USB3 left\n
+                {\n
+                    "UsbConnector", 3,\n
+                    "port", Buffer() { 0x02, 0, 0, 0 },\n
+                },\n
+                "HS03", Package() // USB2 far right\n
+                {\n
+                    "UsbConnector", 0,\n
+                    "port", Buffer() { 0x03, 0, 0, 0 },\n
+                },\n
+                "HS04", Package() // USB2 near right\n
+                {\n
+                    "UsbConnector", 0,\n
+                    "port", Buffer() { 0x04, 0, 0, 0 },\n
+                },\n
+                "HS05", Package() // camera\n
+                {\n
+                    "UsbConnector", 255,\n
+                    "port", Buffer() { 0x05, 0, 0, 0 },\n
+                },\n
+                "HS06", Package() // bluetooth\n
+                {\n
+                    "UsbConnector", 255,\n
+                    "port", Buffer() { 0x06, 0, 0, 0 },\n
+                },\n
+                "SS01", Package() // SS USB3 left\n
+                {\n
+                    "UsbConnector", 3,\n
+                    "port", Buffer() { 0x0a, 0, 0, 0 },\n
+                },\n
+            },\n
+        },\n
+    })\n
+}\n
+end;
+
 #Maintained by: RehabMan for: Laptop Patches
 #usb_USB_7-series.txt
 
@@ -99,6 +163,8 @@ Method (_DSM, 4, NotSerialized)\n
         "AAPL,current-extra-in-sleep", 1600,\n
         "AAPL,device-internal", 0x02,\n
         "AAPL,max-port-current-in-sleep", 2100,\n
+        "RM,pr2-force", Buffer() { 0xff, 0x3f, 0, 0, },\n
     })\n
 }\n
 end;
+

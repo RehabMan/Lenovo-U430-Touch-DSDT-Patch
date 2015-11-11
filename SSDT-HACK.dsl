@@ -31,7 +31,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             "Windows 2006 SP1",     // Windows Vista SP1
             //"Windows 2006.1",     // Windows Server 2008
             "Windows 2009",         // Windows 7/Windows Server 2008 R2
-            //"Windows 2012",       // Windows 8/Windows Sesrver 2012
+            "Windows 2012",         // Windows 8/Windows Sesrver 2012
             //"Windows 2013",       // Windows 8.1/Windows Server 2012 R2
             //"Windows 2015",       // Windows 10/Windows Server TP
         }, Local0)
@@ -45,9 +45,132 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
     // of the return package.
     Method(GPRW, 2)
     {
-        If (LEqual(Arg0, 0x6d)) { Return(Package() { 0x6d, 0, }) }
+        //If (LEqual(Arg0, 0x6d)) { Return(Package() { 0x6d, 0, }) }
         External(\XPRW, MethodObj)
         Return(XPRW(Arg0, Arg1))
+    }
+
+    // In DSDT, native XSEL is renamed XXEL with Clover binpatch.
+    // Calls to it will land here.
+    // ... which does nothing
+    External(\_SB.PCI0.XHC, DeviceObj)
+    Method(_SB.PCI0.XHC.XSEL)
+    {
+        // nothing
+    }
+
+    // Override for USBInjectAll.kext
+    Device(UIAC)
+    {
+        Name(_HID, "UIA00000")
+        Name(RMCF, Package()
+        {
+            // EH01 has no ports (XHCIMux is used to force USB3 routing OFF)
+            "EH01", Package()
+            {
+                "port-count", Buffer() { 0, 0, 0, 0 },
+                "ports", Package() { },
+            },
+            // XHC overrides
+            "8086_9xxx", Package()
+            {
+                //"port-count", Buffer() { 0x0d, 0, 0, 0},
+                "ports", Package()
+                {
+                    "HS01", Package() // touchscreen
+                    {
+                        "UsbConnector", 255,
+                        "port", Buffer() { 0x01, 0, 0, 0 },
+                    },
+                    "HS02", Package() // HS USB3 left
+                    {
+                        "UsbConnector", 3,
+                        "port", Buffer() { 0x02, 0, 0, 0 },
+                    },
+                    "HS03", Package() // USB2 far right
+                    {
+                        "UsbConnector", 0,
+                        "port", Buffer() { 0x03, 0, 0, 0 },
+                    },
+                    "HS04", Package() // USB2 near right
+                    {
+                        "UsbConnector", 0,
+                        "port", Buffer() { 0x04, 0, 0, 0 },
+                    },
+                    "HS05", Package() // camera
+                    {
+                        "UsbConnector", 255,
+                        "port", Buffer() { 0x05, 0, 0, 0 },
+                    },
+                    "HS06", Package() // bluetooth
+                    {
+                        "UsbConnector", 255,
+                        "port", Buffer() { 0x06, 0, 0, 0 },
+                    },
+                    "SS01", Package() // SS USB3 left
+                    {
+                        "UsbConnector", 3,
+                        "port", Buffer() { 0x0a, 0, 0, 0 },
+                    },
+                },
+            },
+        })
+    }
+
+    // Override for ACPIBatteryManager.kext
+    External(\_SB.BAT1, DeviceObj)
+    Name(_SB.BAT1.RMCF, Package()
+    {
+        "StartupDelay", 10,
+    })
+
+    // registers needed for disabling EHC#1
+    External(_SB.PCI0.EH01, DeviceObj)
+    Scope(_SB.PCI0.EH01)
+    {
+        OperationRegion(PSTS, PCI_Config, 0x54, 2)
+        Field(PSTS, WordAcc, NoLock, Preserve)
+        {
+            PSTE, 2  // bits 2:0 are power state
+        }
+
+    }
+    Scope(_SB.PCI0.LPCB)
+    {
+        OperationRegion(RMLP, PCI_Config, 0xF0, 4)
+        Field(RMLP, DWordAcc, NoLock, Preserve)
+        {
+            RCB1, 32, // Root Complex Base Address
+        }
+        // address is in bits 31:14
+        OperationRegion(FDM1, SystemMemory, Add(And(RCB1,Not(Subtract(ShiftLeft(1,14),1))),0x3418), 4)
+        //OperationRegion(FDM1, SystemMemory, (RCB1 & Not((1<<14)-1)) + 0x3418, 4)
+        //Field(FDM1, AnyAcc, NoLock, Preserve)
+        //{
+        //    FD32, 32, // RCBA+0x3418 (all 32-bits of FD register)
+        //}
+        Field(FDM1, DWordAcc, NoLock, Preserve)
+        {
+            ,15,    // skip first 15 bits
+            FDE1,1, // should be bit 15 (0-based) (FD EHCI#1)
+        }
+    }
+    Scope(_SB.PCI0)
+    {
+        Device(RMD1)
+        {
+            //Name(_ADR, 0)
+            Name(_HID, "RMD10000")
+            Method(_INI)
+            {
+                // disable EHCI#1
+                // put EHCI#1 in D3hot (sleep mode)
+                Store(3, ^^EH01.PSTE)
+                // disable EHCI#1 PCI space
+                //Or(\_SB.PCI0.LPCB.FD32, ShiftLeft(1,15), \_SB.PCI0.LPCB.FD32)
+                Store(1, ^^LPCB.FDE1)
+            }
+        }
     }
 
     // For backlight control
@@ -58,13 +181,10 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         Name(_CID, "backlight")
         Name(_UID, 10)
         Name(_STA, 0x0B)
-        Method(RMCF)
+        Name(RMCF, Package()
         {
-            Return(Package()
-            {
-                "PWMMax", 0,
-            })
-        }
+            "PWMMax", 0,
+        })
         Method(_INI)
         {
             // disable discrete graphics (Nvidia) if it is present
@@ -399,7 +519,6 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         Method (\B1B2, 2, NotSerialized) { Return (Or (Arg0, ShiftLeft (Arg1, 8))) }
         
         External(\_SB.BATM, MutexObj)
-        External(\_SB.BAT1, DeviceObj)
         External(\_SB.BAT1.PBIF, PkgObj)
         External(\_SB.PCI0.LPCB.EC0.WAEC, MethodObj)
         External(\_SB.PCI0.LPCB.EC0.WADR, MethodObj)
@@ -585,7 +704,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             })
         }
 
-        External(\_SB.PCI0.XHC, DeviceObj)
+        //External(\_SB.PCI0.XHC, DeviceObj)
         Method(XHC._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -598,6 +717,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
                 "AAPL,current-extra-in-sleep", 1600,
                 //"AAPL,device-internal", 0x02,
                 "AAPL,max-port-current-in-sleep", 2100,
+                "RM,pr2-force", Buffer() { 0xff, 0x3f, 0, 0, },
             })
         }
 #endif

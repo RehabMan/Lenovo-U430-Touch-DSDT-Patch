@@ -23,25 +23,6 @@
 		</array>
 		<key>DSDT</key>
 		<dict>
-			<key>#Patches</key>
-			<array>
-				<dict>
-					<key>Comment</key>
-					<string>change Return(GPRW(0x6d,3)) to Return(GPRW(0x6d,0))</string>
-					<key>Find</key>
-					<data>pEdQUlcKbQoD</data>
-					<key>Replace</key>
-					<data>pEdQUlcKbQoA</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>change Return(GPRW(0x6d,4)) to Return(GPRW(0x6d,0))</string>
-					<key>Find</key>
-					<data>pEdQUlcKbQoE</data>
-					<key>Replace</key>
-					<data>pEdQUlcKbQoA</data>
-				</dict>
-			</array>
 			<key>Patches</key>
 			<array>
 				<dict>
@@ -70,7 +51,7 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change Method(GPRW,2,..) to Method(XPRW,2,..)</string>
+					<string>change Method(GPRW,2,N) to XPRW</string>
 					<key>Find</key>
 					<data>R1BSVwI=</data>
 					<key>Replace</key>
@@ -110,47 +91,47 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change _Q91 to XQ91</string>
+					<string>change Method(_Q91,0,N) to XQ91</string>
 					<key>Find</key>
-					<data>X1E5MQ==</data>
+					<data>X1E5MQA=</data>
 					<key>Replace</key>
-					<data>WFE5MQ==</data>
+					<data>WFE5MQA=</data>
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change _Q90 to XQ90</string>
+					<string>change Method(_Q90,0,N) to XQ90</string>
 					<key>Find</key>
-					<data>X1E5MA==</data>
+					<data>X1E5MAA=</data>
 					<key>Replace</key>
-					<data>WFE5MA==</data>
+					<data>WFE5MAA=</data>
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change _Q94 to XQ94</string>
+					<string>change Method(_Q94,0,N) to XQ94</string>
 					<key>Find</key>
-					<data>X1E5NA==</data>
+					<data>X1E5NAA=</data>
 					<key>Replace</key>
-					<data>WFE5NA==</data>
+					<data>WFE5NAA=</data>
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change _Q8F to XQ8F</string>
+					<string>change Method(_Q8F,0,N) to XQ8F</string>
 					<key>Find</key>
-					<data>X1E4Rg==</data>
+					<data>X1E4RgA=</data>
 					<key>Replace</key>
-					<data>WFE4Rg==</data>
+					<data>WFE4RgA=</data>
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change _Q41 to XQ41</string>
+					<string>change Method(_Q41,0,N) to XQ41</string>
 					<key>Find</key>
-					<data>X1E0MQ==</data>
+					<data>X1E0MQA=</data>
 					<key>Replace</key>
-					<data>WFE0MQ==</data>
+					<data>WFE0MQA=</data>
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change Method(UPBI,..) to Method(XPBI,..)</string>
+					<string>change Method(UPBI,0,N) to XPBI</string>
 					<key>Find</key>
 					<data>VVBCSQA=</data>
 					<key>Replace</key>
@@ -158,16 +139,24 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change Method(UPBS,..) to Method(XPBS,..)</string>
+					<string>change Method(UPBS,0,N) to XPBS</string>
 					<key>Find</key>
 					<data>VVBCUwA=</data>
 					<key>Replace</key>
 					<data>WFBCUwA=</data>
 				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(XSEL,0,S) to XXEL</string>
+					<key>Find</key>
+					<data>WFNFTAg=</data>
+					<key>Replace</key>
+					<data>WFhFTAg=</data>
+				</dict>
 			</array>
 			<key>Fixes</key>
 			<dict>
-				<key>FixRegions_10000000</key>
+				<key>#FixRegions_10000000</key>
 				<true/>
 				<key>NewWay_80000000</key>
 				<true/>
@@ -187,23 +176,8 @@
 		<dict>
 			<key>DropOem</key>
 			<false/>
-			<key>EnableC2</key>
-			<true/>
-			<key>EnableC4</key>
-			<true/>
-			<key>EnableC6</key>
-			<true/>
-			<key>EnableC7</key>
-			<true/>
 			<key>Generate</key>
-			<dict>
-				<key>PStates</key>
-				<false/>
-				<key>CStates</key>
-				<false/>
-			</dict>
-			<key>PluginType</key>
-			<integer>1</integer>
+			<false/>
 		</dict>
 	</dict>
 	<key>Boot</key>
@@ -440,6 +414,14 @@
 						<key>Value</key>
 						<integer>2100</integer>
 					</dict>
+					<dict>
+						<key>Comment</key>
+						<string>No XHC to EHC port routing for USB2</string>
+						<key>Key</key>
+						<string>RM,pr2-force</string>
+						<key>Value</key>
+						<data>/z8AAA==</data>
+					</dict>
 				</array>
 			</dict>
 		</array>
@@ -492,9 +474,9 @@
 		<key>Theme</key>
 		<string>bluemac</string>
 	</dict>
-	<key>Graphics</key>
+	<key>#Graphics</key>
 	<dict>
-		<key>#Inject</key>
+		<key>Inject</key>
 		<dict>
 			<key>Intel</key>
 			<true/>
@@ -614,31 +596,11 @@
 				<key>Comment</key>
 				<string>AppleHDA ALC283 (#4 of 4, new in 10.11, credit lisai9093)</string>
 				<key>Find</key>
-				<data>gxnUEQ==</data>
+				<data>PYMZ1BE=</data>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Replace</key>
-				<data>AAAAAA==</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Boot graphics glitch, 10.10.2 (1 of 2)</string>
-				<key>Find</key>
-				<data>QYjE6xE=</data>
-				<key>Name</key>
-				<string>#IOGraphicsFamily</string>
-				<key>Replace</key>
-				<data>QYjE6zE=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Boot graphics glitch, 10.10.2 (2 of 2) (seems to have no effect)</string>
-				<key>Find</key>
-				<data>hcB0a0g=</data>
-				<key>Name</key>
-				<string>#IOGraphicsFamily</string>
-				<key>Replace</key>
-				<data>McB0W0g=</data>
+				<data>PQAAAAA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -648,7 +610,7 @@
 				<key>Name</key>
 				<string>IOGraphicsFamily</string>
 				<key>Replace</key>
-				<data>AQAAdBc=</data>
+				<data>AQAA6xc=</data>
 			</dict>
 		</array>
 	</dict>
@@ -664,7 +626,7 @@
 		<key>ProductName</key>
 		<string>MacBookAir6,2</string>
 		<key>Trust</key>
-		<false/>
+		<true/>
 	</dict>
 	<key>SystemParameters</key>
 	<dict>
