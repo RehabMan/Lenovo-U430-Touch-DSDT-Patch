@@ -1,6 +1,8 @@
 ## Lenovo Haswell U330/U430/U530 DSDT patches by RehabMan
 
-This set of patches/makefile can be used to patch your Lenovo U330/U430/U530 Touch(and p) DSDT/SSDTs.  It relies heavily on already existing laptop DSDT patches at github here: https://github.com/RehabMan/Laptop-DSDT-Patch.. There are also post install scripts that can be used to create and install the kexts the are required for this laptop series.
+This set of patches/makefile can be used to patch your Lenovo U330/U430/U530 Touch(and p) DSDT/SSDTs.  There are also post install scripts that can be used to create and install the kexts the are required for this laptop series.
+
+Although older versions of the repo had scripts to automate patching of DSDT/SSDTs, the current version does it all via config.plist hotpatching and SSDT-HACK.
 
 Please refer to this guide thread on tonymacx86.com for a step-by-step process, feedback, and questions:
 
@@ -8,6 +10,20 @@ http://www.tonymacx86.com/yosemite-laptop-guides/155106-guide-lenovo-ideapad-u33
 
 
 ### Change Log:
+
+2015-11-11
+
+- removed FULLPATCH, now using only SSDT-HACK.dsl
+
+- remove config_iris.plist, injections done (smartly) in SSDT-HACK
+
+- disable EHCI#1 controller, use XHC only
+
+2015-10-xx
+
+- various updates for 10.11
+
+- transition to SSDT-HACK and dynamic patching/injection
 
 2015-04-20
 

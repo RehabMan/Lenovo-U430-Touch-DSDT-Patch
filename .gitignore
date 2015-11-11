@@ -15,3 +15,6 @@ native_linux/*
 !native_linux/readme.txt
 native_patchmatic/*
 !native_patchmatic/readme.txt
+native_61ww/*
+native_62ww/*
+AppleBacklightInjector.kext
