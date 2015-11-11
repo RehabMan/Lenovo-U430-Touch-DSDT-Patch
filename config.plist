@@ -204,7 +204,7 @@
 	</dict>
 	<key>Devices</key>
 	<dict>
-		<key>Arbitrary</key>
+		<key>#Arbitrary</key>
 		<array>
 			<dict>
 				<key>Comment</key>
@@ -239,6 +239,9 @@
 					</dict>
 				</array>
 			</dict>
+		</array>
+		<key>Arbitrary</key>
+		<array>
 			<dict>
 				<key>Comment</key>
 				<string>Intel HDA</string>

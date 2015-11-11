@@ -609,7 +609,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
     }
 
-    Scope (\_SB.PCI0)
+    Scope(\_SB.PCI0)
     {
         Device(IMEI)
         {
@@ -631,6 +631,45 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
                 }
             }
         }
+
+        External(\_SB.PCI0.IGPU, DeviceObj)
+        Scope(IGPU)
+        {
+            // need the device-id from PCI_config to inject correct properties
+            OperationRegion(IGD4, PCI_Config, 2, 2)
+            Field(IGD4, AnyAcc, NoLock, Preserve)
+            {
+                GDID,16
+            }
+
+            // inject properties for integrated graphics on IGPU
+            Method(_DSM, 4)
+            {
+                If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                Store(Package()
+                {
+                    "model", Buffer() { "place holder" },
+                    "device-id", Buffer() { 0x12, 0x04, 0x00, 0x00 },
+                    "hda-gfx", Buffer() { "onboard-1" },
+                    "AAPL,ig-platform-id", Buffer() { 0x06, 0x00, 0x26, 0x0a },
+                }, Local1)
+                Store(GDID, Local0)
+                If (LEqual(Local0, 0x0a16)) { Store("Intel HD Graphics 4400", Index(Local1,1)) }
+                ElseIf (LEqual(Local0, 0x0416)) { Store("Intel HD Graphics 4600", Index(Local1,1)) }
+                ElseIf (LEqual(Local0, 0x0a1e)) { Store("Intel HD Graphics 4200", Index(Local1,1)) }
+                Else
+                {
+                    // others (HD5000 and Iris) are natively supported
+                    Store(Package()
+                    {
+                        "hda-gfx", Buffer() { "onboard-1" },
+                        "AAPL,ig-platform-id", Buffer() { 0x06, 0x00, 0x26, 0x0a },
+                    }, Local1)
+                }
+                Return(Local1)
+            }
+        }
+
 
 // Note: All the _DSM injects below could be done in config.plist/Devices/Arbitrary
 //  For now, using config.plist instead of _DSM methods.
@@ -655,17 +694,6 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             Return (Package()
             {
                 "layout-id", Buffer() { 3, 0, 0, 0, },
-                "hda-gfx", Buffer() { "onboard-1" },
-            })
-        }
-
-        // inject properties for HDMI audio on IGPU
-        External(\_SB.PCI0.IGPU, DeviceObj)
-        Method(IGPU._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
                 "hda-gfx", Buffer() { "onboard-1" },
             })
         }

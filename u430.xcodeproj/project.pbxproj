@@ -45,7 +45,6 @@
 		849F78781AEE6B0A006B721E /* refs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = refs.txt; sourceTree = "<group>"; };
 		84ADB53718860F9600097B3C /* remove_wmi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = remove_wmi.txt; path = patches/remove_wmi.txt; sourceTree = "<group>"; };
 		84ADCC25187CB0A100720ACA /* keyboard.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = keyboard.txt; path = patches/keyboard.txt; sourceTree = "<group>"; };
-		84AE61AF1BBE08300087C9D5 /* config_iris.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config_iris.plist; sourceTree = "<group>"; };
 		84B540371ACB34A200D8ABAE /* Platforms.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Platforms.plist; path = Resources_ALC283/layout/Platforms.plist; sourceTree = "<group>"; };
 		84BD236218B97D73000FEB2B /* debug.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = debug.txt; path = patches/debug.txt; sourceTree = "<group>"; };
 		84C95FCD1A3C10F100118E8C /* syntax_ppc.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = syntax_ppc.txt; path = patches/syntax_ppc.txt; sourceTree = "<group>"; };
@@ -68,7 +67,6 @@
 			children = (
 				8406FCD6188627B8006D8DB7 /* README.md */,
 				8455352818E65265001ADBFD /* config.plist */,
-				84AE61AF1BBE08300087C9D5 /* config_iris.plist */,
 				848741B61BBC7C7F0087EA08 /* SSDT-HACK.dsl */,
 				840152EF182AE45E00D58B0A /* makefile */,
 				840152F0182AE46D00D58B0A /* disassemble.sh */,
