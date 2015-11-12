@@ -45,7 +45,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
     // of the return package.
     Method(GPRW, 2)
     {
-        //If (LEqual(Arg0, 0x6d)) { Return(Package() { 0x6d, 0, }) }
+        If (LEqual(Arg0, 0x6d)) { Return(Package() { 0x6d, 0, }) }
         External(\XPRW, MethodObj)
         Return(XPRW(Arg0, Arg1))
     }
