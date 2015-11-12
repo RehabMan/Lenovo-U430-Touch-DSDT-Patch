@@ -12,7 +12,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
     External(\_SB.PCI0.LPCB, DeviceObj)
 
     // All _OSI calls in DSDT are routed to XOSI...
-    // XOSI simulates "Windows 2009" (which is Windows 7)
+    // XOSI simulates "Windows 2012" (which is Windows 8)
     // Note: According to ACPI spec, _OSI("Windows") must also return true
     //  Also, it should return true for all previous versions of Windows.
     Method(XOSI, 1)
@@ -37,6 +37,47 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }, Local0)
         Return (LNotEqual(Match(Local0, MEQ, Arg0, MTR, 0, 0), Ones))
     }
+
+//
+// ACPISensors configuration (ACPISensors.kext is not installed by default)
+//
+
+    Device (SMCD)
+    {
+        Name (_HID, "FAN00000") // _HID: Hardware ID
+        // ACPISensors.kext configuration
+        //    Name (TACH, Package()
+        //    {
+        //        "System Fan", "FAN0",
+        //    })
+        Name (TEMP, Package()
+        {
+            "CPU Heatsink", "TCPU",
+            //"Ambient", "TAMB",
+            //"Mainboard", "TSYS",
+            //"CPU Proximity", "TCPP",
+        })
+        //Name (KLVN, 1)
+        // Actual methods to implement fan/temp readings/control
+        //    Method (FAN0, 0, Serialized)
+        //    {
+        //    }
+        Method (TCPU, 0, Serialized)
+        {
+            //Return (\_TZ.TZ00._TMP())
+            //Return(Divide(Subtract(\_TZ.TZ00._TMP(), 2732), 10))
+            If (\_SB.PCI0.LPCB.EC0.ECOK) { Store(\_SB.PCI0.LPCB.EC0.RTMP, Local0) }
+            Else { Store(0x1A, Local0) }
+            Return(Local0)
+        }
+        //Method (TAMB, 0, Serialized) // Ambient Temp
+        //{
+        //}
+    }
+
+//
+// USB related
+//
 
     // In DSDT, native GPRW is renamed to XPRW with Clover binpatch.
     // As a result, calls to GPRW land here.
@@ -117,13 +158,6 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         })
     }
 
-    // Override for ACPIBatteryManager.kext
-    External(\_SB.BAT1, DeviceObj)
-    Name(_SB.BAT1.RMCF, Package()
-    {
-        "StartupDelay", 10,
-    })
-
     // registers needed for disabling EHC#1
     External(_SB.PCI0.EH01, DeviceObj)
     Scope(_SB.PCI0.EH01)
@@ -173,7 +207,10 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
     }
 
-    // For backlight control
+//
+// Backlight control
+//
+
     Device(PNLF)
     {
         Name(_ADR, Zero)
@@ -195,6 +232,155 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             }
         }
     }
+
+//
+// Standard Injections/Fixes
+//
+
+    Scope(\_SB.PCI0)
+    {
+        Device(IMEI)
+        {
+            Name (_ADR, 0x00160000)
+        }
+
+        Device(SBUS.BUS0)
+        {
+            Name(_CID, "smbus")
+            Name(_ADR, Zero)
+            Device(DVL0)
+            {
+                Name(_ADR, 0x57)
+                Name(_CID, "diagsvault")
+                Method(_DSM, 4)
+                {
+                    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                    Return (Package() { "address", 0x57 })
+                }
+            }
+        }
+
+        External(\_SB.PCI0.IGPU, DeviceObj)
+        Scope(IGPU)
+        {
+            // need the device-id from PCI_config to inject correct properties
+            OperationRegion(IGD4, PCI_Config, 2, 2)
+            Field(IGD4, AnyAcc, NoLock, Preserve)
+            {
+                GDID,16
+            }
+
+            // inject properties for integrated graphics on IGPU
+            Method(_DSM, 4)
+            {
+                If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                Store(Package()
+                {
+                    "model", Buffer() { "place holder" },
+                    "device-id", Buffer() { 0x12, 0x04, 0x00, 0x00 },
+                    "hda-gfx", Buffer() { "onboard-1" },
+                    "AAPL,ig-platform-id", Buffer() { 0x06, 0x00, 0x26, 0x0a },
+                }, Local1)
+                Store(GDID, Local0)
+                If (LEqual(Local0, 0x0a16)) { Store("Intel HD Graphics 4400", Index(Local1,1)) }
+                ElseIf (LEqual(Local0, 0x0416)) { Store("Intel HD Graphics 4600", Index(Local1,1)) }
+                ElseIf (LEqual(Local0, 0x0a1e)) { Store("Intel HD Graphics 4200", Index(Local1,1)) }
+                Else
+                {
+                    // others (HD5000 and Iris) are natively supported
+                    Store(Package()
+                    {
+                        "hda-gfx", Buffer() { "onboard-1" },
+                        "AAPL,ig-platform-id", Buffer() { 0x06, 0x00, 0x26, 0x0a },
+                    }, Local1)
+                }
+                Return(Local1)
+            }
+        }
+
+        // Note: All the _DSM injects below could be done in config.plist/Devices/Arbitrary
+        //  For now, using config.plist instead of _DSM methods.
+#if 0
+        // inject properties for onboard audio
+        External(\_SB.PCI0.HDEF, DeviceObj)
+        Method(HDEF._DSM, 4)
+        {
+            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+            Return (Package()
+            {
+                "layout-id", Buffer() { 3, 0, 0, 0, },
+                "PinConfigurations", Buffer(Zero) {},
+            })
+        }
+
+        // inject properties for HDMI audio on HDAU
+        External(\_SB.PCI0.HDAU, DeviceObj)
+        Method(HDAU._DSM, 4)
+        {
+            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+            Return (Package()
+            {
+                "layout-id", Buffer() { 3, 0, 0, 0, },
+                "hda-gfx", Buffer() { "onboard-1" },
+            })
+        }
+
+        // inject properties for USB: EHC1/EHC2/XHC
+        External(\_SB.PCI0.EH01, DeviceObj)
+        Method(EH01._DSM, 4)
+        {
+            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+            Return (Package()
+            {
+                "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
+                "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
+                "AAPL,current-available", 2100,
+                "AAPL,current-extra", 2200,
+                "AAPL,current-extra-in-sleep", 1600,
+                //"AAPL,device-internal", 0x02,
+                "AAPL,max-port-current-in-sleep", 2100,
+            })
+        }
+
+        // Note: EHCI #2 is not really active on the u430
+        External(\_SB.PCI0.EH02, DeviceObj)
+        Method(EH02._DSM, 4)
+        {
+            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+            Return (Package()
+            {
+                "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
+                "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
+                "AAPL,current-available", 2100,
+                "AAPL,current-extra", 2200,
+                "AAPL,current-extra-in-sleep", 1600,
+                //"AAPL,device-internal", 0x02,
+                "AAPL,max-port-current-in-sleep", 2100,
+            })
+        }
+
+        //External(\_SB.PCI0.XHC, DeviceObj)
+        Method(XHC._DSM, 4)
+        {
+            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+            Return (Package()
+            {
+                "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
+                "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
+                "AAPL,current-available", 2100,
+                "AAPL,current-extra", 2200,
+                "AAPL,current-extra-in-sleep", 1600,
+                //"AAPL,device-internal", 0x02,
+                "AAPL,max-port-current-in-sleep", 2100,
+                "RM,pr2-force", Buffer() { 0xff, 0x3f, 0, 0, },
+            })
+        }
+#endif
+    }
+
+//
+// Keyboard/Trackpad
+//
 
     External(\_SB.PCI0.LPCB.PS2K, DeviceObj)
     Scope (\_SB.PCI0.LPCB.PS2K)
@@ -436,6 +622,17 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
     }
 
+//
+// Battery Status
+//
+
+    // Override for ACPIBatteryManager.kext
+    External(\_SB.BAT1, DeviceObj)
+    Name(_SB.BAT1.RMCF, Package()
+    {
+        "StartupDelay", 10,
+    })
+
     Scope(\_SB.PCI0.LPCB.EC0)
     {
         // This is an override for battery methods that access EC fields
@@ -607,181 +804,6 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
                 }
             }
         }
-    }
-
-    Scope(\_SB.PCI0)
-    {
-        Device(IMEI)
-        {
-            Name (_ADR, 0x00160000)
-        }
-
-        Device(SBUS.BUS0)
-        {
-            Name(_CID, "smbus")
-            Name(_ADR, Zero)
-            Device(DVL0)
-            {
-                Name(_ADR, 0x57)
-                Name(_CID, "diagsvault")
-                Method(_DSM, 4)
-                {
-                    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-                    Return (Package() { "address", 0x57 })
-                }
-            }
-        }
-
-        External(\_SB.PCI0.IGPU, DeviceObj)
-        Scope(IGPU)
-        {
-            // need the device-id from PCI_config to inject correct properties
-            OperationRegion(IGD4, PCI_Config, 2, 2)
-            Field(IGD4, AnyAcc, NoLock, Preserve)
-            {
-                GDID,16
-            }
-
-            // inject properties for integrated graphics on IGPU
-            Method(_DSM, 4)
-            {
-                If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-                Store(Package()
-                {
-                    "model", Buffer() { "place holder" },
-                    "device-id", Buffer() { 0x12, 0x04, 0x00, 0x00 },
-                    "hda-gfx", Buffer() { "onboard-1" },
-                    "AAPL,ig-platform-id", Buffer() { 0x06, 0x00, 0x26, 0x0a },
-                }, Local1)
-                Store(GDID, Local0)
-                If (LEqual(Local0, 0x0a16)) { Store("Intel HD Graphics 4400", Index(Local1,1)) }
-                ElseIf (LEqual(Local0, 0x0416)) { Store("Intel HD Graphics 4600", Index(Local1,1)) }
-                ElseIf (LEqual(Local0, 0x0a1e)) { Store("Intel HD Graphics 4200", Index(Local1,1)) }
-                Else
-                {
-                    // others (HD5000 and Iris) are natively supported
-                    Store(Package()
-                    {
-                        "hda-gfx", Buffer() { "onboard-1" },
-                        "AAPL,ig-platform-id", Buffer() { 0x06, 0x00, 0x26, 0x0a },
-                    }, Local1)
-                }
-                Return(Local1)
-            }
-        }
-
-
-// Note: All the _DSM injects below could be done in config.plist/Devices/Arbitrary
-//  For now, using config.plist instead of _DSM methods.
-#if 0
-        // inject properties for onboard audio
-        External(\_SB.PCI0.HDEF, DeviceObj)
-        Method(HDEF._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
-                "layout-id", Buffer() { 3, 0, 0, 0, },
-                "PinConfigurations", Buffer(Zero) {},
-            })
-        }
-
-        // inject properties for HDMI audio on HDAU
-        External(\_SB.PCI0.HDAU, DeviceObj)
-        Method(HDAU._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
-                "layout-id", Buffer() { 3, 0, 0, 0, },
-                "hda-gfx", Buffer() { "onboard-1" },
-            })
-        }
-
-        // inject properties for USB: EHC1/EHC2/XHC
-        External(\_SB.PCI0.EH01, DeviceObj)
-        Method(EH01._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
-                "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
-                "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
-                "AAPL,current-available", 2100,
-                "AAPL,current-extra", 2200,
-                "AAPL,current-extra-in-sleep", 1600,
-                //"AAPL,device-internal", 0x02,
-                "AAPL,max-port-current-in-sleep", 2100,
-            })
-        }
-
-        // Note: EHCI #2 is not really active on the u430
-        External(\_SB.PCI0.EH02, DeviceObj)
-        Method(EH02._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
-                "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
-                "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
-                "AAPL,current-available", 2100,
-                "AAPL,current-extra", 2200,
-                "AAPL,current-extra-in-sleep", 1600,
-                //"AAPL,device-internal", 0x02,
-                "AAPL,max-port-current-in-sleep", 2100,
-            })
-        }
-
-        //External(\_SB.PCI0.XHC, DeviceObj)
-        Method(XHC._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
-                "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
-                "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
-                "AAPL,current-available", 2100,
-                "AAPL,current-extra", 2200,
-                "AAPL,current-extra-in-sleep", 1600,
-                //"AAPL,device-internal", 0x02,
-                "AAPL,max-port-current-in-sleep", 2100,
-                "RM,pr2-force", Buffer() { 0xff, 0x3f, 0, 0, },
-            })
-        }
-#endif
-    }
-
-    Device (SMCD)
-    {
-        Name (_HID, "FAN00000") // _HID: Hardware ID
-        // ACPISensors.kext configuration
-        //    Name (TACH, Package()
-        //    {
-        //        "System Fan", "FAN0",
-        //    })
-        Name (TEMP, Package()
-        {
-            "CPU Heatsink", "TCPU",
-            //"Ambient", "TAMB",
-            //"Mainboard", "TSYS",
-            //"CPU Proximity", "TCPP",
-        })
-        //Name (KLVN, 1)
-        // Actual methods to implement fan/temp readings/control
-        //    Method (FAN0, 0, Serialized)
-        //    {
-        //    }
-        Method (TCPU, 0, Serialized)
-        {
-            //Return (\_TZ.TZ00._TMP())
-            //Return(Divide(Subtract(\_TZ.TZ00._TMP(), 2732), 10))
-            If (\_SB.PCI0.LPCB.EC0.ECOK) { Store(\_SB.PCI0.LPCB.EC0.RTMP, Local0) }
-            Else { Store(0x1A, Local0) }
-            Return(Local0)
-        }
-        //	Method (TAMB, 0, Serialized) // Ambient Temp
-        //	{
-        //	}
     }
 }
 
