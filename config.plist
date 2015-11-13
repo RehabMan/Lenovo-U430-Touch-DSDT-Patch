@@ -7,11 +7,6 @@
 		<key>SortedOrder</key>
 		<array>
 			<string>SSDT.aml</string>
-			<string>SSDT-2.aml</string>
-			<string>SSDT-3.aml</string>
-			<string>SSDT-4.aml</string>
-			<string>SSDT-5.aml</string>
-			<string>SSDT-7.aml</string>
 			<string>SSDT-HACK.aml</string>
 		</array>
 		<key>#DropTables</key>
