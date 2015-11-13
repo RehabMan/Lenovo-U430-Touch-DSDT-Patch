@@ -8,8 +8,8 @@
 
 DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
 {
-    External(\_SB.PCI0, DeviceObj)
-    External(\_SB.PCI0.LPCB, DeviceObj)
+    External(_SB.PCI0, DeviceObj)
+    External(_SB.PCI0.LPCB, DeviceObj)
 
     // All _OSI calls in DSDT are routed to XOSI...
     // XOSI simulates "Windows 2012" (which is Windows 8)
@@ -94,7 +94,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
     // In DSDT, native XSEL is renamed XXEL with Clover binpatch.
     // Calls to it will land here.
     // ... which does nothing
-    External(\_SB.PCI0.XHC, DeviceObj)
+    External(_SB.PCI0.XHC, DeviceObj)
     Method(_SB.PCI0.XHC.XSEL)
     {
         // nothing
@@ -237,7 +237,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
 // Standard Injections/Fixes
 //
 
-    Scope(\_SB.PCI0)
+    Scope(_SB.PCI0)
     {
         Device(IMEI)
         {
@@ -260,7 +260,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             }
         }
 
-        External(\_SB.PCI0.IGPU, DeviceObj)
+        External(IGPU, DeviceObj)
         Scope(IGPU)
         {
             // need the device-id from PCI_config to inject correct properties
@@ -302,7 +302,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         //  For now, using config.plist instead of _DSM methods.
 #if 0
         // inject properties for onboard audio
-        External(\_SB.PCI0.HDEF, DeviceObj)
+        External(HDEF, DeviceObj)
         Method(HDEF._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -314,7 +314,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
 
         // inject properties for HDMI audio on HDAU
-        External(\_SB.PCI0.HDAU, DeviceObj)
+        External(HDAU, DeviceObj)
         Method(HDAU._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -326,7 +326,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
 
         // inject properties for USB: EHC1/EHC2/XHC
-        External(\_SB.PCI0.EH01, DeviceObj)
+        External(EH01, DeviceObj)
         Method(EH01._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -343,7 +343,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
 
         // Note: EHCI #2 is not really active on the u430
-        External(\_SB.PCI0.EH02, DeviceObj)
+        External(EH02, DeviceObj)
         Method(EH02._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -359,7 +359,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             })
         }
 
-        //External(\_SB.PCI0.XHC, DeviceObj)
+        //External(XHC, DeviceObj)
         Method(XHC._DSM, 4)
         {
             If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
@@ -382,8 +382,8 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
 // Keyboard/Trackpad
 //
 
-    External(\_SB.PCI0.LPCB.PS2K, DeviceObj)
-    Scope (\_SB.PCI0.LPCB.PS2K)
+    External(_SB.PCI0.LPCB.PS2K, DeviceObj)
+    Scope (_SB.PCI0.LPCB.PS2K)
     {
         // Select specific keyboard map in VoodooPS2Keyboard.kext
         Method(_DSM, 4)
@@ -578,15 +578,11 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         }
     }
 
-    External(\_SB.PCI0.LPCB.EC0, DeviceObj)
-    External(\_SB.PCI0.LPCB.EC0.XQ94, MethodObj)
-    External(\_SB.PCI0.LPCB.EC0.TPDS, FieldUnitObj)
-    External(\_SB.PCI0.LPCB.EC0.BLIS, FieldUnitObj)
-    External(\_SB.PCI0.LPCB.EC0.ECOK, IntObj)
-    External(\_SB.PCI0.LPCB.EC0.RTMP, FieldUnitObj)
-
-    Scope(\_SB.PCI0.LPCB.EC0)
+    External(_SB.PCI0.LPCB.EC0, DeviceObj)
+    Scope(_SB.PCI0.LPCB.EC0)
     {
+        External(TPDS, FieldUnitObj)
+
         // The native _Qxx methods in DSDT are renamed XQxx,
         // so notifications from the EC driver will land here.
 
@@ -627,14 +623,19 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
 //
 
     // Override for ACPIBatteryManager.kext
-    External(\_SB.BAT1, DeviceObj)
+    External(_SB.BAT1, DeviceObj)
     Name(_SB.BAT1.RMCF, Package()
     {
         "StartupDelay", 10,
     })
 
-    Scope(\_SB.PCI0.LPCB.EC0)
+    Scope(_SB.PCI0.LPCB.EC0)
     {
+        External(XQ94, MethodObj)
+        External(BLIS, FieldUnitObj)
+        External(ECOK, IntObj)
+        External(RTMP, FieldUnitObj)
+
         // This is an override for battery methods that access EC fields
         // larger than 8-bit.
 
@@ -717,10 +718,10 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         
         External(\_SB.BATM, MutexObj)
         External(\_SB.BAT1.PBIF, PkgObj)
-        External(\_SB.PCI0.LPCB.EC0.WAEC, MethodObj)
-        External(\_SB.PCI0.LPCB.EC0.WADR, MethodObj)
-        External(\_SB.PCI0.LPCB.EC0.CREC, MethodObj)
-        External(\_SB.PCI0.LPCB.EC0.HIID, FieldUnitObj)
+        External(WAEC, MethodObj)
+        External(WADR, MethodObj)
+        External(CREC, MethodObj)
+        External(HIID, FieldUnitObj)
 
         // UPBI and UPBS in DSDT are renamed to XPBI and XPBS.  As a result,
         // calls from _BST, _BIF land here, where we can deal with
@@ -757,9 +758,9 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         
         External(\_SB.POSW, MethodObj)
         External(\_SB.BAT1.PBST, PkgObj)
-        External(\_SB.PCI0.LPCB.EC0.MBTF, FieldUnitObj)
-        External(\_SB.PCI0.LPCB.EC0.MBWC, FieldUnitObj)
-        External(\_SB.PCI0.LPCB.EC0.MBDS, FieldUnitObj)
+        External(MBTF, FieldUnitObj)
+        External(MBWC, FieldUnitObj)
+        External(MBDS, FieldUnitObj)
 
         Method (\_SB.BAT1.UPBS, 0, NotSerialized)
         {
