@@ -582,6 +582,9 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
     Scope(_SB.PCI0.LPCB.EC0)
     {
         External(TPDS, FieldUnitObj)
+        External(TPVD, FieldUnitObj)
+        External(\_SB.PCI0.LPCB.SYVD, IntObj)
+        External(\_SB.PCI0.LPCB.ELVD, IntObj)
 
         // The native _Qxx methods in DSDT are renamed XQxx,
         // so notifications from the EC driver will land here.
@@ -589,27 +592,55 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         // _Q91 (Fn+F11) called on brightness down key
         Method(_Q91)
         {
-            // e06b: code for brightness down
-            Notify (\_SB.PCI0.LPCB.PS2K, 0x046b)
+            If (LEqual(TPVD, SYVD))
+            {
+                // Synaptics
+                // e06b: code for brightness down
+                Notify(\_SB.PCI0.LPCB.PS2K, 0x046b)
+            }
+            Else
+            {
+                // Other(ELAN)
+                Notify(\_SB.PCI0.LPCB.PS2K, 0x20)
+            }
         }
         //_Q90 (Fn+F12) called on brightness up key
         Method(_Q90)
         {
-            // e06c: code for brightness up
-            Notify (\_SB.PCI0.LPCB.PS2K, 0x046c)
+            If (LEqual(TPVD, SYVD))
+            {
+                // Synaptics
+                // e06c: code for brightness up
+                Notify(\_SB.PCI0.LPCB.PS2K, 0x046c)
+            }
+            Else
+            {
+                // Other(ELAN)
+                Notify(\_SB.PCI0.LPCB.PS2K, 0x10)
+            }
         }
         Method(_Q94)
         {
-            // e069 will be mapped to either F10 (44) or e0f0 or e0f2
-            Notify (\_SB.PCI0.LPCB.PS2K, 0x0469)
+            If (LEqual(TPVD, SYVD))
+            {
+                // Synaptics
+                // e069 will be mapped to either F10 (44) or e0f0 or e0f2
+                Notify (\_SB.PCI0.LPCB.PS2K, 0x0469)
+            }
+            // Else not implemented for ELAN
         }
         Method(_Q8F)
         {
             // EC toggles TPDS when this key is struck before arriving here
             // We can cancel the toggle by setting TPDS=1 (trackpad enabled)
             Store(1, TPDS)
-            // e066 will be mapped to either F6 (40) or e037
-            Notify (\_SB.PCI0.LPCB.PS2K, 0x0466)
+            If (LEqual(TPVD, SYVD))
+            {
+                // Synaptics
+                // e066 will be mapped to either F6 (40) or e037
+                Notify (\_SB.PCI0.LPCB.PS2K, 0x0466)
+            }
+            // Else not implemented for ELAN
         }
         Method(_Q41)
         {
