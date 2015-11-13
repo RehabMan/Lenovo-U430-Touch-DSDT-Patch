@@ -6,11 +6,7 @@
 # Created by RehabMan 
 #
 
-LAPTOPGIT=../laptop.git
-DEBUGGIT=../debug.git
 BUILDDIR=./build
-PATCHED=./patched
-UNPATCHED=./unpatched
 RESOURCES=./Resources_ALC283
 HDAINJECT=AppleHDA_ALC283.kext
 HDALAYOUT=layout3
@@ -39,19 +35,7 @@ $(BUILDDIR)/SSDT-HACK.aml: ./SSDT-HACK.dsl
 
 .PHONY: clean
 clean:
-	rm -f $(PATCHED)/*.dsl
 	rm -f $(BUILDDIR)/*.dsl $(BUILDDIR)/*.aml
-
-.PHONY: cleanall
-cleanall:
-	make clean
-	rm -f $(UNPATCHED)/*.dsl
-
-.PHONY: cleanallex
-cleanallex:
-	make cleanall
-	rm -f native_patchmatic/*.aml
-
 
 # Clover Install
 .PHONY: install

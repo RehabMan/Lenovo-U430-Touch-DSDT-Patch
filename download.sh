@@ -3,8 +3,8 @@
 function download()
 {
     echo "downloading $2:"
-    curl --location --silent --output /tmp/org.rehabman.u430-download.txt https://bitbucket.org/RehabMan/$1/downloads
-    scrape=`grep -o -m 1 href\=\".*$2.*\.zip.*\" /tmp/org.rehabman.u430-download.txt|perl -ne 'print $1 if /href\=\"(.*)\"/'`
+    curl --location --silent --output /tmp/org.rehabman.download.txt https://bitbucket.org/RehabMan/$1/downloads
+    scrape=`grep -o -m 1 href\=\".*$2.*\.zip.*\" /tmp/org.rehabman.download.txt|perl -ne 'print $1 if /href\=\"(.*)\"/'`
     url=https://bitbucket.org$scrape
     echo $url
     if [ "$3" == "" ]; then
