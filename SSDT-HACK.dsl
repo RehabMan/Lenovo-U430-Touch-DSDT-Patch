@@ -93,11 +93,22 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
 
     // In DSDT, native XSEL is renamed XXEL with Clover binpatch.
     // Calls to it will land here.
-    // ... which does nothing
     External(_SB.PCI0.XHC, DeviceObj)
+    External(_SB.PCI0.XHC.PR2, FieldUnitObj)
+    External(_SB.PCI0.XHC.PR2M, FieldUnitObj)
+    External(_SB.PCI0.XHC.PR3, FieldUnitObj)
+    External(_SB.PCI0.XHC.PR3M, FieldUnitObj)
+    External(_SB.PCI0.XHC.XUSB, FieldUnitObj)
+    External(_SB.PCI0.XHC.XRST, IntObj)
     Method(_SB.PCI0.XHC.XSEL)
     {
-        // nothing
+        // This code is based on original XSEL, but without all the conditionals
+        // With this code, USB works correctly even in 10.10 after booting Windows
+        // setup to route all USB2 on XHCI to XHCI (not EHCI, which is disabled)
+        Store(1, XUSB)
+        Store(1, XRST)
+        Or(And (PR3, 0xFFFFFFC0), PR3M, PR3)
+        Or(And (PR2, 0xFFFF8000), PR2M, PR2)
     }
 
     // Override for USBInjectAll.kext
@@ -295,85 +306,6 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
                 Return(Local1)
             }
         }
-
-        // Note: All the _DSM injects below could be done in config.plist/Devices/Arbitrary
-        //  For now, using config.plist instead of _DSM methods.
-#if 0
-        // inject properties for onboard audio
-        External(HDEF, DeviceObj)
-        Method(HDEF._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
-                "layout-id", Buffer() { 3, 0, 0, 0, },
-                "PinConfigurations", Buffer(Zero) {},
-            })
-        }
-
-        // inject properties for HDMI audio on HDAU
-        External(HDAU, DeviceObj)
-        Method(HDAU._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
-                "layout-id", Buffer() { 3, 0, 0, 0, },
-                "hda-gfx", Buffer() { "onboard-1" },
-            })
-        }
-
-        // inject properties for USB: EHC1/EHC2/XHC
-        External(EH01, DeviceObj)
-        Method(EH01._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
-                "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
-                "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
-                "AAPL,current-available", 2100,
-                "AAPL,current-extra", 2200,
-                "AAPL,current-extra-in-sleep", 1600,
-                //"AAPL,device-internal", 0x02,
-                "AAPL,max-port-current-in-sleep", 2100,
-            })
-        }
-
-        // Note: EHCI #2 is not really active on the u430
-        External(EH02, DeviceObj)
-        Method(EH02._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
-                "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
-                "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
-                "AAPL,current-available", 2100,
-                "AAPL,current-extra", 2200,
-                "AAPL,current-extra-in-sleep", 1600,
-                //"AAPL,device-internal", 0x02,
-                "AAPL,max-port-current-in-sleep", 2100,
-            })
-        }
-
-        //External(XHC, DeviceObj)
-        Method(XHC._DSM, 4)
-        {
-            If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-            Return (Package()
-            {
-                "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
-                "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
-                "AAPL,current-available", 2100,
-                "AAPL,current-extra", 2200,
-                "AAPL,current-extra-in-sleep", 1600,
-                //"AAPL,device-internal", 0x02,
-                "AAPL,max-port-current-in-sleep", 2100,
-                "RM,pr2-force", Buffer() { 0xff, 0x3f, 0, 0, },
-            })
-        }
-#endif
     }
 
 //
