@@ -98,14 +98,14 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
     External(_SB.PCI0.XHC.PR2M, FieldUnitObj)
     External(_SB.PCI0.XHC.PR3, FieldUnitObj)
     External(_SB.PCI0.XHC.PR3M, FieldUnitObj)
-    External(_SB.PCI0.XHC.XUSB, FieldUnitObj)
+    External(_SB.PCI0.LPCB.XUSB, FieldUnitObj)
     External(_SB.PCI0.XHC.XRST, IntObj)
     Method(_SB.PCI0.XHC.XSEL)
     {
         // This code is based on original XSEL, but without all the conditionals
         // With this code, USB works correctly even in 10.10 after booting Windows
         // setup to route all USB2 on XHCI to XHCI (not EHCI, which is disabled)
-        Store(1, XUSB)
+        Store(1, \_SB.PCI0.LPCB.XUSB)
         Store(1, XRST)
         Or(And (PR3, 0xFFFFFFC0), PR3M, PR3)
         Or(And (PR2, 0xFFFF8000), PR2M, PR2)
