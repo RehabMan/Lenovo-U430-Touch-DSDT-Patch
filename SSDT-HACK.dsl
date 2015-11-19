@@ -512,7 +512,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
     Scope(_SB.PCI0.LPCB.EC0)
     {
         External(TPDS, FieldUnitObj)
-        External(TPVD, FieldUnitObj)
+        External(\TPVD, FieldUnitObj)
         External(\_SB.PCI0.LPCB.SYVD, IntObj)
         External(\_SB.PCI0.LPCB.ELVD, IntObj)
 
