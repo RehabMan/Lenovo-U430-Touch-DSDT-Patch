@@ -141,6 +141,22 @@
 					<key>Replace</key>
 					<data>WFhFTAg=</data>
 				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change SSDT Method(_DSM,4,Serialized) to XDSM</string>
+					<key>Find</key>
+					<data>X0RTTQxwe2oK/wA=</data>
+					<key>Replace</key>
+					<data>WERTTQxwe2oK/wA=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change SSDT _SB.PCI0.IGPU._DSM to XDSM</string>
+					<key>Find</key>
+					<data>X1NCX1BDSTBJR1BVX0RTTQ==</data>
+					<key>Replace</key>
+					<data>X1NCX1BDSTBJR1BVWERTTQ==</data>
+				</dict>
 			</array>
 			<key>Fixes</key>
 			<dict>
