@@ -592,8 +592,36 @@
 	</dict>
 	<key>SMBIOS</key>
 	<dict>
+		<key>BoardType</key>
+		<integer>10</integer>
+		<key>ChassisType</key>
+		<integer>10</integer>
+		<key>BiosReleaseDate</key>
+		<string>05/24/13</string>
+		<key>Version</key>
+		<string>1.0</string>
+		<key>SerialNumber</key>
+		<string>G02HACKUF5V7</string>
+		<key>Manufacturer</key>
+		<string>Apple Computer, Inc.</string>
+		<key>BoardManufacturer</key>
+		<string>Apple Computer, Inc.</string>
+		<key>ChassisAssetTag</key>
+		<string>Air-Enclosure</string>
+		<key>BiosVendor</key>
+		<string>Apple Computer, Inc.</string>
+		<key>ChassisManufacturer</key>
+		<string>Apple Computer, Inc.</string>
+		<key>BiosVersion</key>
+		<string>MBA61.88Z.0099.B04.1305241529</string>
+		<key>Board-ID</key>
+		<string>Mac-7DF21CB3ED6977E5</string>
+		<key>Family</key>
+		<string>MacBook Air</string>
 		<key>ProductName</key>
 		<string>MacBookAir6,2</string>
+		<key>Mobile</key>
+		<true/>
 		<key>Trust</key>
 		<true/>
 	</dict>
