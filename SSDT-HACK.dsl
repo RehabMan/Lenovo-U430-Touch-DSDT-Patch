@@ -6,7 +6,7 @@
 
 // Note: No solution for missing IAOE here, but so far, not a problem.
 
-DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
+DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
 {
     External(_SB.PCI0, DeviceObj)
     External(_SB.PCI0.LPCB, DeviceObj)
@@ -35,7 +35,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             //"Windows 2013",       // Windows 8.1/Windows Server 2012 R2
             //"Windows 2015",       // Windows 10/Windows Server TP
         }, Local0)
-        Return (LNotEqual(Match(Local0, MEQ, Arg0, MTR, 0, 0), Ones))
+        Return (Ones != Match(Local0, MEQ, Arg0, MTR, 0, 0))
     }
 
 //
@@ -66,8 +66,8 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         {
             //Return (\_TZ.TZ00._TMP())
             //Return(Divide(Subtract(\_TZ.TZ00._TMP(), 2732), 10))
-            If (\_SB.PCI0.LPCB.EC0.ECOK) { Store(\_SB.PCI0.LPCB.EC0.RTMP, Local0) }
-            Else { Store(0x1A, Local0) }
+            If (\_SB.PCI0.LPCB.EC0.ECOK) { Local0 = \_SB.PCI0.LPCB.EC0.RTMP }
+            Else { Local0 = 0x1a }
             Return(Local0)
         }
         //Method (TAMB, 0, Serialized) // Ambient Temp
@@ -86,7 +86,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
     // of the return package.
     Method(GPRW, 2)
     {
-        If (LEqual(Arg0, 0x6d)) { Return(Package() { 0x6d, 0, }) }
+        If (0x6d == Arg0) { Return(Package() { 0x6d, 0, }) }
         External(\XPRW, MethodObj)
         Return(XPRW(Arg0, Arg1))
     }
@@ -278,7 +278,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
                 Name(_CID, "diagsvault")
                 Method(_DSM, 4)
                 {
-                    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                    If (!Arg2) { Return (Buffer() { 0x03 } ) }
                     Return (Package() { "address", 0x57 })
                 }
             }
@@ -288,8 +288,8 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         Scope(IGPU)
         {
             // need the device-id from PCI_config to inject correct properties
-            OperationRegion(IGD4, PCI_Config, 2, 2)
-            Field(IGD4, AnyAcc, NoLock, Preserve)
+            OperationRegion(RMIG, PCI_Config, 2, 2)
+            Field(RMIG, AnyAcc, NoLock, Preserve)
             {
                 GDID,16
             }
@@ -297,26 +297,26 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             // inject properties for integrated graphics on IGPU
             Method(_DSM, 4)
             {
-                If (LEqual(Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-                Store(Package()
+                If (!Arg2) { Return (Buffer() { 0x03 } ) }
+                Local1 = Package()
                 {
                     "model", Buffer() { "place holder" },
                     "device-id", Buffer() { 0x12, 0x04, 0x00, 0x00 },
                     "hda-gfx", Buffer() { "onboard-1" },
                     "AAPL,ig-platform-id", Buffer() { 0x06, 0x00, 0x26, 0x0a },
-                }, Local1)
-                Store(GDID, Local0)
-                If (LEqual(Local0, 0x0a16)) { Store("Intel HD Graphics 4400", Index(Local1,1)) }
-                ElseIf (LEqual(Local0, 0x0416)) { Store("Intel HD Graphics 4600", Index(Local1,1)) }
-                ElseIf (LEqual(Local0, 0x0a1e)) { Store("Intel HD Graphics 4200", Index(Local1,1)) }
+                }
+                Local0 = GDID
+                If (0x0a16 == Local0) { Local1[1] = "Intel HD Graphics 4400" }
+                ElseIf (0x0416 == Local0) { Local1[1] = "Intel HD Graphics 4600" }
+                ElseIf (0x0a1e == Local0) { Local1[1] = "Intel HD Graphics 4200" }
                 Else
                 {
                     // others (HD5000 and Iris) are natively supported
-                    Store(Package()
+                    Local1 = Package()
                     {
                         "hda-gfx", Buffer() { "onboard-1" },
                         "AAPL,ig-platform-id", Buffer() { 0x06, 0x00, 0x26, 0x0a },
-                    }, Local1)
+                    }
                 }
                 Return(Local1)
             }
@@ -333,7 +333,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
         // Select specific keyboard map in VoodooPS2Keyboard.kext
         Method(_DSM, 4)
         {
-            If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+            If (!Arg2) { Return (Buffer() { 0x03 } ) }
             Return (Package()
             {
                 "RM,oem-id", "LENOVO",
@@ -570,7 +570,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             {
                 // Synaptics
                 // e069 will be mapped to either F10 (44) or e0f0 or e0f2
-                Notify (\_SB.PCI0.LPCB.PS2K, 0x0469)
+                Notify(\_SB.PCI0.LPCB.PS2K, 0x0469)
             }
             // Else not implemented for ELAN
         }
@@ -583,14 +583,14 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "hack", "hack", 0x00003000)
             {
                 // Synaptics
                 // e066 will be mapped to either F6 (40) or e037
-                Notify (\_SB.PCI0.LPCB.PS2K, 0x0466)
+                Notify(\_SB.PCI0.LPCB.PS2K, 0x0466)
             }
             // Else not implemented for ELAN
         }
         Method(_Q41)
         {
             // e067 will be mapped to either F7 (41) or itself
-            //Notify (\_SB.PCI0.LPCB.PS2K, 0x0467)
+            //Notify(\_SB.PCI0.LPCB.PS2K, 0x0467)
         }
     }
 

@@ -157,6 +157,16 @@
 					<key>Replace</key>
 					<data>X1NCX1BDSTBJR1BVWERTTQ==</data>
 				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change _DSM to XDSM</string>
+					<key>Disabled</key>
+					<true/>
+					<key>Find</key>
+					<data>X0RTTQ==</data>
+					<key>Replace</key>
+					<data>WERTTQ==</data>
+				</dict>
 			</array>
 			<key>Fixes</key>
 			<dict>
