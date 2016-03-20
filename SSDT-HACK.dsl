@@ -306,9 +306,9 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
                     "AAPL,ig-platform-id", Buffer() { 0x06, 0x00, 0x26, 0x0a },
                 }
                 Local0 = GDID
-                If (0x0a16 == Local0) { Local1[1] = "Intel HD Graphics 4400" }
-                ElseIf (0x0416 == Local0) { Local1[1] = "Intel HD Graphics 4600" }
-                ElseIf (0x0a1e == Local0) { Local1[1] = "Intel HD Graphics 4200" }
+                If (0x0a16 == Local0) { Local1[1] = Buffer() { "Intel HD Graphics 4400" } }
+                ElseIf (0x0416 == Local0) { Local1[1] = Buffer() { "Intel HD Graphics 4600" } }
+                ElseIf (0x0a1e == Local0) { Local1[1] = Buffer() { "Intel HD Graphics 4200" } }
                 Else
                 {
                     // others (HD5000 and Iris) are natively supported
