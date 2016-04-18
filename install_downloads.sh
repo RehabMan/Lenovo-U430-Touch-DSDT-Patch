@@ -168,7 +168,7 @@ fi
 $SUDO rm -Rf $KEXTDEST/AppleHDA_ALC283.kext
 $SUDO rm -Rf $KEXTDEST/AppleHDAHCD_ALC283.kext
 $SUDO rm -f $SLE/AppleHDA.kext/Contents/Resources/*.zml*
-if [[ 0 -eq 0 ]]
+if [[ 0 -eq 0 ]]; then
     # dummyHDA configuration
     install_kext AppleHDA_ALC283.kext
 else
