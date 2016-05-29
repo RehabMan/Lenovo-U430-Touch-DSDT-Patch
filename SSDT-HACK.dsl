@@ -480,6 +480,8 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             },
         })
 
+        External(\_SB.PCI0.LPCB.EC0.XQ94, MethodObj)
+
         // RKAB/RKAC called for PS2 code e0fb/e0fc (brightness is mapped to it)
         Method(RKAB, 1)
         {
@@ -607,7 +609,6 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
 
     Scope(_SB.PCI0.LPCB.EC0)
     {
-        External(XQ94, MethodObj)
         External(BLIS, FieldUnitObj)
         External(ECOK, IntObj)
         External(RTMP, FieldUnitObj)

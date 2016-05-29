@@ -168,12 +168,12 @@ fi
 $SUDO rm -Rf $KEXTDEST/AppleHDA_ALC283.kext
 $SUDO rm -Rf $KEXTDEST/AppleHDAHCD_ALC283.kext
 $SUDO rm -f $SLE/AppleHDA.kext/Contents/Resources/*.zml*
-if [[ 0 -eq 0 ]]; then
+if [[ 0 -eq 1 ]]; then
     # dummyHDA configuration
     install_kext AppleHDA_ALC283.kext
 else
     # alternate configuration (requires .xml.zlib .zml.zlib AppleHDA patch)
-    install_kext AppleHDAHCD_ALC283.kext
+    #install_kext AppleHDAHCD_ALC283.kext
     $SUDO cp AppleHDA_ALC283_Resources/*.zml* $SLE/AppleHDA.kext/Contents/Resources
 fi
 

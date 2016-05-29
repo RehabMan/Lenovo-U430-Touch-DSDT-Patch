@@ -9,6 +9,8 @@
 /* Begin PBXFileReference section */
 		840152EF182AE45E00D58B0A /* makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = makefile; sourceTree = "<group>"; usesTabs = 1; };
 		8406FCD6188627B8006D8DB7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		840CAC371CDE6D51003392E1 /* SSDT-ALC283.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SSDT-ALC283.dsl"; sourceTree = "<group>"; };
+		84325E9D1CF10A6600B3415F /* SSDT-ALC283_out.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SSDT-ALC283_out.dsl"; sourceTree = "<group>"; };
 		84490D5D1A14945B000E1BFB /* patch_hda.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_hda.sh; sourceTree = "<group>"; };
 		8455352818E65265001ADBFD /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		845CCF5C19A2B0F000C6B5C0 /* ahhcd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ahhcd.plist; path = Resources_ALC283/ahhcd.plist; sourceTree = "<group>"; };
@@ -31,6 +33,8 @@
 				8406FCD6188627B8006D8DB7 /* README.md */,
 				8455352818E65265001ADBFD /* config.plist */,
 				848741B61BBC7C7F0087EA08 /* SSDT-HACK.dsl */,
+				840CAC371CDE6D51003392E1 /* SSDT-ALC283.dsl */,
+				84325E9D1CF10A6600B3415F /* SSDT-ALC283_out.dsl */,
 				840152EF182AE45E00D58B0A /* makefile */,
 				8467C38E1A23A9FC00FCF396 /* mount_efi.sh */,
 				ED3F518B1A2029DE0060691A /* download.sh */,

@@ -24,26 +24,31 @@ endif
 SLE=/System/Library/Extensions
 
 # set build products
-PRODUCTS=$(BUILDDIR)/SSDT-HACK.aml
+PRODUCTS=$(BUILDDIR)/SSDT-HACK.aml $(BUILDDIR)/SSDT-ALC283.aml
 
 IASLFLAGS=-vw 2095 -vw 2146
 IASL=iasl
 
 .PHONY: all
-all: $(PRODUCTS) $(HDAINJECT) $(HDAHCDINJECT)
+all: $(PRODUCTS) $(HDAHCDINJECT) #  $(HDAINJECT)
 
 $(BUILDDIR)/SSDT-HACK.aml: ./SSDT-HACK.dsl
+	$(IASL) $(IASLFLAGS) -p $@ $<
+
+$(BUILDDIR)/SSDT-ALC283.aml: ./SSDT-ALC283.dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
 .PHONY: clean
 clean:
 	rm -f $(BUILDDIR)/*.dsl $(BUILDDIR)/*.aml
+	make clean_hda
 
 # Clover Install
 .PHONY: install
 install: $(PRODUCTS)
 	$(eval EFIDIR:=$(shell sudo ./mount_efi.sh /))
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-HACK.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-ALC283.aml
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/DSDT.aml
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-2.aml
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-3.aml
@@ -51,10 +56,16 @@ install: $(PRODUCTS)
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-5.aml
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-7.aml
 	cp $(BUILDDIR)/SSDT-HACK.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-HACK.aml
+	cp $(BUILDDIR)/SSDT-ALC283.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-ALC283.aml
 
-$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
+#$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
+$(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
 	./patch_hda.sh $(HDA)
 	touch $@
+
+.PHONY: clean_hda
+clean_hda:
+	rm -rf $(HDAHCDINJECT) $(HDAZML) # $(HDAINJECT)
 
 $(BACKLIGHTINJECT): Backlight.plist patch_backlight.sh
 	./patch_backlight.sh
@@ -65,23 +76,34 @@ update_kernelcache:
 	sudo touch $(SLE)
 	sudo kextcache -update-volume /
 
+.PHONY: install_hdadummy
+install_hdadummy:
+	sudo rm -Rf $(INSTDIR)/$(HDAINJECT)
+	sudo rm -Rf $(INSTDIR)/$(HDAHCDINJECT)
+	sudo cp -R ./$(HDAINJECT) $(INSTDIR)
+	sudo rm -f $(SLE)/AppleHDA.kext/Contents/Resources/*.zml*
+	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(INSTDIR)/$(HDAINJECT); fi
+	make update_kernelcache
+
 .PHONY: install_hda
 install_hda:
 	sudo rm -Rf $(INSTDIR)/$(HDAINJECT)
 	sudo rm -Rf $(INSTDIR)/$(HDAHCDINJECT)
-	sudo cp -R ./$(HDAINJECT) $(INSTDIR)
-	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(INSTDIR)/$(HDAINJECT); fi
-	make update_kernelcache
-
-.PHONY: install_hdahcd
-install_hdahcd:
-	sudo rm -Rf $(INSTDIR)/$(HDAINJECT)
-	sudo rm -Rf $(INSTDIR)/$(HDAHCDINJECT)
-	sudo cp -R ./$(HDAHCDINJECT) $(INSTDIR)
-	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(INSTDIR)/$(HDAHCDINJECT); fi
+	#sudo cp -R ./$(HDAHCDINJECT) $(INSTDIR)
+	#if [ "`which tag`" != "" ]; then sudo tag -a Blue $(INSTDIR)/$(HDAHCDINJECT); fi
 	sudo cp $(HDAZML)/*.zml* $(SLE)/AppleHDA.kext/Contents/Resources
 	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(SLE)/AppleHDA.kext/Contents/Resources/*.zml*; fi
 	make update_kernelcache
+
+FORCED=/ForcedExtensions
+.PHONY: install_hdax
+install_hdax:
+	sudo rm -Rf $(INSTDIR)/$(HDAINJECT)
+	sudo rm -Rf $(INSTDIR)/$(HDAHCDINJECT)
+	#sudo cp -R ./$(HDAHCDINJECT) $(FORCED)
+	#if [ "`which tag`" != "" ]; then sudo tag -a Blue $(FORCED)/$(HDAHCDINJECT); fi
+	sudo cp $(HDAZML)/*.zml* $(FORCED)/AppleHDA_Resources
+	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(FORCED)/AppleHDA_Resources/*.zml*; fi
 
 .PHONY: install_usb
 install_usb:

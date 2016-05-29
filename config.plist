@@ -4,11 +4,6 @@
 <dict>
 	<key>ACPI</key>
 	<dict>
-		<key>SortedOrder</key>
-		<array>
-			<string>SSDT.aml</string>
-			<string>SSDT-HACK.aml</string>
-		</array>
 		<key>DSDT</key>
 		<dict>
 			<key>Patches</key>
@@ -435,12 +430,12 @@
 		<key>Theme</key>
 		<string>bluemac</string>
 	</dict>
-	<key>#Graphics</key>
+	<key>Graphics</key>
 	<dict>
 		<key>Inject</key>
 		<dict>
 			<key>Intel</key>
-			<true/>
+			<false/>
 		</dict>
 		<key>ig-platform-id</key>
 		<string>0x0a260006</string>
@@ -527,25 +522,13 @@
 				<key>Comment</key>
 				<string>AppleHDA .xml.zlib to .zml.zlib</string>
 				<key>Disabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>LnhtbC56bA==</data>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Replace</key>
 				<data>LnptbC56bA==</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AppleHDA ALC262 to ALC283</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Find</key>
-				<data>YgLsEA==</data>
-				<key>Name</key>
-				<string>AppleHDA</string>
-				<key>Replace</key>
-				<data>gwLsEA==</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
