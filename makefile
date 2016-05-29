@@ -61,7 +61,6 @@ install: $(PRODUCTS)
 #$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
 $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
 	./patch_hda.sh $(HDA)
-	touch $@
 
 .PHONY: clean_hda
 clean_hda:

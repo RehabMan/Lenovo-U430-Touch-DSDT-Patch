@@ -17,6 +17,7 @@
 		8467C38E1A23A9FC00FCF396 /* mount_efi.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mount_efi.sh; sourceTree = "<group>"; };
 		848741B61BBC7C7F0087EA08 /* SSDT-HACK.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SSDT-HACK.dsl"; sourceTree = "<group>"; };
 		84B540371ACB34A200D8ABAE /* Platforms.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Platforms.plist; path = Resources_ALC283/Platforms.plist; sourceTree = "<group>"; };
+		ED272D601CCC73EC00FE569D /* install_tools.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_tools.sh; sourceTree = "<group>"; };
 		ED3F518A1A2029DE0060691A /* install_downloads.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_downloads.sh; sourceTree = "<group>"; };
 		ED3F518B1A2029DE0060691A /* download.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = download.sh; sourceTree = "<group>"; };
 		ED5F40D91B4F2FAE0041A26A /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_backlight.sh; sourceTree = "<group>"; };
@@ -38,6 +39,7 @@
 				840152EF182AE45E00D58B0A /* makefile */,
 				8467C38E1A23A9FC00FCF396 /* mount_efi.sh */,
 				ED3F518B1A2029DE0060691A /* download.sh */,
+				ED272D601CCC73EC00FE569D /* install_tools.sh */,
 				ED3F518A1A2029DE0060691A /* install_downloads.sh */,
 				EDF48E7D1C07512B0047CEFA /* update_config.sh */,
 				EDCE1AC51B4F2C81006D67D7 /* USBXHC_u430.kext */,
