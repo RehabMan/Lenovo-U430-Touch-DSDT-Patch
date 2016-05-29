@@ -362,6 +362,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             },
             "Synaptics TouchPad", Package()
             {
+                "DynamicEWMode", ">y",
                 "MultiFingerVerticalDivisor", 9,
                 "MultiFingerHorizontalDivisor", 9,
                 "MomentumScrollThreshY", 12,
