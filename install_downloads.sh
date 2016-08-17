@@ -194,6 +194,7 @@ HDA=ALC283
 $SUDO rm -Rf $KEXTDEST/AppleHDA_$HDA.kext
 $SUDO rm -Rf $KEXTDEST/AppleHDAHCD_$HDA.kext
 $SUDO rm -f $SLE/AppleHDA.kext/Contents/Resources/*.zml*
+./patch_hda.sh "$HDA"
 if [[ 0 -eq 1 ]]; then
     # dummyHDA configuration
     make AppleHDA_$HDA.kext
