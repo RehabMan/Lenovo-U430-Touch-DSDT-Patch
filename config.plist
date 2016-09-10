@@ -453,6 +453,8 @@
 				<string>10.9.5 5Ghz US FCC, svko</string>
 				<key>Find</key>
 				<data>WFQAIBcnIAAA</data>
+				<key>MatchOS</key>
+				<string>10.9.5</string>
 				<key>Name</key>
 				<string>AirPortBrcm4360</string>
 				<key>Replace</key>
@@ -463,6 +465,8 @@
 				<string>10.10.2+ 5Ghz US FCC, the-darkvoid</string>
 				<key>Find</key>
 				<data>QYP8/3QsSA==</data>
+				<key>MatchOS</key>
+				<string>10.10.x,10.11.x,10.12.x</string>
 				<key>Name</key>
 				<string>AirPortBrcm4360</string>
 				<key>Replace</key>
@@ -470,9 +474,23 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>AirPortBrcm4360 - fcvo, 10.12.x (credit the-darkvoid)</string>
+				<key>Find</key>
+				<data>gflSqgAAdSk=</data>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Replace</key>
+				<data>gflSqgAAZpA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>10.10.2+ BT4LE-Handoff-Hotspot, Dokterdok</string>
 				<key>Find</key>
 				<data>SIXAdFwPt0g=</data>
+				<key>MatchOS</key>
+				<string>10.10.x</string>
 				<key>Name</key>
 				<string>IOBluetoothFamily</string>
 				<key>Replace</key>
@@ -483,6 +501,8 @@
 				<string>10.11.dp1+ BT4LE-Handoff-Hotspot, credit RehabMan based on Dokterdok original</string>
 				<key>Find</key>
 				<data>SIX/dEdIiwc=</data>
+				<key>MatchOS</key>
+				<string>10.11.x,10.12.x</string>
 				<key>Name</key>
 				<string>IOBluetoothFamily</string>
 				<key>Replace</key>
@@ -520,11 +540,35 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>Boot graphics glitch, 10.10.x/10.11.x</string>
+				<key>Find</key>
+				<data>AQAAdRc=</data>
+				<key>MatchOS</key>
+				<string>10.10.x,10.11.x</string>
+				<key>Name</key>
+				<string>IOGraphicsFamily</string>
+				<key>Replace</key>
+				<data>AQAA6xc=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Boot graphics glitch, 10.12.dp1 (credit denskop)</string>
+				<key>Find</key>
+				<data>AQAAdSU=</data>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Name</key>
+				<string>IOGraphicsFamily</string>
+				<key>Replace</key>
+				<data>AQAA6yU=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>AppleHDA .xml.zlib to .zml.zlib</string>
-				<key>Disabled</key>
-				<false/>
 				<key>Find</key>
 				<data>LnhtbC56bA==</data>
+				<key>MatchOS</key>
+				<string>10.10.x,10.11.x,10.12.x</string>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Replace</key>
@@ -532,27 +576,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>AppleHDA ALC283 (1 of 4)</string>
-				<key>Find</key>
-				<data>PYQI7BA=</data>
-				<key>Name</key>
-				<string>AppleHDA</string>
-				<key>Replace</key>
-				<data>PQAAAAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AppleHDA ALC283 (2 of 4)</string>
-				<key>Find</key>
-				<data>PYUI7BA=</data>
-				<key>Name</key>
-				<string>AppleHDA</string>
-				<key>Replace</key>
-				<data>PQAAAAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AppleHDA ALC283 (3 of 4)</string>
+				<string>AppleHDA ALC283 (1 of 4) 0x11d41984 to 0x10ec0283</string>
 				<key>Find</key>
 				<data>PYQZ1BE=</data>
 				<key>Name</key>
@@ -562,9 +586,11 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>AppleHDA ALC283 (#4 of 4, new in 10.11, credit lisai9093)</string>
+				<string>AppleHDA ALC283 (2 of 4) 0x10ec0884 to zero</string>
 				<key>Find</key>
-				<data>PYMZ1BE=</data>
+				<data>PYQI7BA=</data>
+				<key>MatchOS</key>
+				<string>10.9.x,10.10.x</string>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Replace</key>
@@ -572,13 +598,27 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Boot graphics glitch, 10.10.x/10.11.x</string>
+				<string>AppleHDA ALC283 (3 of 4) 0x10ec0885 to zero</string>
 				<key>Find</key>
-				<data>AQAAdRc=</data>
+				<data>PYUI7BA=</data>
+				<key>MatchOS</key>
+				<string>10.9.x,10.10.x,10.11.x,10.12.x</string>
 				<key>Name</key>
-				<string>IOGraphicsFamily</string>
+				<string>AppleHDA</string>
 				<key>Replace</key>
-				<data>AQAA6xc=</data>
+				<data>PQAAAAA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>AppleHDA ALC283 (#4 of 4) 0x11d41983 to zero</string>
+				<key>Find</key>
+				<data>PYMZ1BE=</data>
+				<key>MatchOS</key>
+				<string>10.11.x</string>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Replace</key>
+				<data>PQAAAAA=</data>
 			</dict>
 		</array>
 	</dict>
