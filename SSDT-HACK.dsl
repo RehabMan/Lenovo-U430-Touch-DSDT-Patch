@@ -409,8 +409,8 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
                     "e065=71", // F15
                     "e068=4f", // F18
                     "e0f2=65", // special F9
-                    "e0fb=91", // brightness down
-                    "e0fc=90", // brightness up
+                    "e0fb=6b", // brightness down (was =91)
+                    "e0fc=71", // brightness up (was =90)
                     "e06a=70", // video mirror
                 },
                 "Custom PS2 Map", Package()
