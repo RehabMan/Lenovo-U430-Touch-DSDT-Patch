@@ -51,7 +51,7 @@ fi
 function replace_var()
 # $1 is path to replace
 {
-    value=`/usr/libexec/plistbuddy -c "Print \"$1\"" $config`
+    value=`/usr/libexec/plistbuddy -c "Print \"$1\"" config.plist`
     /usr/libexec/plistbuddy -c "Set \"$1\" \"$value\"" $config
 }
 
