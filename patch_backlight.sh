@@ -2,7 +2,7 @@
 
 #set -x
 
-uid=15
+uid=10
 vanilla=/System/Library/Extensions/AppleBacklight.kext
 
 ioreg -n AppleBacklightDisplay -arxw0>/tmp/org.rehabman.display.plist
