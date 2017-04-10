@@ -24,7 +24,7 @@ endif
 SLE=/System/Library/Extensions
 
 # set build products
-PRODUCTS=$(BUILDDIR)/SSDT-HACK.aml $(BUILDDIR)/SSDT-ALC283.aml $(BUILDDIR)/SSDT-PNLF.aml
+PRODUCTS=$(BUILDDIR)/SSDT-HACK.aml
 
 IASLFLAGS=-vw 2095 -vw 2146
 IASL=iasl
@@ -33,12 +33,6 @@ IASL=iasl
 all: $(PRODUCTS) $(HDAHCDINJECT) #  $(HDAINJECT)
 
 $(BUILDDIR)/SSDT-HACK.aml: ./SSDT-HACK.dsl
-	$(IASL) $(IASLFLAGS) -p $@ $<
-
-$(BUILDDIR)/SSDT-ALC283.aml: ./SSDT-ALC283.dsl
-	$(IASL) $(IASLFLAGS) -p $@ $<
-
-$(BUILDDIR)/SSDT-PNLF.aml: ./SSDT-PNLF.dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
 .PHONY: clean
@@ -50,7 +44,8 @@ clean:
 .PHONY: install
 install: $(PRODUCTS)
 	$(eval EFIDIR:=$(shell sudo ./mount_efi.sh /))
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/DSDT.aml $(EFIDIR)/EFI/CLOVER/ACPI/SSDT-*.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/DSDT.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-*.aml
 	cp $(PRODUCTS) $(EFIDIR)/EFI/CLOVER/ACPI/patched
 
 #$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh

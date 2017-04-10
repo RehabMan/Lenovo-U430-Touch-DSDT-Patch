@@ -246,6 +246,217 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
     }
 
 //
+// Display backlight implementation
+//
+// From SSDT-PNLF.dsl
+// Adding PNLF device for IntelBacklight.kext or AppleBacklight.kext+AppleBacklightInjector.kext
+
+#define SANDYIVY_PWMMAX 0x710
+#define HASWELL_PWMMAX 0xad9
+#define SKYLAKE_PWMMAX 0x56c
+
+    External(RMCF.BKLT, IntObj)
+    External(RMCF.LMAX, IntObj)
+
+    External(_SB.PCI0.IGPU, DeviceObj)
+    Scope(_SB.PCI0.IGPU)
+    {
+        // need the device-id from PCI_config to inject correct properties
+        OperationRegion(IGD5, PCI_Config, 0, 0x14)
+    }
+
+    // For backlight control
+    Device(_SB.PCI0.IGPU.PNLF)
+    {
+        Name(_ADR, Zero)
+        Name(_HID, EisaId ("APP0002"))
+        Name(_CID, "backlight")
+        // _UID is set depending on PWMMax
+        // 14: Sandy/Ivy 0x710
+        // 15: Haswell/Broadwell 0xad9
+        // 16: Skylake/KabyLake 0x56c (and some Haswell, example 0xa2e0008)
+        // 99: Other
+        Name(_UID, 0)
+        Name(_STA, 0x0B)
+
+        // IntelBacklight.kext configuration
+        Name(RMCF, Package()
+        {
+            "PWMMax", 0,
+        })
+
+        Field(^IGD5, AnyAcc, NoLock, Preserve)
+        {
+            Offset(0x02), GDID,16,
+            Offset(0x10), BAR1,32,
+        }
+
+        OperationRegion(RMB1, SystemMemory, BAR1 & ~0xF, 0xe1184)
+        Field(RMB1, AnyAcc, Lock, Preserve)
+        {
+            Offset(0x48250),
+            LEV2, 32,
+            LEVL, 32,
+            Offset(0x70040),
+            P0BL, 32,
+            Offset(0xc8250),
+            LEVW, 32,
+            LEVX, 32,
+            Offset(0xe1180),
+            PCHL, 32,
+        }
+
+        Method(_INI)
+        {
+            // IntelBacklight.kext takes care of this at load time...
+            // If RMCF.BKLT does not exist, it is assumed you want to use AppleBacklight.kext...
+            If (CondRefOf(\RMCF.BKLT)) { If (1 != \RMCF.BKLT) { Return } }
+
+            // Adjustment required when using AppleBacklight.kext
+            Local0 = GDID
+            Local2 = Ones
+            if (CondRefOf(\RMCF.LMAX)) { Local2 = \RMCF.LMAX }
+
+            If (Ones != Match(Package()
+            {
+                // Sandy
+                0x0116, 0x0126, 0x0112, 0x0122,
+                // Ivy
+                0x0166, 0x016a,
+                // Arrandale
+                0x42, 0x46
+            }, MEQ, Local0, MTR, 0, 0))
+            {
+                // Sandy/Ivy
+                if (Ones == Local2) { Local2 = SANDYIVY_PWMMAX }
+
+                // change/scale only if different than current...
+                Local1 = LEVX >> 16
+                If (!Local1) { Local1 = Local2 }
+                If (Local2 != Local1)
+                {
+                    // set new backlight PWMMax but retain current backlight level by scaling
+                    Local0 = (LEVL * Local2) / Local1
+                    //REVIEW: wait for vblank before setting new PWM config
+                    //For (Local7 = P0BL, P0BL == Local7, ) { }
+                    Local3 = Local2 << 16
+                    If (Local2 > Local1)
+                    {
+                        // PWMMax is getting larger... store new PWMMax first
+                        LEVX = Local3
+                        LEVL = Local0
+                    }
+                    Else
+                    {
+                        // otherwise, store new brightness level, followed by new PWMMax
+                        LEVL = Local0
+                        LEVX = Local3
+                    }
+                }
+            }
+            Else
+            {
+                // otherwise... Assume Haswell/Broadwell/Skylake
+                if (Ones == Local2)
+                {
+                    // check Haswell and Broadwell, as they are both 0xad9 (for most common ig-platform-id values)
+                    If (Ones != Match(Package()
+                    {
+                        // Haswell
+                        0x0d26, 0x0a26, 0x0d22, 0x0412, 0x0416, 0x0a16, 0x0a1e, 0x0a1e, 0x0a2e, 0x041e, 0x041a,
+                        // Broadwell
+                        0x0BD1, 0x0BD2, 0x0BD3, 0x1606, 0x160e, 0x1616, 0x161e, 0x1626, 0x1622, 0x1612, 0x162b,
+                    }, MEQ, Local0, MTR, 0, 0))
+                    {
+                        Local2 = HASWELL_PWMMAX
+                    }
+                    Else
+                    {
+                        // assume Skylake/KabyLake, both 0x56c
+                        // 0x1916, 0x191E, 0x1926, 0x1927, 0x1912, 0x1932, 0x1902, 0x1917, 0x191b,
+                        // 0x5916, 0x5912, 0x591b, others...
+                        Local2 = SKYLAKE_PWMMAX
+                    }
+                }
+
+                // This 0xC value comes from looking what OS X initializes this\n
+                // register to after display sleep (using ACPIDebug/ACPIPoller)\n
+                LEVW = 0xC0000000
+
+                // change/scale only if different than current...
+                Local1 = LEVX >> 16
+                If (!Local1) { Local1 = Local2 }
+                If (Local2 != Local1)
+                {
+                    // set new backlight PWMAX but retain current backlight level by scaling
+                    Local0 = (((LEVX & 0xFFFF) * Local2) / Local1) | (Local2 << 16)
+                    //REVIEW: wait for vblank before setting new PWM config
+                    //For (Local7 = P0BL, P0BL == Local7, ) { }
+                    LEVX = Local0
+                }
+            }
+
+            // Now Local2 is the new PWMMax, set _UID accordingly
+            // The _UID selects the correct entry in AppleBacklightInjector.kext
+            If (Local2 == SANDYIVY_PWMMAX) { _UID = 14 }
+            ElseIf (Local2 == HASWELL_PWMMAX) { _UID = 15 }
+            ElseIf (Local2 == SKYLAKE_PWMMAX) { _UID = 16 }
+            Else { _UID = 99 }
+        }
+    }
+
+//
+// Audio configuration
+//
+
+    External(_SB.PCI0.HDEF, DeviceObj)
+    Name(_SB.PCI0.HDEF.RMCF, Package()
+    {
+        "CodecCommanderProbeInit", Package()
+        {
+            "Version", 0x020600,
+            "10ec_0283", Package()
+            {
+                "PinConfigDefault", Package()
+                {
+                    Package(){},
+                    Package()
+                    {
+                        "LayoutID", 3,
+                        "PinConfigs", Package()
+                        {
+                            Package(){},
+                            0x12, 0x90a00110,
+                            0x14, 0x90170140,
+                            0x17, 0x400000f0,
+                            0x18, 0x400000f0,
+                            0x19, 0x400000f0,
+                            0x1a, 0x000000f0,
+                            0x1b, 0x400000f0,
+                            0x1d, 0x400000f0,
+                            0x1e, 0x400000f0,
+                            0x21, 0x03211050,
+                        },
+                    },
+                },
+                "Custom Commands", Package()
+                {
+                    Package(){},
+                    Package()
+                    {
+                        "LayoutID", 3,
+                        "Command", Buffer()
+                        {
+                            0x01, 0x47, 0x0c, 0x02,
+                            0x02, 0x17, 0x0c, 0x02
+                        },
+                    },
+                },
+            },
+        },
+    })
+
+//
 // Standard Injections/Fixes
 //
 
