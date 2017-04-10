@@ -211,15 +211,17 @@ fi
 # for the touchscreen
 install_kext USBXHC_u430.kext
 
-#if [[ $MINOR_VER -ge 11 ]]; then
-    # create custom AppleBacklightInjector.kext and install
-    #./patch_backlight.sh
-    #install_kext AppleBacklightInjector.kext
-    # remove ACPIBacklight.kext if it is installed (doesn't work with 10.11)
-    #if [ -d $SLE/ACPIBacklight.kext ]; then
-    #    $SUDO rm -Rf $SLE/ACPIBacklight.kext
-    #fi
-#fi
+# install AppleBacklightInjector.kext on 10.12
+#  (set BKLT=1 in SSDT-HACK.dsl to use it, set BKLT=0 to use IntelBacklight.kext)
+if [[ $MINOR_VER -ge 12 ]]; then
+    cd kexts
+    install_kext AppleBacklightInjector.kext
+    cd ..
+    # remove IntelBacklight.kext if it is installed (doesn't work with 10.12)
+    if [ -d $KEXTDEST/IntelBacklight.kext ]; then
+        $SUDO rm -Rf $KEXTDEST/IntelBacklight.kext
+    fi
+fi
 
 #check_directory *.kext
 #if [ $? -ne 0 ]; then

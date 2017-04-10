@@ -230,30 +230,18 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
         }
     }
 
-
 //
-// Backlight control
+// For disabling the discrete GPU
 //
 
-    Device(PNLF)
+    External(_SB.PCI0.RP05.PEGP._OFF, MethodObj)
+    Device(RMD2)
     {
-        Name(_ADR, Zero)
-        Name(_HID, EisaId ("APP0002"))
-        Name(_CID, "backlight")
-        Name(_UID, 10)
-        Name(_STA, 0x0B)
-        Name(RMCF, Package()
-        {
-            "PWMMax", 0,
-        })
+        Name(_HID, "RMD20000")
         Method(_INI)
         {
-            // disable discrete graphics (Nvidia) if it is present
-            External(\_SB.PCI0.RP05.PEGP._OFF, MethodObj)
-            If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF))
-            {
-                \_SB.PCI0.RP05.PEGP._OFF()
-            }
+            // disable discrete graphics (Nvidia/Radeon) if it is present
+            If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF)) { \_SB.PCI0.RP05.PEGP._OFF() }
         }
     }
 

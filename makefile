@@ -24,7 +24,7 @@ endif
 SLE=/System/Library/Extensions
 
 # set build products
-PRODUCTS=$(BUILDDIR)/SSDT-HACK.aml $(BUILDDIR)/SSDT-ALC283.aml
+PRODUCTS=$(BUILDDIR)/SSDT-HACK.aml $(BUILDDIR)/SSDT-ALC283.aml $(BUILDDIR)/SSDT-PNLF.aml
 
 IASLFLAGS=-vw 2095 -vw 2146
 IASL=iasl
@@ -38,6 +38,9 @@ $(BUILDDIR)/SSDT-HACK.aml: ./SSDT-HACK.dsl
 $(BUILDDIR)/SSDT-ALC283.aml: ./SSDT-ALC283.dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
+$(BUILDDIR)/SSDT-PNLF.aml: ./SSDT-PNLF.dsl
+	$(IASL) $(IASLFLAGS) -p $@ $<
+
 .PHONY: clean
 clean:
 	rm -f $(BUILDDIR)/*.dsl $(BUILDDIR)/*.aml
@@ -47,16 +50,8 @@ clean:
 .PHONY: install
 install: $(PRODUCTS)
 	$(eval EFIDIR:=$(shell sudo ./mount_efi.sh /))
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-HACK.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-ALC283.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/DSDT.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-2.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-3.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-4.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-5.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-7.aml
-	cp $(BUILDDIR)/SSDT-HACK.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-HACK.aml
-	cp $(BUILDDIR)/SSDT-ALC283.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-ALC283.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/DSDT.aml $(EFIDIR)/EFI/CLOVER/ACPI/SSDT-*.aml
+	cp $(PRODUCTS) $(EFIDIR)/EFI/CLOVER/ACPI/patched
 
 #$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
 $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
