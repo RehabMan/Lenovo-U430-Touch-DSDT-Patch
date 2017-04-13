@@ -17,6 +17,5 @@ native_patchmatic/*
 !native_patchmatic/readme.txt
 native_61ww/*
 native_62ww/*
-AppleBacklightInjector.kext
 AppleHDAHCD_ALC283.kext
 AppleHDA_ALC283_Resources
