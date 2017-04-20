@@ -510,23 +510,23 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>0x0a260006 9MB cursor bytes, vbo</string>
+				<string> 0x0a260006 9MB cursor bytes (vbo), 2 ports only (RehabMan)</string>
 				<key>Find</key>
 				<data>BgAmCgEDAwMAAAACAAAwAQAAYAA=</data>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 				<key>Replace</key>
-				<data>BgAmCgEDAwMAAAACAAAwAQAAkAA=</data>
+				<data>BgAmCgEDAgIAAAACAAAwAQAAkAA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>HDMI-audio, port 0204, 0x0a260005 0x0a260006</string>
+				<string>0x0a260006 disable 0204 port, change 0105 DP port to 0204 HDMI (RehabMan)</string>
 				<key>Find</key>
-				<data>AgQJAAAEAACHAAAA</data>
+				<data>AQUJAAAEAACHAAAAAgQJAAAEAACHAAAA</data>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 				<key>Replace</key>
-				<data>AgQJAAAIAACHAAAA</data>
+				<data>AgQJAAAIAACHAAAA/wAAAAEAAABAAAAA</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
