@@ -46,6 +46,7 @@ install: $(PRODUCTS)
 	$(eval EFIDIR:=$(shell sudo ./mount_efi.sh /))
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/DSDT.aml
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-*.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT.aml
 	cp $(PRODUCTS) $(EFIDIR)/EFI/CLOVER/ACPI/patched
 
 #$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh

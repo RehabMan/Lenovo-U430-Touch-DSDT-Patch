@@ -39,6 +39,20 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
     }
 
 //
+// Power management with X86PlatformPlugin.kext
+//
+
+    External(\_PR.CPU0, DeviceObj)
+    Method (\_PR.CPU0._DSM, 4)
+    {
+        If (!Arg2) { Return (Buffer() { 0x03 } ) }
+        Return (Package()
+        {
+            "plugin-type", 1
+        })
+    }
+
+//
 // ACPISensors configuration (ACPISensors.kext is not installed by default)
 //
 
