@@ -80,7 +80,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
         {
             //Return (\_TZ.TZ00._TMP())
             //Return(Divide(Subtract(\_TZ.TZ00._TMP(), 2732), 10))
-            If (\_SB.PCI0.LPCB.EC0.ECOK) { Local0 = \_SB.PCI0.LPCB.EC0.RTMP }
+            If (\_SB.PCI0.LPCB.EC.ECOK) { Local0 = \_SB.PCI0.LPCB.EC.RTMP }
             Else { Local0 = 0x1a }
             Return(Local0)
         }
@@ -694,17 +694,17 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             },
         })
 
-        External(\_SB.PCI0.LPCB.EC0.XQ94, MethodObj)
+        External(\_SB.PCI0.LPCB.EC.XQ94, MethodObj)
 
         // RKAB/RKAC called for PS2 code e0fb/e0fc (brightness is mapped to it)
         Method(RKAB, 1)
         {
             // if screen is turned off, turn it on...
-            If (LNot(\_SB.PCI0.LPCB.EC0.BLIS))
+            If (LNot(\_SB.PCI0.LPCB.EC.BLIS))
             {
-                Store (1, \_SB.PCI0.LPCB.EC0.BLIS)
-                \_SB.PCI0.LPCB.EC0.XQ94()
-                \_SB.PCI0.LPCB.EC0._Q41()
+                Store (1, \_SB.PCI0.LPCB.EC.BLIS)
+                \_SB.PCI0.LPCB.EC.XQ94()
+                \_SB.PCI0.LPCB.EC._Q41()
             }
         }
         Method(RKAC, 1) { RKAB(Arg0) }
@@ -716,8 +716,8 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             If (Arg0)
             {
                 // normal action for Fn+F9 (without keys swapped, toggle screen)
-                \_SB.PCI0.LPCB.EC0.XQ94()
-                \_SB.PCI0.LPCB.EC0._Q41()
+                \_SB.PCI0.LPCB.EC.XQ94()
+                \_SB.PCI0.LPCB.EC._Q41()
             }
         }
         Method(RKA1, 1)
@@ -725,7 +725,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             If (Arg0)
             {
                 // F9 with keys swapped, do what EC would do (toggle screen)
-                Store(LNot(\_SB.PCI0.LPCB.EC0.BLIS), \_SB.PCI0.LPCB.EC0.BLIS)
+                Store(LNot(\_SB.PCI0.LPCB.EC.BLIS), \_SB.PCI0.LPCB.EC.BLIS)
                 RKA0(Arg0)
             }
         }
@@ -734,13 +734,13 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             If (Arg0)
             {
                 // Fn+F9 with keys swapped, undo what EC would do (avoid toggling screen)
-                Store(LNot(\_SB.PCI0.LPCB.EC0.BLIS), \_SB.PCI0.LPCB.EC0.BLIS)
+                Store(LNot(\_SB.PCI0.LPCB.EC.BLIS), \_SB.PCI0.LPCB.EC.BLIS)
             }
         }
     }
 
-    External(_SB.PCI0.LPCB.EC0, DeviceObj)
-    Scope(_SB.PCI0.LPCB.EC0)
+    External(_SB.PCI0.LPCB.EC, DeviceObj)
+    Scope(_SB.PCI0.LPCB.EC)
     {
         External(TPDS, FieldUnitObj)
         External(\TPVD, FieldUnitObj)
@@ -821,7 +821,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
         "StartupDelay", 10,
     })
 
-    Scope(_SB.PCI0.LPCB.EC0)
+    Scope(_SB.PCI0.LPCB.EC)
     {
         External(BLIS, FieldUnitObj)
         External(ECOK, IntObj)
@@ -922,27 +922,27 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
         {
             Acquire (BATM, 0xFFFF)
             Store (Zero, Index (PBIF, Zero))
-            Multiply (B1B2 (^^PCI0.LPCB.EC0.B1F0, ^^PCI0.LPCB.EC0.B1F1), 0x0A, Index (PBIF, 0x02))
-            ^^PCI0.LPCB.EC0.WAEC ()
-            Store (0x02, ^^PCI0.LPCB.EC0.HIID)
-            ^^PCI0.LPCB.EC0.WADR ()
-            Multiply (B1B2 (^^PCI0.LPCB.EC0.DIC0, ^^PCI0.LPCB.EC0.DIC1), 0x0A, Local1)
+            Multiply (B1B2 (^^PCI0.LPCB.EC.B1F0, ^^PCI0.LPCB.EC.B1F1), 0x0A, Index (PBIF, 0x02))
+            ^^PCI0.LPCB.EC.WAEC ()
+            Store (0x02, ^^PCI0.LPCB.EC.HIID)
+            ^^PCI0.LPCB.EC.WADR ()
+            Multiply (B1B2 (^^PCI0.LPCB.EC.DIC0, ^^PCI0.LPCB.EC.DIC1), 0x0A, Local1)
             Store (Local1, Index (PBIF, One))
-            Store (B1B2 (^^PCI0.LPCB.EC0.DIV0, ^^PCI0.LPCB.EC0.DIV1), Index (PBIF, 0x04))
-            ^^PCI0.LPCB.EC0.CREC ()
+            Store (B1B2 (^^PCI0.LPCB.EC.DIV0, ^^PCI0.LPCB.EC.DIV1), Index (PBIF, 0x04))
+            ^^PCI0.LPCB.EC.CREC ()
             Store (Divide (Local1, 0x0A, ), Index (PBIF, 0x05))
             Store (Divide (Multiply (Local1, 0x02), 0x64, ), Index (PBIF, 0x06))
-            ^^PCI0.LPCB.EC0.WAEC ()
-            Store (0x06, ^^PCI0.LPCB.EC0.HIID)
-            ^^PCI0.LPCB.EC0.WADR ()
-            Store (^^PCI0.LPCB.EC0.RDDN(), Index (PBIF, 0x09))
-            ^^PCI0.LPCB.EC0.CREC ()
+            ^^PCI0.LPCB.EC.WAEC ()
+            Store (0x06, ^^PCI0.LPCB.EC.HIID)
+            ^^PCI0.LPCB.EC.WADR ()
+            Store (^^PCI0.LPCB.EC.RDDN(), Index (PBIF, 0x09))
+            ^^PCI0.LPCB.EC.CREC ()
             Store ("LION", Index (PBIF, 0x0B))
-            ^^PCI0.LPCB.EC0.WAEC ()
-            Store (0x05, ^^PCI0.LPCB.EC0.HIID)
-            ^^PCI0.LPCB.EC0.WADR ()
-            Store (^^PCI0.LPCB.EC0.RDMN(), Index (PBIF, 0x0C))
-            ^^PCI0.LPCB.EC0.CREC ()
+            ^^PCI0.LPCB.EC.WAEC ()
+            Store (0x05, ^^PCI0.LPCB.EC.HIID)
+            ^^PCI0.LPCB.EC.WADR ()
+            Store (^^PCI0.LPCB.EC.RDMN(), Index (PBIF, 0x0C))
+            ^^PCI0.LPCB.EC.CREC ()
             Release (BATM)
         }
         
@@ -954,11 +954,11 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
 
         Method (\_SB.BAT1.UPBS, 0, NotSerialized)
         {
-            Store (B1B2 (^^PCI0.LPCB.EC0.MCU0, ^^PCI0.LPCB.EC0.MCU1), Local5)
+            Store (B1B2 (^^PCI0.LPCB.EC.MCU0, ^^PCI0.LPCB.EC.MCU1), Local5)
             Multiply (POSW (Local5), 0x0A, Index (PBST, One))
-            Multiply (B1B2 (^^PCI0.LPCB.EC0.MBR0, ^^PCI0.LPCB.EC0.MBR1), 0x0A, Index (PBST, 0x02))
-            Store (B1B2 (^^PCI0.LPCB.EC0.MBV0, ^^PCI0.LPCB.EC0.MBV1), Index (PBST, 0x03))
-            If (^^PCI0.LPCB.EC0.MBTF)
+            Multiply (B1B2 (^^PCI0.LPCB.EC.MBR0, ^^PCI0.LPCB.EC.MBR1), 0x0A, Index (PBST, 0x02))
+            Store (B1B2 (^^PCI0.LPCB.EC.MBV0, ^^PCI0.LPCB.EC.MBV1), Index (PBST, 0x03))
+            If (^^PCI0.LPCB.EC.MBTF)
             {
                 Store (Zero, Index (PBST, Zero))
             }
@@ -966,13 +966,13 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             {
                 If (LNotEqual (Local5, Zero))
                 {
-                    If (^^PCI0.LPCB.EC0.MBWC)
+                    If (^^PCI0.LPCB.EC.MBWC)
                     {
                         Store (0x02, Index (PBST, Zero))
                     }
                     Else
                     {
-                        If (^^PCI0.LPCB.EC0.MBDS)
+                        If (^^PCI0.LPCB.EC.MBDS)
                         {
                             Store (One, Index (PBST, Zero))
                         }
@@ -984,7 +984,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
                 }
                 Else
                 {
-                    If (^^PCI0.LPCB.EC0.MBWC)
+                    If (^^PCI0.LPCB.EC.MBWC)
                     {
                         Store (0x02, Index (PBST, Zero))
                     }
