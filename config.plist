@@ -482,6 +482,20 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>10.10.2+ 5Ghz #a (locale unknown), based on the-darkvoid US FCC patch</string>
+				<key>Disabled</key>
+				<true/>
+				<key>Find</key>
+				<data>QYP8/3QsSA==</data>
+				<key>MatchOS</key>
+				<string>10.10.x,10.11.x,10.12.x</string>
+				<key>Name</key>
+				<string>com.apple.driver.AirPort.Brcm4360</string>
+				<key>Replace</key>
+				<data>ZscGI2HrKw==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>AirPortBrcm4360 - fcvo, 10.12.x (credit the-darkvoid)</string>
 				<key>Find</key>
 				<data>gflSqgAAdSk=</data>
@@ -518,23 +532,23 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string> 0x0a260006 9MB cursor bytes (vbo), 2 ports only (RehabMan)</string>
+				<string> 0x0a260006 9MB cursor bytes (vbo)</string>
 				<key>Find</key>
 				<data>BgAmCgEDAwMAAAACAAAwAQAAYAA=</data>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 				<key>Replace</key>
-				<data>BgAmCgEDAgIAAAACAAAwAQAAkAA=</data>
+				<data>BgAmCgEDAwMAAAACAAAwAQAAkAA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>0x0a260006 disable 0204 port, change 0105 DP port to 0204 HDMI (RehabMan)</string>
+				<string>0x0a260006 disable 0105 port, change 0204 port to HDMI (RehabMan)</string>
 				<key>Find</key>
 				<data>AQUJAAAEAACHAAAAAgQJAAAEAACHAAAA</data>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 				<key>Replace</key>
-				<data>AgQJAAAIAACHAAAA/wAAAAEAAABAAAAA</data>
+				<data>/wAAAAEAAABAAAAAAgQJAAAIAACHAAAA</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
