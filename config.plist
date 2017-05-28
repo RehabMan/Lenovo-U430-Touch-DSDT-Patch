@@ -43,6 +43,8 @@
 				<dict>
 					<key>Comment</key>
 					<string>change Method(GPRW,2,N) to XPRW</string>
+					<key>Disabled</key>
+					<true/>
 					<key>Find</key>
 					<data>R1BSVwI=</data>
 					<key>Replace</key>

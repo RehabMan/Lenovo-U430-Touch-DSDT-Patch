@@ -92,7 +92,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
 //
 // USB related
 //
-
+#if 0
     // In DSDT, native GPRW is renamed to XPRW with Clover binpatch.
     // As a result, calls to GPRW land here.
     // The purpose of this implementation is to avoid "instant wake"
@@ -104,7 +104,10 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
         External(\XPRW, MethodObj)
         Return(XPRW(Arg0, Arg1))
     }
-
+#else
+    Name(_SB.PCI0.EH01._STA, 0)
+    Name(_SB.PCI0.EH02._STA, 0)
+#endif
     // In DSDT, native XSEL is renamed XXEL with Clover binpatch.
     // Calls to it will land here.
     External(_SB.PCI0.XHC, DeviceObj)
