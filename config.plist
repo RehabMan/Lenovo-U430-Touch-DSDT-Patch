@@ -461,24 +461,24 @@
 			<dict>
 				<key>Comment</key>
 				<string>10.9.5 5Ghz US FCC, svko</string>
-				<key>Find</key>
-				<data>WFQAIBcnIAAA</data>
 				<key>MatchOS</key>
 				<string>10.9.5</string>
 				<key>Name</key>
 				<string>com.apple.driver.AirPort.Brcm4360</string>
+				<key>Find</key>
+				<data>WFQAIBcnIAAA</data>
 				<key>Replace</key>
 				<data>WFQAG2cxlQAJ</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>10.10.2+ 5Ghz US FCC, the-darkvoid</string>
-				<key>Find</key>
-				<data>QYP8/3QsSA==</data>
 				<key>MatchOS</key>
 				<string>10.10.x,10.11.x</string>
 				<key>Name</key>
 				<string>com.apple.driver.AirPort.Brcm4360</string>
+				<key>Find</key>
+				<data>QYP8/3QsSA==</data>
 				<key>Replace</key>
 				<data>ZscGVVPrKw==</data>
 			</dict>
@@ -487,168 +487,142 @@
 				<string>10.10.2+ 5Ghz #a (locale unknown), based on the-darkvoid US FCC patch</string>
 				<key>Disabled</key>
 				<true/>
-				<key>Find</key>
-				<data>QYP8/3QsSA==</data>
 				<key>MatchOS</key>
 				<string>10.10.x,10.11.x,10.12.x</string>
 				<key>Name</key>
 				<string>com.apple.driver.AirPort.Brcm4360</string>
+				<key>Find</key>
+				<data>QYP8/3QsSA==</data>
 				<key>Replace</key>
 				<data>ZscGI2HrKw==</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>AirPortBrcm4360 - fcvo, 10.12.x (credit the-darkvoid)</string>
-				<key>Find</key>
-				<data>gflSqgAAdSk=</data>
 				<key>MatchOS</key>
 				<string>10.12.x</string>
 				<key>Name</key>
 				<string>com.apple.driver.AirPort.Brcm4360</string>
+				<key>Find</key>
+				<data>gflSqgAAdSk=</data>
 				<key>Replace</key>
 				<data>gflSqgAAZpA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>10.10.2+ BT4LE-Handoff-Hotspot, Dokterdok</string>
-				<key>Find</key>
-				<data>SIXAdFwPt0g=</data>
 				<key>MatchOS</key>
 				<string>10.10.x</string>
 				<key>Name</key>
 				<string>com.apple.iokit.IOBluetoothFamily</string>
+				<key>Find</key>
+				<data>SIXAdFwPt0g=</data>
 				<key>Replace</key>
 				<data>Qb4PAAAA61k=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>10.11.dp1+ BT4LE-Handoff-Hotspot, credit RehabMan based on Dokterdok original</string>
-				<key>Find</key>
-				<data>SIX/dEdIiwc=</data>
 				<key>MatchOS</key>
 				<string>10.11.x,10.12.x</string>
 				<key>Name</key>
 				<string>com.apple.iokit.IOBluetoothFamily</string>
+				<key>Find</key>
+				<data>SIX/dEdIiwc=</data>
 				<key>Replace</key>
 				<data>Qb4PAAAA60Q=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string> 0x0a260006 9MB cursor bytes (vbo)</string>
-				<key>Find</key>
-				<data>BgAmCgEDAwMAAAACAAAwAQAAYAA=</data>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
+				<key>Find</key>
+				<data>BgAmCgEDAwMAAAACAAAwAQAAYAA=</data>
 				<key>Replace</key>
 				<data>BgAmCgEDAwMAAAACAAAwAQAAkAA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>0x0a260006 disable 0105 port, change 0204 port to HDMI (RehabMan)</string>
-				<key>Find</key>
-				<data>AQUJAAAEAACHAAAAAgQJAAAEAACHAAAA</data>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
+				<key>Find</key>
+				<data>AQUJAAAEAACHAAAAAgQJAAAEAACHAAAA</data>
 				<key>Replace</key>
 				<data>/wAAAAEAAABAAAAAAgQJAAAIAACHAAAA</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>Enable TRIM for non-Apple SSDs</string>
-				<key>Find</key>
-				<data>AEFQUExFIFNTRAA=</data>
 				<key>Name</key>
 				<string>com.apple.iokit.IOAHCIBlockStorage</string>
+				<key>Find</key>
+				<data>AEFQUExFIFNTRAA=</data>
 				<key>Replace</key>
 				<data>AAAAAAAAAAAAAAA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Boot graphics glitch, 10.10.x/10.11.x</string>
-				<key>Find</key>
-				<data>AQAAdRc=</data>
-				<key>MatchOS</key>
-				<string>10.10.x,10.11.x</string>
-				<key>Name</key>
-				<string>com.apple.iokit.IOGraphicsFamily</string>
-				<key>Replace</key>
-				<data>AQAA6xc=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Boot graphics glitch, 10.12.dp1 (credit denskop)</string>
-				<key>Find</key>
-				<data>AQAAdSU=</data>
-				<key>MatchOS</key>
-				<string>10.12.x</string>
-				<key>Name</key>
-				<string>com.apple.iokit.IOGraphicsFamily</string>
-				<key>Replace</key>
-				<data>AQAA6yU=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
 				<string>AppleHDA .xml.zlib to .zml.zlib</string>
-				<key>Find</key>
-				<data>LnhtbC56bA==</data>
 				<key>MatchOS</key>
-				<string>10.10.x,10.11.x,10.12.x</string>
+				<string>10.10.x,10.11.x,10.12.x,10.13.x</string>
 				<key>Name</key>
 				<string>com.apple.driver.AppleHDA</string>
+				<key>Find</key>
+				<data>LnhtbC56bA==</data>
 				<key>Replace</key>
 				<data>LnptbC56bA==</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>AppleHDA ALC283 (1 of 4) 0x11d41984 to 0x10ec0283</string>
-				<key>Find</key>
-				<data>PYQZ1BE=</data>
 				<key>Name</key>
 				<string>com.apple.driver.AppleHDA</string>
+				<key>Find</key>
+				<data>PYQZ1BE=</data>
 				<key>Replace</key>
 				<data>PYMC7BA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>AppleHDA ALC283 (2 of 4) 0x10ec0884 to zero</string>
-				<key>Find</key>
-				<data>PYQI7BA=</data>
 				<key>MatchOS</key>
 				<string>10.9.x,10.10.x</string>
 				<key>Name</key>
 				<string>com.apple.driver.AppleHDA</string>
+				<key>Find</key>
+				<data>PYQI7BA=</data>
 				<key>Replace</key>
 				<data>PQAAAAA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>AppleHDA ALC283 (3 of 4) 0x10ec0885 to zero</string>
-				<key>Find</key>
-				<data>PYUI7BA=</data>
 				<key>MatchOS</key>
-				<string>10.9.x,10.10.x,10.11.x,10.12.x</string>
+				<string>10.9.x,10.10.x,10.11.x,10.12.x,10.13.x</string>
 				<key>Name</key>
 				<string>com.apple.driver.AppleHDA</string>
+				<key>Find</key>
+				<data>PYUI7BA=</data>
 				<key>Replace</key>
 				<data>PQAAAAA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>AppleHDA ALC283 (#4 of 4) 0x11d41983 to zero</string>
-				<key>Find</key>
-				<data>PYMZ1BE=</data>
 				<key>MatchOS</key>
 				<string>10.11.x</string>
 				<key>Name</key>
 				<string>com.apple.driver.AppleHDA</string>
+				<key>Find</key>
+				<data>PYMZ1BE=</data>
 				<key>Replace</key>
 				<data>PQAAAAA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>change F%uT%04x to F%uTxxxx in AppleBacklightInjector.kext (credit RehabMan)</string>
-				<key>Disabled</key>
-				<false/>
 				<key>Name</key>
 				<string>com.apple.driver.AppleBacklight</string>
 				<key>Find</key>
