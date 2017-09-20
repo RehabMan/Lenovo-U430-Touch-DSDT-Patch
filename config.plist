@@ -173,8 +173,6 @@
 		</dict>
 		<key>SSDT</key>
 		<dict>
-			<key>DropOem</key>
-			<false/>
 			<key>Generate</key>
 			<false/>
 		</dict>
@@ -183,10 +181,6 @@
 	<dict>
 		<key>Arguments</key>
 		<string>kext-dev-mode=1 nv_disable=1 dart=0</string>
-		<key>Legacy</key>
-		<string>PBR</string>
-		<key>Log</key>
-		<false/>
 		<key>NeverHibernate</key>
 		<true/>
 		<key>Secure</key>
@@ -403,11 +397,7 @@
 		</dict>
 		<key>USB</key>
 		<dict>
-			<key>AddClockID</key>
-			<false/>
 			<key>Inject</key>
-			<false/>
-			<key>FixOwnership</key>
 			<false/>
 		</dict>
 	</dict>
@@ -641,36 +631,8 @@
 	</dict>
 	<key>SMBIOS</key>
 	<dict>
-		<key>BoardType</key>
-		<integer>10</integer>
-		<key>ChassisType</key>
-		<integer>10</integer>
-		<key>BiosReleaseDate</key>
-		<string>05/24/13</string>
-		<key>Version</key>
-		<string>1.0</string>
-		<key>SerialNumber</key>
-		<string>G02HACKUF5V7</string>
-		<key>Manufacturer</key>
-		<string>Apple Computer, Inc.</string>
-		<key>BoardManufacturer</key>
-		<string>Apple Computer, Inc.</string>
-		<key>ChassisAssetTag</key>
-		<string>Air-Enclosure</string>
-		<key>BiosVendor</key>
-		<string>Apple Computer, Inc.</string>
-		<key>ChassisManufacturer</key>
-		<string>Apple Computer, Inc.</string>
-		<key>BiosVersion</key>
-		<string>MBA61.88Z.0099.B04.1305241529</string>
-		<key>Board-ID</key>
-		<string>Mac-7DF21CB3ED6977E5</string>
-		<key>Family</key>
-		<string>MacBook Air</string>
 		<key>ProductName</key>
 		<string>MacBookAir6,2</string>
-		<key>Mobile</key>
-		<true/>
 		<key>Trust</key>
 		<true/>
 	</dict>
