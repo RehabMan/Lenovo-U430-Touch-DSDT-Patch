@@ -2,7 +2,7 @@
 
 #set -x
 
-EFI=`sudo mount_efi.sh /`
+EFI=`mount_efi.sh`
 config=$EFI/EFI/Clover/config.plist
 #config=config_new.plist
 
