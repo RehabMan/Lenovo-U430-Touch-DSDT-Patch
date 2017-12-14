@@ -210,8 +210,6 @@
 	</dict>
 	<key>KernelAndKextPatches</key>
 	<dict>
-		<key>AsusAICPUPM</key>
-		<true/>
 		<key>AppleRTC</key>
 		<true/>
 		<key>KernelLapic</key>
