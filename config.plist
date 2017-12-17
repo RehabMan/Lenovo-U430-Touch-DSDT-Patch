@@ -16,6 +16,8 @@
 				<true/>
 				<key>FixHPET</key>
 				<true/>
+				<key>FixMutex</key>
+				<true/>
 				<key>FixWAK</key>
 				<true/>
 			</dict>
@@ -62,22 +64,6 @@
 					<data>R1BSVwI=</data>
 					<key>Replace</key>
 					<data>WFBSVwI=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>change Mutex(BFWM,7) to Mutex(BFWM,0)</string>
-					<key>Find</key>
-					<data>WwFCRldNBw==</data>
-					<key>Replace</key>
-					<data>WwFCRldNBw==</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>change Mutex(MSMI,7) to Mutex(MSMI,0)</string>
-					<key>Find</key>
-					<data>WwFNU01JBw==</data>
-					<key>Replace</key>
-					<data>WwFNU01JAA==</data>
 				</dict>
 				<dict>
 					<key>Comment</key>
