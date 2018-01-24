@@ -10,6 +10,7 @@ TAGCMD=`pwd`/tools/tag
 SLE=/System/Library/Extensions
 LE=/Library/Extensions
 EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData|USBInjectAll|Lilu|IntelGraphicsFixup"
+ESSENTIAL="FakeSMC.kext RealtekRTL8111.kext USBInjectAll.kext Lilu.kext IntelGraphicsFixup.kext AppleBacklightInjector.kext IntelBacklight.kext"
 
 # extract minor version (eg. 10.9 vs. 10.10 vs. 10.11)
 MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})
@@ -45,11 +46,16 @@ function nothing
     :
 }
 
+function remove_kext
+{
+    $SUDO rm -Rf $SLE/"$1" $LE/"$1"
+}
+
 function install_kext
 {
     if [ "$1" != "" ]; then
         echo installing $1 to $KEXTDEST
-        $SUDO rm -Rf $SLE/`basename $1` $KEXTDEST/`basename $1`
+        remove_kext `basename $1`
         $SUDO cp -Rf $1 $KEXTDEST
         $TAG -a Gray $KEXTDEST/`basename $1`
     fi
@@ -158,16 +164,16 @@ if [ $? -ne 0 ]; then
         # 10.11 needs USBInjectAll.kext
         cd RehabMan-USBInjectAll*/Release && install_kext USBInjectAll.kext && cd ../..
         # remove BrcPatchRAM.kext just in case
-        $SUDO rm -Rf $SLE/BrcmPatchRAM.kext $KEXTDEST/BrcmPatchRAM.kext
+        remove_kext BrcmPatchRAM.kext
         # remove injector just in case
-        $SUDO rm -Rf $SLE/BrcmBluetoothInjector.kext $KEXTDEST/BrcmBluetoothInjector.kext
+        remove_kext BrcmBluetoothInjector.kext
     else
         # prior to 10.11, need BrcmPatchRAM.kext
         cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmPatchRAM.kext && cd ../..
         # remove BrcPatchRAM2.kext just in case
-        $SUDO rm -Rf $SLE/BrcmPatchRAM2.kext $KEXTDEST/BrcmPatchRAM2.kext
+        remove_kext BrcmPatchRAM2.kext
         # remove injector just in case
-        $SUDO rm -Rf $SLE/BrcmBluetoothInjector.kext $KEXTDEST/BrcmBluetoothInjector.kext
+        remove_kext BrcmBluetoothInjector.kext
     fi
     if [[ $MINOR_VER -ge 12 ]]; then
         #10.12 needs Lilu.kext and IntelGraphicsFixup.kext
@@ -175,20 +181,14 @@ if [ $? -ne 0 ]; then
         cd RehabMan-IntelGraphicsFixup*/Release && install_kext IntelGraphicsFixup.kext && cd ../..
     fi
     # this guide does not use BrcmFirmwareData.kext
-    $SUDO rm -Rf $SLE/BrcmFirmwareData.kext $KEXTDEST/BrcmFirmwareData.kext
+    remove_kext BrcmFirmwareData.kext
     # now using IntelBacklight.kext instead of ACPIBacklight.kext
-    $SUDO rm -Rf $SLE/ACPIBacklight.kext $KEXTDEST/ACPIBacklight.kext
+    remove_kext ACPIBacklight.kext
     # since EHCI #1 is disabled, FakePCIID_XHCIMux.kext cannot be used
-    $SUDO rm -Rf $KEXTDEST/FakePCIID_XHCIMux.kext
+    remove_kext FakePCIID_XHCIMux.kext
     # deal with some renames
-    if [[ -e $KEXTDEST/FakePCIID_Broadcom_WiFi.kext ]]; then
-        # remove old FakePCIID_BCM94352Z_as_BCM94360CS2.kext
-        $SUDO rm -Rf $SLE/FakePCIID_BCM94352Z_as_BCM94360CS2.kext $KEXTDEST/FakePCIID_BCM94352Z_as_BCM94360CS2.kext
-    fi
-    if [[ -e $KEXTDEST/FakePCIID_Intel_HD_Graphics.kext ]]; then
-        # remove old FakePCIID_HD4600_HD4400.kext
-        $SUDO rm -Rf $SLE/FakePCIID_HD4600_HD4400.kext $KEXTDEST/FakePCIID_HD4600_HD4400.kext
-    fi
+    remove_kext FakePCIID_BCM94352Z_as_BCM94360CS2.kext
+    remove_kext FakePCIID_HD4600_HD4400.kext
     cd ../..
 fi
 
@@ -196,8 +196,8 @@ fi
 
 # patching AppleHDA
 HDA=ALC283
-$SUDO rm -Rf $KEXTDEST/AppleHDA_$HDA.kext
-$SUDO rm -Rf $KEXTDEST/AppleHDAHCD_$HDA.kext
+remove_kext AppleHDA_$HDA.kext
+remove_kext AppleHDAHCD_$HDA.kext
 $SUDO rm -f $SLE/AppleHDA.kext/Contents/Resources/*.zml*
 ./patch_hda.sh "$HDA"
 if [[ $MINOR_VER -le 9 ]]; then
@@ -214,7 +214,9 @@ fi
 
 # USBXHC_u430 is mostly specific to 10.11, but it does inject non-removable=yes
 # for the touchscreen
-install_kext USBXHC_u430.kext
+# Note: not used anymore
+#install_kext USBXHC_u430.kext
+remove_kext USBXHC_u430.kext
 
 # install AppleBacklightInjector.kext on 10.12
 #  (set BKLT=1 in SSDT-HACK.dsl to use it, set BKLT=0 to use IntelBacklight.kext)
@@ -223,9 +225,7 @@ if [[ $MINOR_VER -ge 12 ]]; then
     install_kext AppleBacklightInjector.kext
     cd ..
     # remove IntelBacklight.kext if it is installed (doesn't work with 10.12)
-    if [ -d $KEXTDEST/IntelBacklight.kext ]; then
-        $SUDO rm -Rf $KEXTDEST/IntelBacklight.kext
-    fi
+    remove_kext IntelBacklight.kext
 fi
 
 #check_directory *.kext
@@ -237,6 +237,16 @@ fi
 
 # force cache rebuild with output
 $SUDO touch $SLE && $SUDO kextcache -u /
+
+# install/update kexts on EFI/Clover/kexts/Other
+EFI=`./mount_efi.sh`
+echo Updating kexts at EFI/Clover/kexts/Other
+for kext in $ESSENTIAL; do
+    echo updating $EFI/EFI/CLOVER/kexts/Other/$kext
+    if [[ -e $KEXTDEST/$kext ]]; then
+        cp -Rfp $KEXTDEST/$kext $EFI/EFI/CLOVER/kexts/Other
+    fi
+done
 
 # install VoodooPS2Daemon
 echo Installing VoodooPS2Daemon to /usr/bin and /Library/LaunchDaemons...
