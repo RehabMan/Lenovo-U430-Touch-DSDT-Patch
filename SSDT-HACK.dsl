@@ -425,7 +425,7 @@ DefinitionBlock("", "SSDT", 2, "hack", "_HACK", 0)
                     Package(){},
                     Package()
                     {
-                        "LayoutID", 3,
+                        //"LayoutID", 2,
                         "PinConfigs", Package()
                         {
                             Package(){},
@@ -447,7 +447,7 @@ DefinitionBlock("", "SSDT", 2, "hack", "_HACK", 0)
                     Package(){},
                     Package()
                     {
-                        "LayoutID", 3,
+                        //"LayoutID", 2,
                         "Command", Buffer()
                         {
                             0x01, 0x47, 0x0c, 0x02,

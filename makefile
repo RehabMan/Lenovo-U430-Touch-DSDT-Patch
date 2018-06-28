@@ -30,7 +30,7 @@ IASLFLAGS=-vw 2095 -vw 2146
 IASL=iasl
 
 .PHONY: all
-all: $(PRODUCTS) $(HDAHCDINJECT) #  $(HDAINJECT)
+all: $(PRODUCTS) $(HDAHCDINJECT) $(HDAINJECT)
 
 $(BUILDDIR)/SSDT-HACK.aml: ./SSDT-HACK.dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
@@ -49,13 +49,13 @@ install: $(PRODUCTS)
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT.aml
 	cp $(PRODUCTS) $(EFIDIR)/EFI/CLOVER/ACPI/patched
 
-#$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
-$(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
+#$(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
+$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
 	./patch_hda.sh $(HDA)
 
 .PHONY: clean_hda
 clean_hda:
-	rm -rf $(HDAHCDINJECT) $(HDAZML) # $(HDAINJECT)
+	rm -rf $(HDAHCDINJECT) $(HDAZML) $(HDAINJECT)
 
 $(BACKLIGHTINJECT): Backlight.plist patch_backlight.sh
 	./patch_backlight.sh
@@ -81,6 +81,7 @@ install_hda:
 	sudo rm -Rf $(INSTDIR)/$(HDAHCDINJECT)
 	#sudo cp -R ./$(HDAHCDINJECT) $(INSTDIR)
 	#if [ "`which tag`" != "" ]; then sudo tag -a Blue $(INSTDIR)/$(HDAHCDINJECT); fi
+	sudo rm -f $(SLE)/AppleHDA.kext/Contents/Resources/*.zml*
 	sudo cp $(HDAZML)/*.zml* $(SLE)/AppleHDA.kext/Contents/Resources
 	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(SLE)/AppleHDA.kext/Contents/Resources/*.zml*; fi
 	make update_kernelcache

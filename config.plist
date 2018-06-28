@@ -195,7 +195,7 @@
 						<key>Key</key>
 						<string>layout-id</string>
 						<key>Value</key>
-						<data>AwAAAA==</data>
+						<data>AgAAAA==</data>
 					</dict>
 					<dict>
 						<key>Key</key>
@@ -216,7 +216,7 @@
 						<key>Key</key>
 						<string>layout-id</string>
 						<key>Value</key>
-						<data>AwAAAA==</data>
+						<data>AgAAAA==</data>
 					</dict>
 					<dict>
 						<key>Key</key>
@@ -431,7 +431,7 @@
 			<true/>
 		</dict>
 		<key>Theme</key>
-		<string>bluemac</string>
+		<string>BGM</string>
 	</dict>
 	<key>Graphics</key>
 	<dict>
@@ -557,7 +557,7 @@
 				<key>Find</key>
 				<data>AQUJAAAEAACHAAAAAgQJAAAEAACHAAAA</data>
 				<key>Replace</key>
-				<data>/wAAAAEAAABAAAAAAgQJAAAIAACHAAAA</data>
+				<data>AgQJAAAIAACHAAAA/wAAAAEAAABAAAAA</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -575,7 +575,7 @@
 				<key>Comment</key>
 				<string>AppleHDA .xml.zlib to .zml.zlib</string>
 				<key>MatchOS</key>
-				<string>10.10.x,10.11.x,10.12.x,10.13.x</string>
+				<string>10.10.x,10.11.x,10.12.x,10.13.x,10.14.x</string>
 				<key>Name</key>
 				<string>com.apple.driver.AppleHDA</string>
 				<key>Find</key>
@@ -609,7 +609,7 @@
 				<key>Comment</key>
 				<string>AppleHDA ALC283 (3 of 4) 0x10ec0885 to zero</string>
 				<key>MatchOS</key>
-				<string>10.9.x,10.10.x,10.11.x,10.12.x,10.13.x</string>
+				<string>10.9.x,10.10.x,10.11.x,10.12.x,10.13.x,10.14.x</string>
 				<key>Name</key>
 				<string>com.apple.driver.AppleHDA</string>
 				<key>Find</key>
