@@ -1,11 +1,4 @@
-// Instead of providing patched DSDT/SSDT, just include a single SSDT
-// and do the rest of the work in config.plist
-
-// A bit experimental, and a bit more difficult with laptops, but
-// still possible.
-
-// Note: No solution for missing IAOE here, but so far, not a problem.
-
+// Main add-on SSDT for u430/u330/u550
 DefinitionBlock("", "SSDT", 2, "hack", "_HACK", 0)
 {
     External(_SB.PCI0, DeviceObj)
@@ -238,7 +231,6 @@ DefinitionBlock("", "SSDT", 2, "hack", "_HACK", 0)
 //
 
     External(_SB.PCI0.RP05.PEGP._OFF, MethodObj)
-    External(_SB.PCI0.RP05.PXSX._OFF, MethodObj)
     Device(RMD2)
     {
         Name(_HID, "RMD20000")
@@ -246,9 +238,34 @@ DefinitionBlock("", "SSDT", 2, "hack", "_HACK", 0)
         {
             // disable discrete graphics (Nvidia/Radeon) if it is present
             If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF)) { \_SB.PCI0.RP05.PEGP._OFF() }
-            If (CondRefOf(\_SB.PCI0.RP05.PXSX._OFF)) { \_SB.PCI0.RP05.PXSX._OFF() }
         }
     }
+    Name(_SB.PCI0.RP05.PXSX._STA, 0)
+
+    // Note other important code in SSDT-DGPU.dsl
+
+    External(_SB.PCI0.LPCB.EC, DeviceObj)
+    External(_SB.PCI0.LPCB.EC.NVPR, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC.XREG, MethodObj)
+
+    // Override EC._REG to take care of EC related code removed from HGOF
+    Scope(_SB.PCI0.LPCB.EC)
+    {
+        OperationRegion(ECR3, EmbeddedControl, 0x00, 0xFF)
+        // original _REG is renamed to XREG
+        Method(_REG, 2)
+        {
+            // call original _REG (now renamed XREG)
+            XREG(Arg0, Arg1)
+
+            If (3 == Arg0 && 1 == Arg1 && CondRefOf(\_SB.PCI0.RP05.PEGP._OFF))
+            {
+                // original EC related code from HGOF
+                Store (Zero, \_SB.PCI0.LPCB.EC.NVPR)
+            }
+        }
+    }
+
 
 //
 // Display backlight implementation

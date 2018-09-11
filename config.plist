@@ -6,6 +6,8 @@
 	<dict>
 		<key>DSDT</key>
 		<dict>
+			<key>DropOEM_DSM</key>
+			<false/>
 			<key>Fixes</key>
 			<dict>
 				<key>FixTMR</key>
@@ -152,6 +154,24 @@
 					<data>X0RTTQ==</data>
 					<key>Replace</key>
 					<data>WERTTQ==</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(HGOF,0,S) to XGOF</string>
+					<key>Find</key>
+					<data>SEdPRgg=</data>
+					<key>Replace</key>
+					<data>WEdPRgg=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change EC Method(_REG,2,N) to XREG</string>
+					<key>Find</key>
+					<data>X1JFRwI=</data>
+					<key>Replace</key>
+					<data>WFJFRwI=</data>
+					<key>TgtBridge</key>
+					<data>RUNfXw==</data>
 				</dict>
 			</array>
 		</dict>

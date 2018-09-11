@@ -24,7 +24,7 @@ endif
 SLE=/System/Library/Extensions
 
 # set build products
-PRODUCTS=$(BUILDDIR)/SSDT-HACK.aml
+PRODUCTS=$(BUILDDIR)/SSDT-HACK.aml $(BUILDDIR)/SSDT-DGPU.aml
 
 IASLFLAGS=-vw 2095 -vw 2146
 IASL=iasl
@@ -33,6 +33,9 @@ IASL=iasl
 all: $(PRODUCTS) $(HDAHCDINJECT) $(HDAINJECT)
 
 $(BUILDDIR)/SSDT-HACK.aml: ./SSDT-HACK.dsl
+	$(IASL) $(IASLFLAGS) -p $@ $<
+
+$(BUILDDIR)/SSDT-DGPU.aml: ./SSDT-DGPU.dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
 .PHONY: clean
