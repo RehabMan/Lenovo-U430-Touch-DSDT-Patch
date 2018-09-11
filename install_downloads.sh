@@ -9,8 +9,8 @@ TAG=tag_file
 TAGCMD=`pwd`/tools/tag
 SLE=/System/Library/Extensions
 LE=/Library/Extensions
-EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData|USBInjectAll|Lilu|IntelGraphicsFixup"
-ESSENTIAL="FakeSMC.kext RealtekRTL8111.kext USBInjectAll.kext Lilu.kext IntelGraphicsFixup.kext AppleBacklightInjector.kext IntelBacklight.kext"
+EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData|USBInjectAll"
+ESSENTIAL="FakeSMC.kext RealtekRTL8111.kext USBInjectAll.kext Lilu.kext WhateverGreen.kext AppleBacklightInjector.kext IntelBacklight.kext"
 
 # extract minor version (eg. 10.9 vs. 10.10 vs. 10.11)
 MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})
@@ -174,11 +174,6 @@ if [ $? -ne 0 ]; then
         remove_kext BrcmPatchRAM2.kext
         # remove injector just in case
         remove_kext BrcmBluetoothInjector.kext
-    fi
-    if [[ $MINOR_VER -ge 12 ]]; then
-        #10.12 needs Lilu.kext and IntelGraphicsFixup.kext
-        cd nbb_vit9696-Lilu* && install_kext Lilu.kext && cd ..
-        cd nbb_lvs1974-IntelGraphicsFixup* && install_kext IntelGraphicsFixup.kext && cd ..
     fi
     # this guide does not use BrcmFirmwareData.kext
     remove_kext BrcmFirmwareData.kext
