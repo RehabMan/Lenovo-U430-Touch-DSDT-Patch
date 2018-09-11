@@ -167,7 +167,7 @@
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>kext-dev-mode=1 nv_disable=1 dart=0</string>
+		<string>kext-dev-mode=1 nv_disable=1 dart=0 -igfxnohdmi</string>
 		<key>NeverHibernate</key>
 		<true/>
 		<key>Secure</key>
@@ -198,6 +198,18 @@
 						<data>AQAAAA==</data>
 					</dict>
 					<dict>
+						<key>Key</key>
+						<string>framebuffer-portcount</string>
+						<key>Value</key>
+						<data>AgAAAA==</data>
+					</dict>
+					<dict>
+						<key>Key</key>
+						<string>framebuffer-memorycount</string>
+						<key>Value</key>
+						<data>AgAAAA==</data>
+					</dict>
+					<dict>
 						<key>Comment</key>
 						<string>9MB cursor bytes (as per orginal vbo idea)</string>
 						<key>Key</key>
@@ -213,41 +225,11 @@
 					</dict>
 					<dict>
 						<key>Comment</key>
-						<string>change 0105 @1 -&gt; 0204 part 1</string>
+						<string>0x0a260006 disable 0105 port, change 0204 port to HDMI (RehabMan)</string>
 						<key>Key</key>
-						<string>framebuffer-con1-index</string>
+						<string>framebuffer-con1-alldata</string>
 						<key>Value</key>
-						<data>AgAAAA==</data>
-					</dict>
-					<dict>
-						<key>Comment</key>
-						<string>change 0105 @1 -&gt;0204 part 2</string>
-						<key>Key</key>
-						<string>framebuffer-con1-busid</string>
-						<key>Value</key>
-						<data>BAAAAA==</data>
-					</dict>
-					<dict>
-						<key>Comment</key>
-						<string>framebuffer@1 (now 0204) as HDMI</string>
-						<key>Key</key>
-						<string>framebuffer-con1-type</string>
-						<key>Value</key>
-						<data>AAgAAA==</data>
-					</dict>
-					<dict>
-						<key>Key</key>
-						<string>framebuffer-con2-enable</string>
-						<key>Value</key>
-						<data>AQAAAA==</data>
-					</dict>
-					<dict>
-						<key>Comment</key>
-						<string>disable original 0204 port (lag fix)</string>
-						<key>Key</key>
-						<string>framebuffer-con2-index</string>
-						<key>Value</key>
-						<data>/wAAAA==</data>
+						<data>AgQJAAAIAACHAAAA/wAAAAEAAABAAAAA</data>
 					</dict>
 				</array>
 			</dict>
@@ -437,6 +419,120 @@
 				</array>
 			</dict>
 		</array>
+		<key>#Arbitrary semantic</key>
+		<array>
+			<dict>
+				<key>Comment</key>
+				<string>Intel HD Graphics</string>
+				<key>PciAddr</key>
+				<string>00:02.00</string>
+				<key>CustomProperties</key>
+				<array>
+					<dict>
+						<key>Key</key>
+						<string>framebuffer-patch-enable</string>
+						<key>Value</key>
+						<data>AQAAAA==</data>
+					</dict>
+					<dict>
+						<key>Key</key>
+						<string>framebuffer-portcount</string>
+						<key>Value</key>
+						<data>AgAAAA==</data>
+					</dict>
+					<dict>
+						<key>Key</key>
+						<string>framebuffer-memorycount</string>
+						<key>Value</key>
+						<data>AgAAAA==</data>
+					</dict>
+					<dict>
+						<key>Comment</key>
+						<string>9MB cursor bytes (as per orginal vbo idea)</string>
+						<key>Key</key>
+						<string>framebuffer-fbmem</string>
+						<key>Value</key>
+						<data>AACQAA==</data>
+					</dict>
+					<dict>
+						<key>Key</key>
+						<string>framebuffer-con1-enable</string>
+						<key>Value</key>
+						<data>AQAAAA==</data>
+					</dict>
+					<dict>
+						<key>Comment</key>
+						<string>change 0105 @1 -&gt; 0204 part 1</string>
+						<key>Key</key>
+						<string>framebuffer-con1-index</string>
+						<key>Value</key>
+						<data>AgAAAA==</data>
+					</dict>
+					<dict>
+						<key>Comment</key>
+						<string>change 0105 @1 -&gt;0204 part 2</string>
+						<key>Key</key>
+						<string>framebuffer-con1-busid</string>
+						<key>Value</key>
+						<data>BAAAAA==</data>
+					</dict>
+					<dict>
+						<key>Comment</key>
+						<string>framebuffer@1 (now 0204) as HDMI</string>
+						<key>Key</key>
+						<string>framebuffer-con1-type</string>
+						<key>Value</key>
+						<data>AAgAAA==</data>
+					</dict>
+					<dict>
+						<key>Key</key>
+						<string>framebuffer-con2-enable</string>
+						<key>Value</key>
+						<data>AQAAAA==</data>
+					</dict>
+					<dict>
+						<key>Comment</key>
+						<string>disable original 0204 port (lag fix), part 1</string>
+						<key>Key</key>
+						<string>framebuffer-con2-index</string>
+						<key>Value</key>
+						<data>/wAAAA==</data>
+					</dict>
+					<dict>
+						<key>Comment</key>
+						<string>disable original 0204 port (lag fix), part 2</string>
+						<key>Key</key>
+						<string>framebuffer-con2-busid</string>
+						<key>Value</key>
+						<data>AAAAAA==</data>
+					</dict>
+					<dict>
+						<key>Comment</key>
+						<string>disable original 0204 port (lag fix), part 3</string>
+						<key>Key</key>
+						<string>framebuffer-con2-pipe</string>
+						<key>Value</key>
+						<data>AAAAAA==</data>
+					</dict>
+					<dict>
+						<key>Comment</key>
+						<string>disable original 0204 port (lag fix), part 4</string>
+						<key>Key</key>
+						<string>framebuffer-con2-type</string>
+						<key>Value</key>
+						<data>AQAAAA==</data>
+					</dict>
+					<dict>
+						<key>Comment</key>
+						<string>disable original 0204 port (lag fix), part 5</string>
+						<key>Key</key>
+						<string>framebuffer-con2-flags</string>
+						<key>Value</key>
+						<data>QAAAAA==</data>
+					</dict>
+				</array>
+			</dict>
+		</array>
 		<key>Audio</key>
 		<dict>
 			<key>Inject</key>
@@ -605,30 +701,6 @@
 				<data>SIX/dEdIiwc=</data>
 				<key>Replace</key>
 				<data>Qb4PAAAA60Q=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string> 0x0a260006 9MB cursor bytes (vbo)</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
-				<key>Find</key>
-				<data>BgAmCgEDAwMAAAACAAAwAQAAYAA=</data>
-				<key>Replace</key>
-				<data>BgAmCgEDAwMAAAACAAAwAQAAkAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>0x0a260006 disable 0105 port, change 0204 port to HDMI (RehabMan)</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
-				<key>Find</key>
-				<data>AQUJAAAEAACHAAAAAgQJAAAEAACHAAAA</data>
-				<key>Replace</key>
-				<data>AgQJAAAIAACHAAAA/wAAAAEAAABAAAAA</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
