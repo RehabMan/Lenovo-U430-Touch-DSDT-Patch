@@ -202,7 +202,7 @@
 				<data>AQAAAA==</data>
 				<key>#Comment-0</key>
 				<string>9MB cursor bytes (as per orginal vbo idea)</string>
-				<key>framebuffer-fbmem</key>
+				<key>framebuffer-cursormem</key>
 				<data>AACQAA==</data>
 				<key>#Comment-1</key>
 				<string>0x0a260006 disable 0105 port, change 0204 port to HDMI (RehabMan)</string>
