@@ -384,8 +384,8 @@ DefinitionBlock("", "SSDT", 2, "hack", "_HACK", 0)
                     }
                 }
 
-                // This 0xC value comes from looking what OS X initializes this\n
-                // register to after display sleep (using ACPIDebug/ACPIPoller)\n
+                // This 0xC value comes from looking what OS X initializes this
+                // register to after display sleep (using ACPIDebug/ACPIPoller)
                 LEVW = 0xC0000000
 
                 // change/scale only if different than current...
