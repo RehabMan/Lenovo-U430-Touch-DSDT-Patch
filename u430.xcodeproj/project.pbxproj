@@ -14,7 +14,6 @@
 		8474524120E534EE001279A2 /* layout3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = layout3.plist; path = Resources_ALC283/layout3.plist; sourceTree = "<group>"; };
 		848741B61BBC7C7F0087EA08 /* SSDT-HACK.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SSDT-HACK.dsl"; sourceTree = "<group>"; };
 		84B540371ACB34A200D8ABAE /* Platforms.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Platforms.plist; path = Resources_ALC283/Platforms.plist; sourceTree = "<group>"; };
-		ED272D601CCC73EC00FE569D /* install_tools.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = install_tools.sh; path = tools/install_tools.sh; sourceTree = "<group>"; };
 		ED3F518A1A2029DE0060691A /* install_downloads.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_downloads.sh; sourceTree = "<group>"; };
 		ED3F518B1A2029DE0060691A /* download.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = download.sh; sourceTree = "<group>"; };
 		ED9F2E701BB6F89C00A269C0 /* layout2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = layout2.plist; path = Resources_ALC283/layout2.plist; sourceTree = "<group>"; };
@@ -31,7 +30,6 @@
 				848741B61BBC7C7F0087EA08 /* SSDT-HACK.dsl */,
 				840152EF182AE45E00D58B0A /* makefile */,
 				ED3F518B1A2029DE0060691A /* download.sh */,
-				ED272D601CCC73EC00FE569D /* install_tools.sh */,
 				ED3F518A1A2029DE0060691A /* install_downloads.sh */,
 				EDF48E7D1C07512B0047CEFA /* update_config.sh */,
 				84B540381ACB34B600D8ABAE /* audio */,
