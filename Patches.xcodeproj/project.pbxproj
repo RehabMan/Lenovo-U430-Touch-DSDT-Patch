@@ -59,18 +59,18 @@
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
-		840152E9182AE40B00D58B0A /* u430 */ = {
+		840152E9182AE40B00D58B0A /* Patches */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = 840152EC182AE40B00D58B0A /* Build configuration list for PBXLegacyTarget "u430" */;
+			buildConfigurationList = 840152EC182AE40B00D58B0A /* Build configuration list for PBXLegacyTarget "Patches" */;
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
 			dependencies = (
 			);
-			name = u430;
+			name = Patches;
 			passBuildSettingsInEnvironment = 1;
-			productName = u430;
+			productName = Patches;
 		};
 /* End PBXLegacyTarget section */
 
@@ -81,7 +81,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = RehabMan;
 			};
-			buildConfigurationList = 840152E8182AE40B00D58B0A /* Build configuration list for PBXProject "u430" */;
+			buildConfigurationList = 840152E8182AE40B00D58B0A /* Build configuration list for PBXProject "Patches" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -92,7 +92,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				840152E9182AE40B00D58B0A /* u430 */,
+				840152E9182AE40B00D58B0A /* Patches */,
 			);
 		};
 /* End PBXProject section */
@@ -174,7 +174,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = u430;
+				PRODUCT_NAME = Patches;
 			};
 			name = Debug;
 		};
@@ -183,14 +183,14 @@
 			buildSettings = {
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = u430;
+				PRODUCT_NAME = Patches;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		840152E8182AE40B00D58B0A /* Build configuration list for PBXProject "u430" */ = {
+		840152E8182AE40B00D58B0A /* Build configuration list for PBXProject "Patches" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				840152EA182AE40B00D58B0A /* Debug */,
@@ -199,7 +199,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		840152EC182AE40B00D58B0A /* Build configuration list for PBXLegacyTarget "u430" */ = {
+		840152EC182AE40B00D58B0A /* Build configuration list for PBXLegacyTarget "Patches" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				840152ED182AE40B00D58B0A /* Debug */,

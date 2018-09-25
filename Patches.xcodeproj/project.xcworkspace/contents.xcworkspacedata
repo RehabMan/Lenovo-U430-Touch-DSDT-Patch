@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:u430.xcodeproj">
+      location = "self:Patches.xcodeproj">
    </FileRef>
 </Workspace>
