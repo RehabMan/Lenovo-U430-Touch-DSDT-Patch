@@ -417,7 +417,12 @@ DefinitionBlock("", "SSDT", 2, "hack", "_HACK", 0)
     External(_SB.PCI0.HDEF, DeviceObj)
     Name(_SB.PCI0.HDEF.RMCF, Package()
     {
-        "CodecCommanderProbeInit", Package()
+        "CodecCommander", Package()
+        {
+            "Perform Reset", ">n",
+            "Perform Reset on External Wake", ">n",
+        },
+        "//CodecCommanderProbeInit", Package()
         {
             "Version", 0x020600,
             "10ec_0283", Package()

@@ -2,7 +2,7 @@
 #set -x
 
 EXCEPTIONS=
-ESSENTIAL="FakePCIID_AR9280_as_AR946x.kext"
+ESSENTIAL="FakePCIID_AR9280_as_AR946x.kext AppleALC.kext"
 HDA=ALC283
 
 # include subroutines
@@ -21,6 +21,9 @@ remove_kext FakePCIID_XHCIMux.kext
 # USBXHC_u430 is not used anymore
 remove_kext USBXHC_u430.kext
 
+# using AppleALC.kext, remove patched zml.zlib files
+sudo rm -f /System/Library/Extensions/AppleHDA.kext/Contents/Resources/*.zml.zlib
+
 # install required kexts
 install_download_kexts
 install_brcmpatchram_kexts
@@ -28,9 +31,6 @@ install_backlight_kexts
 
 # install special download kexts
 install_kext _downloads/kexts/RehabMan-FakePCIID*/Release/FakePCIID_AR9280_as_AR946x.kext
-
-# create/install patched AppleHDA files
-install_hda
 
 # all kexts are now installed, so rebuild cache
 rebuild_kernel_cache

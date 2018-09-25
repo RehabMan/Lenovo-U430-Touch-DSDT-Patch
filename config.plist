@@ -222,7 +222,7 @@
 				<key>#Comment</key>
 				<string>Intel HDA</string>
 				<key>layout-id</key>
-				<data>AgAAAA==</data>
+				<integer>3</integer>
 				<key>PinConfigurations</key>
 				<data></data>
 			</dict>
@@ -231,7 +231,7 @@
 				<key>#Comment</key>
 				<string>Intel HDMI HDA</string>
 				<key>layout-id</key>
-				<data>AgAAAA==</data>
+				<integer>3</integer>
 				<key>hda-gfx</key>
 				<data>b25ib2FyZC0x</data>
 			</dict>
@@ -373,64 +373,6 @@
 				<data>AEFQUExFIFNTRAA=</data>
 				<key>Replace</key>
 				<data>AAAAAAAAAAAAAAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AppleHDA .xml.zlib to .zml.zlib</string>
-				<key>MatchOS</key>
-				<string>10.10.x,10.11.x,10.12.x,10.13.x,10.14.x</string>
-				<key>Name</key>
-				<string>com.apple.driver.AppleHDA</string>
-				<key>Find</key>
-				<data>LnhtbC56bA==</data>
-				<key>Replace</key>
-				<data>LnptbC56bA==</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AppleHDA ALC283 (1 of 4) 0x11d41984 to 0x10ec0283</string>
-				<key>Name</key>
-				<string>com.apple.driver.AppleHDA</string>
-				<key>Find</key>
-				<data>PYQZ1BE=</data>
-				<key>Replace</key>
-				<data>PYMC7BA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AppleHDA ALC283 (2 of 4) 0x10ec0884 to zero</string>
-				<key>MatchOS</key>
-				<string>10.9.x,10.10.x</string>
-				<key>Name</key>
-				<string>com.apple.driver.AppleHDA</string>
-				<key>Find</key>
-				<data>PYQI7BA=</data>
-				<key>Replace</key>
-				<data>PQAAAAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AppleHDA ALC283 (3 of 4) 0x10ec0885 to zero</string>
-				<key>MatchOS</key>
-				<string>10.9.x,10.10.x,10.11.x,10.12.x,10.13.x,10.14.x</string>
-				<key>Name</key>
-				<string>com.apple.driver.AppleHDA</string>
-				<key>Find</key>
-				<data>PYUI7BA=</data>
-				<key>Replace</key>
-				<data>PQAAAAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>AppleHDA ALC283 (#4 of 4) 0x11d41983 to zero</string>
-				<key>MatchOS</key>
-				<string>10.11.x</string>
-				<key>Name</key>
-				<string>com.apple.driver.AppleHDA</string>
-				<key>Find</key>
-				<data>PYMZ1BE=</data>
-				<key>Replace</key>
-				<data>PQAAAAA=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
