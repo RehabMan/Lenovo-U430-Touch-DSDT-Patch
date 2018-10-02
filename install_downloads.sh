@@ -3,7 +3,6 @@
 
 EXCEPTIONS=
 ESSENTIAL="FakePCIID_AR9280_as_AR946x.kext AppleALC.kext"
-HDA=ALC283
 
 # include subroutines
 DIR=$(dirname ${BASH_SOURCE[0]})

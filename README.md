@@ -11,6 +11,10 @@ http://www.tonymacx86.com/yosemite-laptop-guides/155106-guide-lenovo-ideapad-u33
 
 ### Change Log:
 
+2018-09-01
+
+- completed major changes for Mojave and AppleALC.kext
+
 2015-11-11
 
 - removed FULLPATCH, now using only SSDT-HACK.dsl
