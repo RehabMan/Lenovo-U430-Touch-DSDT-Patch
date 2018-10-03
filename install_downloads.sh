@@ -5,8 +5,7 @@ EXCEPTIONS=
 ESSENTIAL="FakePCIID_AR9280_as_AR946x.kext AppleALC.kext"
 
 # include subroutines
-DIR=$(dirname ${BASH_SOURCE[0]})
-source "$DIR/tools/_install_subs.sh"
+source "$(dirname ${BASH_SOURCE[0]})"/_tools/_install_subs.sh
 
 warn_about_superuser
 

@@ -1,6 +1,5 @@
 .DS_Store
-tools/*
-stash/*
+_tools/*
 _downloads/*
 build/*
 Patches.xcodeproj/project.xcworkspace/xcuserdata
