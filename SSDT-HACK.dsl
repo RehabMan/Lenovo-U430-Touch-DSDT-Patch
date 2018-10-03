@@ -411,20 +411,6 @@ DefinitionBlock("", "SSDT", 2, "hack", "_HACK", 0)
     }
 
 //
-// Audio configuration
-//
-
-    External(_SB.PCI0.HDEF, DeviceObj)
-    Name(_SB.PCI0.HDEF.RMCF, Package()
-    {
-        "CodecCommander", Package()
-        {
-            "Perform Reset", ">n",
-            "Perform Reset on External Wake", ">n",
-        },
-    })
-
-//
 // Standard Injections/Fixes
 //
 
