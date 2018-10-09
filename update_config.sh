@@ -2,8 +2,8 @@
 
 #set -x
 
-EFI=`mount_efi.sh`
-config=$EFI/EFI/Clover/config.plist
+EFI="$(./mount_efi.sh)"
+config="$EFI"/EFI/Clover/config.plist
 #config=config_new.plist
 
 # smbios data
@@ -28,22 +28,22 @@ function serial_number()
 
 function generate_new_plist()
 {
-    cp config.plist $config
+    cp config.plist "$config"
     echo Generated random serial: \"$(serial_number)\"
-    /usr/libexec/plistbuddy -c "Set :SMBIOS:SerialNumber $(serial_number)" $config
+    /usr/libexec/plistbuddy -c "Set :SMBIOS:SerialNumber $(serial_number)" "$config"
 }
 
 # no config.plist... make new one.
-if [[ ! -e $config ]]; then
-    echo No config.plist at $config, generating new.
+if [[ ! -e "$config" ]]; then
+    echo "No config.plist at $config, generating new."
     generate_new_plist
     exit
 fi
 
 # check to see if it is installation config.plist... if so, make new one
-check=`/usr/libexec/plistbuddy -c "Print :ACPI:SortedOrder-Comment" $config 2>&1`
+check=`/usr/libexec/plistbuddy -c "Print :ACPI:SortedOrder-Comment" "$config" 2>&1`
 if [[ ! "$check" == *"Does Not Exist"* ]]; then
-    echo The config.pilst at $config is install plist, generating new.
+    echo "The config.plist at $config is install plist, generating new."
     generate_new_plist
     exit
 fi
@@ -52,16 +52,16 @@ function replace_var()
 # $1 is path to replace
 {
     value=`/usr/libexec/plistbuddy -c "Print \"$1\"" config.plist`
-    /usr/libexec/plistbuddy -c "Set \"$1\" \"$value\"" $config
+    /usr/libexec/plistbuddy -c "Set \"$1\" \"$value\"" "$config"
 }
 
 function replace_dict()
 # $1 is path to replace
 {
     /usr/libexec/plistbuddy -x -c "Print \"$1\"" config.plist >/tmp/org_rehabman_node.plist
-    /usr/libexec/plistbuddy -c "Delete \"$1\"" $config
-    /usr/libexec/plistbuddy -c "Add \"$1\" dict" $config
-    /usr/libexec/plistbuddy -c "Merge /tmp/org_rehabman_node.plist \"$1\"" $config
+    /usr/libexec/plistbuddy -c "Delete \"$1\"" "$config"
+    /usr/libexec/plistbuddy -c "Add \"$1\" dict" "$config"
+    /usr/libexec/plistbuddy -c "Merge /tmp/org_rehabman_node.plist \"$1\"" "$config"
 }
 
 # existing config.plist, preserve:
@@ -80,7 +80,7 @@ function replace_dict()
 #   RtVariables:BooterConfig
 #   RtVariables:CsrActiveConfig
 
-echo The config.plist at $config will be updated.
+echo "The config.plist at $config will be updated."
 
 replace_dict ":ACPI"
 replace_dict ":Boot"
