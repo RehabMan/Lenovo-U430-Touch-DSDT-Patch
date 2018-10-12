@@ -24,6 +24,7 @@ download_rehabman os-x-eapd-codec-commander RehabMan-CodecCommander
 download_rehabman os-x-fake-pci-id RehabMan-FakePCIID
 download_rehabman os-x-brcmpatchram RehabMan-BrcmPatchRAM
 download_rehabman os-x-usb-inject-all RehabMan-USBInjectAll
+download_rehabman applebacklightfixup RehabMan-BacklightFixup
 download_acidanthera Lilu acidanthera-Lilu
 download_acidanthera WhateverGreen acidanthera-WhateverGreen
 download_acidanthera AirportBrcmFixup acidanthera-AirportBrcmFixup
