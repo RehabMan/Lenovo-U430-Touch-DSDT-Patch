@@ -30,8 +30,8 @@ install_backlight_kexts
 # install special download kexts
 install_kext _downloads/kexts/RehabMan-FakePCIID*/Release/FakePCIID_AR9280_as_AR946x.kext
 
-# all kexts are now installed, so rebuild cache
-rebuild_kernel_cache
+# LiluFriend and kernel cache rebuild
+finish_kexts
 
 # update kexts on EFI/CLOVER/kexts/Other
 update_efi_kexts
