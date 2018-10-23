@@ -2,7 +2,7 @@
 #set -x
 
 EXCEPTIONS=
-ESSENTIAL="FakePCIID_AR9280_as_AR946x.kext AppleALC.kext"
+ESSENTIAL="AppleALC.kext CodecCommander.kext"
 
 # include subroutines
 source "$(dirname ${BASH_SOURCE[0]})"/_tools/_install_subs.sh
